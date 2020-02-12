@@ -36,10 +36,20 @@ org $A148	// $1A158
 	db $21,$09,$06	// Originally 21 0A 06
 
 // Flip heart rows in the File Select Screen:
+bank 2;
+// Move upper row of hearts next to the Death counter
+
+org $A268	// $0A278
+// Move lower row of hearts next to the Player's name
+	db $21,$12,$08,$00,$00,$00,$00,$00,$00,$00,$00,$FF
+
 //Found the routines, now I just gotta figure out how to invert the heart printing
 //A4C6: B9 54 A2  LDA $A254,Y @ $A258 = #$24				// 0xA4D6
-//A254: 21 09 11 24 24 24 24 24 24 24 24 2F 00 00 00 00 00 00 00 00	// PPU Transfer for Name and lower (starting) hearts (0xA264)
+//A254: 21 09 11 24 24 24 24 24 24 24 24 2F 00 00 00 00 00 00 00 00	// PPU Transfer for Name and Upper (starting) hearts (0xA264)
+
 //A268: 21 32 08 00 00 00 00 00 00 00 00 FF 				// PPU Transfer for upper Hearts (0xA278)
+//         ^ Changing this to 21 12 08 positions the bottom hearts where desired.
+// 66F9 -> 6E79
 
 //A520: B9 74 A2  LDA $A274,Y @ $A278 = #$24				// 0xA530
 //A274: 21 89 03 24 24 01 21 E9 03 24 24 01 22 49 03 24 24 01 FF	// PPU Transfers for Death counter(s) (0xA284)
@@ -225,11 +235,16 @@ org $9CDF	// $19CEF
 
 
 // Subscreen - "USE B BUTTON" text for "B BUTTON" and blank-out below row
+org $A039	// $1A049
+	dw b_button
+	dw blank
 org $A350	// $1A360
-	db $2A,$42,$0C
-	db "   B BUTTON "	// Originally "USE B BUTTON"
+b_button:
+	db $2A,$45,$08
+	db "B BUTTON"	// Originally "USE B BUTTON"
 	db $FF
-org $A360	// $1A370
+org $A35C	// $1A36C
+blank:
 	db $2A,$64,$08
 	db "        "	// Originally "FOR THIS"
 
@@ -357,109 +372,7 @@ quick_select:
 // (PENDING)
 
 
-//***********************************************************
-//	Rearrange Bosses for Both Quests
-//***********************************************************
-
-// Changes bosses to:
-// 1st Quest - Level 4: Changes the Manhandla in the level to Red Lanmolas, keeps the two-headed Gleeok at the end
-// 1st Quest - Level 7: Changes the Aquamentus for a Patra with Oval attack cycle
-// 2nd Quest - Level 2: Changes the two-headed Gleeok to Blue Lanmolas (You can still fight a two-headed Gleeok in Level 6)
-// 2nd Quest - Level 8: Changes the 3 Dodongos to a Patra with Circle attack cycle
-
-// Dungeons 1-9 1st Quest
-bank 3;
-org $8006	// $0C016
-// Graphics pointer for Dungeon 4
-	dw dungeon4_graphics	// $9A9B (9B 9A)
-// Graphics pointer for DUngeon 7
-org $8022	// $0C032
-	dw dungeon7_graphics	// $A7DB (DB A7)
-
-// Tables for Dungeons 1-9 1st Quest
+// Aquamentus color change for Dungeon 7
 bank 6;
-org $8810	// $18820
-	db $7A
-org $8B08	// $18B18
-	db $B5
-org $8B0C	// $18B1C
-	db $08
-org $8B1C	// $18B2C
-	db $07
-org $8B2A	// $18B3A
-	db $07
-org $8B39	// $18B49
-	db $07
-org $8B58	// $18B68
-	db $EA
-org $8B6C	// $18B7C
-	db $C1
-org $8B8C	// $18B9C
-	db $A3
-org $8B9C	// $18BAC
-	db $A4
-org $8BAA	// $18BBA
-	db $84
-org $8BB9	// $18BC9
-	db $A4
-org $8BEC	// $18BFC
-	db $A4
-org $8B9C	// $18BAC
-	db $A4
-org $8E0A	// $18E1A
-	db $ED
-org $8E1A	// $18E2A
-	db $A4
-org $8E2B	// $18E3B
-	db $7B
-org $8E39	// $18E49
-	db $52
-org $8E3B	// $18E4B
-	db $A4
-org $8E4A	// $18E5A
-	db $B3, $A4
-org $8E5A	// $18E6A
-	db $64
-org $8E69	// $18E79
-	db $52
-org $8E6B	// $18E6B
-	db $93
-org $8E7B	// $18E8B
-	db $52
-org $8EAB	// $18EBB
-	db $05
-
-// Tables for Dungeons 1-9 2nd Quest
-org $9109	// $19119
-	db $08
-org $910B	// $1911B
-	db $08
-org $910D	// $1911D
-	db $07
-org $913D	// $1914D
-	db $08
-org $913F	// $1914F
-	db $08
-org $916D	// $1917D
-	db $07
-org $9189	// $19199
-	db $A4
-org $918B	// $1919B
-	db $A4
-org $918D	// $1919D
-	db $A4
-org $91BD	// $191CD
-	db $A4
-org $91BF	// $191CF
-	db $C6
-org $91ED	// $191FD
-	db $84
-org $924D	// $1925D
-	db $03
-
-
-//***********************************************************
-
-// Optional?
-// One of the MMC conversions, either MMC3 or MMC5, or Optimum
-// (Is this really needed?)
+org $A291	// $1A29E
+	db $0F,$13,$16,$35

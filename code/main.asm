@@ -33,3 +33,9 @@ incsrc code/credits.asm			// Rewrite of the game's credits sequences
 incsrc code/graphics.asm		// Sprite/graphic changes
 incsrc code/title_screen.asm		// Title screen visual changes
 incsrc code/tunic_colors.asm		// Make blue tunic more vivid
+
+//****************************************
+// Optional patches
+//****************************************
+
+//incsrc code/optional/optional.asm	// Optional patches for Zelda Redux
