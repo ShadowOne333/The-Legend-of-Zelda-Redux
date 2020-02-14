@@ -1,4 +1,4 @@
-#!/bin/bash
+#! /bin/bash
 
 export  out_folder=out
 export  clean_rom=rom/Legend\ of\ Zelda\,\ The\ \(USA\).nes
