@@ -235,16 +235,16 @@ org $9CDF	// $19CEF
 
 
 // Subscreen - "USE B BUTTON" text for "B BUTTON" and blank-out below row
-org $A039	// $1A049
-	dw b_button
-	dw blank
+//org $A039	// $1A049
+//	dw b_button
+//	dw blank
 org $A350	// $1A360
-b_button:
+//b_button:
 	db $2A,$45,$08
 	db "B BUTTON"	// Originally "USE B BUTTON"
 	db $FF
 org $A35C	// $1A36C
-blank:
+//blank:
 	db $2A,$64,$08
 	db "        "	// Originally "FOR THIS"
 
