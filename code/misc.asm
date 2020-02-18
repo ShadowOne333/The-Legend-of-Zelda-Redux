@@ -235,18 +235,24 @@ org $9CDF	// $19CEF
 
 
 // Subscreen - "USE B BUTTON" text for "B BUTTON" and blank-out below row
-//org $A039	// $1A049
-//	dw b_button
-//	dw blank
+org $A039	// $1A049
+	db $A3,$50	// Change pointer to upper B button text, label "b_button"
+	db $A3,$5C	// Change pointer to lower B button text, label "blank"
 org $A350	// $1A360
-//b_button:
+b_button:
 	db $2A,$45,$08
 	db "B BUTTON"	// Originally "USE B BUTTON"
 	db $FF
 org $A35C	// $1A36C
-//blank:
+blank:
 	db $2A,$64,$08
 	db "        "	// Originally "FOR THIS"
+blank_rest:
+	db $2A,$6F,$01
+	db $6E		// Box bottom-left corner
+	db $2A,$70,$4B
+	db $6A,$2A,$7B,$01,$6D,$FF	// Other tiles for the box
+	fill $04,$FF
 
 
 //***********************************************************
