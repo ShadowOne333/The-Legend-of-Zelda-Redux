@@ -37,25 +37,25 @@ https://www.romhacking.net/forum/index.php?topic=29403.0
 
 ## Changelog
 
-* [DONE] Save manually with Up+A when in the Items Subscreen
-* [DONE] Reworked heart HUD to match Zelda 2 Redux
-* [DONE] Relocalization of the  game's script to better match the Japanese release, or have better hints altogether. Based on the Legends of Localization book/webpage (Except the two iconic "Take this" and "It's a secret" lines)
-* [DONE] Make the Blue tunic more vibrant
-* [DONE] Increment the initial bomb max. amount to 10 instead of 8
-* [DONE] Increment the bomb upgrades by 10 instead of the original 4. First upgrade should give you 20 bombs, second will be 30.
-* [DONE] Faster text printing
-* [DONE] Modify the Sword beam to only be active when at full health/heart, and stop shooting when the life gets to 3/4 of a heart
-* [DONE] Modify certain item names to better match subsequent official names in the franchise (Rupee, Fairy, Heart Container, etc.)
-* [DONE] Change the Red and Blue rings to Red and Blue tunics
-* [DONE] Introduction text rewrite
-* [DONE] Reimplementation of the warning screen from version PRG1 upon Game Over / Saving
-* [DONE] Slight modifications to the title screen to give the "ZELDA" title a red colour (modified fading palettes to match this change too)
-* [DONE] Possibly also add a breakable tile hint for overworld tiles
-* [DONE] Automap Plus, but modify it to have 1/4 heart decrements instead of 1/8 (this is needed in order to make space in sprite PPU for the next point (#3)
-* [DONE] Visible hint for breakable walls in Dungeons (already implemented, just need sprite space for the left walls)
-* [DONE] Remove the 1 Rupee flashing, and make it green if possible
-* [DONE] Press the Select button to toggle the item selected for the B Button (to avoid pausing the game to select an item everytime)
-* [DONE] Change the duplicate bosses in Level 4 and 7 (Gleeok and Aquamentus) to Lanmola and Patra respectively.
+* **[DONE]** Save manually with Up+A when in the Items Subscreen
+* **[DONE]** Reworked heart HUD to match Zelda 2 Redux
+* **[DONE]** Relocalization of the  game's script to better match the Japanese release, or have better hints altogether. Based on the Legends of Localization book/webpage (Except the two iconic "Take this" and "It's a secret" lines)
+* **[DONE]** Make the Blue tunic more vibrant
+* **[DONE]** Increment the initial bomb max. amount to 10 instead of 8
+* **[DONE]** Increment the bomb upgrades by 10 instead of the original 4. First upgrade should give you 20 bombs, second will be 30.
+* **[DONE]** Faster text printing
+* **[DONE]** Modify the Sword beam to only be active when at full health/heart, and stop shooting when the life gets to 3/4 of a heart
+* **[DONE]** Modify certain item names to better match subsequent official names in the franchise (Rupee, Fairy, Heart Container, etc.)
+* **[DONE]** Change the Red and Blue rings to Red and Blue tunics
+* **[DONE]** Introduction text rewrite
+* **[DONE]** Reimplementation of the warning screen from version PRG1 upon Game Over / Saving
+* **[DONE]** Slight modifications to the title screen to give the "ZELDA" title a red colour (modified fading palettes to match this change too)
+* **[DONE]** Possibly also add a breakable tile hint for overworld tiles
+* **[DONE]** Automap Plus, but modify it to have 1/4 heart decrements instead of 1/8 (this is needed in order to make space in sprite PPU for the next point (#3)
+* **[DONE]** Visible hint for breakable walls in Dungeons (already implemented, just need sprite space for the left walls)
+* **[DONE]** Remove the 1 Rupee flashing, and make it green if possible
+* **[DONE]** Press the Select button to toggle the item selected for the B Button (to avoid pausing the game to select an item everytime)
+* **[DONE]** Change the duplicate bosses in Level 4 and 7 (Gleeok and Aquamentus) to Lanmola and Patra respectively.
 
 * Be able to kill the Pols Voice by playing the flute, and also with arrows to retain the original way of killing them
 * Flip the heart rows in the File Select Screen
