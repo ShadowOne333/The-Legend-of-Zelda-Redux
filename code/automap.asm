@@ -156,7 +156,7 @@ org $BC00	// $17C10 - Free space
 	cmp.b #$FF	// C9 FF
 	beq code_BC0F	// F0 03
 	sta.w $7F29	// 8D 29 7F
-code_BC0F:	// BC0F:
+code_BC0F:	// $17C1F
 	lda.b $15	// A5 15
 	lsr
 	lsr
@@ -167,10 +167,10 @@ code_BC0F:	// BC0F:
 	lda.w $7F29	// AD 29 7F
 	sta.w $0254	// 8D 54 02
 	bne code_BC25	// D0 05
-code_BC20:	// BC20:
+code_BC20:	// $17C30
 	lda #$FF	// A9 FF
 	sta.w $0254	// 8D 54 02
-code_BC25:	// BC25:
+code_BC25:	// $17C35
 	pla
 	jmp $77E7	// Jump to $77E7 ($07067 in PC?)
 
