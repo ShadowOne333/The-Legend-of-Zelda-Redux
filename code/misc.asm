@@ -286,11 +286,54 @@ org $A0C7	// $160D7
 	db $DC,$DC,$F5,$DC,$5A,$F5,$DC,$5C,$F5,$DC,$DC,$F5	// Originally F5 DC DC F5 DC DC F5 DC DC F5 DC DC
 
 
+
 // Overworld Walls:
-org $A977	// $16987 (Table for Secret Tiles Codes (6 bytes at $16986)
-	db $54		// Originally $D8 - Bombable Wall	(D8 D9 DA DB)
+org $A976	// $16987 (Table for Secret Tiles Codes (6 bytes at $16986)
+	db $C8, $D8, $C4, $BC, $C0, $C0		// Originally $D8 - Bombable Wall	(D8 D9 DA DB)
+// C8	Pushable Rock	(C8 C9 CA CB)
+// D8	Bombable Wall	(D8 D9 DA DB)
+// C4	Burnable Tree	(C4 C5 C6 C7)
+// BC	Pushable Tomb	(BC BD BE BF)
+// C0	Armos Statue	(C0 C1 C2 C3)
+// C0	Armos Statue	(C0 C1 C2 C3)
+
+// Fix cracked tiles always appearing regardless of Quest No. (by Trax)
+org $AAD0	// $16AE0
+	jsr $AC40	// Originally LDA $A976,X
+org $AC30	// $16C40
+	db $C8, $54, $C4, $BC, $C0, $C0	// Alternate secret tile codes table
+// C8	Pushable Rock	(C8 C9 CA CB)
+// D8	Bombable Wall	(54 55 56 57)
+// C4	Burnable Tree	(C4 C5 C6 C7)
+// BC	Pushable Tomb	(BC BD BE BF)
+// C0	Armos Statue	(C0 C1 C2 C3)
+// C0	Armos Statue	(C0 C1 C2 C3)
+org $AC40	// $16C50 - Free space
+	ldy.b $EB	// Current Location
+	lda.w $6AFE,y	// Screen Attributes - Table 5 (VRAM)
+	bmi quest2	// Bit 7 - 2nd Quest ONLY
+	asl
+	bmi quest1	// Bit 6 - 1st Quest ONLY
+	bpl altTile
+quest1:
+	ldy.b $16	// Selected Save Slot (0-2)
+	lda $062D,y	// 2nd Quest Flag (0 = 1st Quest, 1 = 2nd Quest)
+	beq altTile
+	bne normalTile
+quest2:
+	ldy.b $16	// Selected Save Slot (0-2)
+	lda.w $062D,y	// 2nd Quest Flag
+	bne altTile
+normalTile:
+	lda.w $A976,x
+	rts
+altTile:
+	lda $AC30,x	// Alternate secret tile codes table
+	rts
+
 //Fix overworld cracked walls collision:
 //org $????
+
 
 
 //***********************************************************
