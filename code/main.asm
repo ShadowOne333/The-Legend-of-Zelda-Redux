@@ -12,7 +12,7 @@ header			// rom has a header
 //****************************************
 // Redux changes
 //****************************************
-incsrc code/misc.asm			// Main ASM code for Redux
+incsrc code/redux.asm			// Main ASM code for Redux
 
 //****************************************
 // Gameplay changes

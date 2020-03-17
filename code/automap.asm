@@ -117,7 +117,7 @@ org $AF20	// $16F30
 	bne code_AF2E	// D0 04
 	lda.b #$7E	// A9 7E
 	sta.b $14	// 85 14
-code_AF2E:	// AFEE (AF2E)
+code_AF2E:	// $16F3E
 	inc.b $13	// E6 13
 	rts
 

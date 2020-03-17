@@ -154,25 +154,29 @@ save_text:
 	db "SAVE"	// 1C 0A 1F 0E - SAVE
 	db $21,$2C,$05	// PPU Transfer
 	db "RETRY"	// 1B 0E 1D 1B 22 - RETRY 
-	db $23,$D8,$60,$55	// PPU Transfers
-	db $21,$83,$01,$69	// for the box
-	db $21,$84,$58,$6A	// or line tiles
-	db $21,$9C,$01,$6B	// that surround
-	db $21,$A3,$CB,$6C	// the Caution
-	db $21,$BC,$CB,$6C	// text
-	db $23,$03,$01,$6E	// ...
+	db $23,$D8,$20	// Text Box Tile attribute PPU transfer - Originally 23 D8 60 55
+	db $FF,$5F,$5F,$5F,$5F,$5F,$5F,$FF
+	db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+	db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+	db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+	db $21,$83,$01,$69	// PPU Transfers
+	db $21,$84,$58,$6A	// for the box
+	db $21,$9C,$01,$6B	// or line tiles
+	db $21,$A3,$CB,$6C	// that surround
+	db $21,$BC,$CB,$6C	// the Caution
+	db $23,$03,$01,$6E	// text
 	db $23,$04,$58,$6A	// ...
 	db $23,$1C,$01,$6D	// ...
-	db $21,$CC,$07	// PPU Transfer
-	db "CAUTION"	// 0C 0A 1E 1D 12 18 17 - CAUTION
+	db $21,$CC,$08	// PPU Transfer
+	db "CAUTION!"	// 0C 0A 1E 1D 12 18 17 - CAUTION
 	db $22,$05,$16	// PPU Transfer
 	db "TO AVOID DAMAGING GAME"	// 1D 18 24 0A 1F 18 12 0D 24 0D 0A 16 0A 10 12 17 10 24 10 0A 16 0E - TO AVOID DAMAGING GAME
 	db $22,$45,$16	// PPU Transfer
-	db " DATA SAVED, HOLD THE "		// 12 17 0F 18 24 24 1C 0A 1F 0E 0D 28 24 24 11 18 15 0D 24 24 12 17 - INFO  SAVED,  HOLD  IN
+	db "SAVE DATA, HOLD IN THE"	// 12 17 0F 18 24 24 1C 0A 1F 0E 0D 28 24 24 11 18 15 0D 24 24 12 17 - INFO  SAVED,  HOLD  IN
 	db $22,$85,$16	// PPU Transfer
-	db "RESET  BUTTON  AS  YOU"		// 1B 0E 1C 0E 1D 24 24 0B 1E 1D 1D 18 17 24 24 0A 1C 24 24 22 18 1E - RESET  BUTTON  AS  YOU
-	db $22,$C5,$0F	// PPU Transfer
-	db "  TURN OFF THE POWER. "		// 1D 1E 1B 17 24 19 18 20 0E 1B 24 18 0F 0F 63 - TURN POWER OFF.
+	db "RESET BUTTON WHILE YOU"	// 1B 0E 1C 0E 1D 24 24 0B 1E 1D 1D 18 17 24 24 0A 1C 24 24 22 18 1E - RESET  BUTTON  AS  YOU
+	db $22,$C5,$16	// PPU Transfer
+	db "TURN OFF THE POWER.   "	// 1D 1E 1B 17 24 19 18 20 0E 1B 24 18 0F 0F 63 - TURN POWER OFF.
 
 
 //***********************************************************
@@ -303,7 +307,7 @@ org $AAD0	// $16AE0
 org $AC30	// $16C40
 	db $C8, $54, $C4, $BC, $C0, $C0	// Alternate secret tile codes table
 // C8	Pushable Rock	(C8 C9 CA CB)
-// D8	Bombable Wall	(54 55 56 57)
+// 54	Bombable Wall	(54 55 56 57)
 // C4	Burnable Tree	(C4 C5 C6 C7)
 // BC	Pushable Tomb	(BC BD BE BF)
 // C0	Armos Statue	(C0 C1 C2 C3)
