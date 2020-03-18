@@ -95,10 +95,10 @@ To play The Legend of Zelda Redux, the following is required:
 * FCEUX 2.2.3 or above
 * The Legend of Zelda NES ROM (Legend of Zelda, The (USA).nes, MD5: 337bd6f1a1163df31bf2633665589ab0)
 * Lunar IPS
-* Zelda1 Redux.ips patch
+* Zelda1_Redux.ips patch
 
-Grab the .zip file from the Releases page and apply the patch over your Legend of Zelda ROM with Lunar IPS.
-If you want to apply any of the optional patches, you can either compile them manually from the source code, or use each Optional patch individually depending on your liking over your already patched The Legend of Zelda Redux ROM.
+Grab the patches from inside the /patches/ folder from the GitHub page, or alternatively, download the .zip file from the Releases page (once a proper release is out) and apply the patch over your Legend of Zelda ROM with Lunar IPS.
+If you want to apply any of the optional patches, you can use each Optional patch individually from inside the /patches/optional folder depending on your liking over your already patched The Legend of Zelda Redux ROM, or you can either compile them manually from the source code, although this is not recommended if you are not familiar with compilations or 6502 assembly.
 
 -------------------
 
