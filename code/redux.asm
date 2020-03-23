@@ -38,10 +38,9 @@ org $A148	// $1A158
 // Flip heart rows in the File Select Screen:
 bank 2;
 // Move upper row of hearts next to the Death counter
-
 org $A268	// $0A278
 // Move lower row of hearts next to the Player's name
-	db $21,$12,$08,$00,$00,$00,$00,$00,$00,$00,$00,$FF
+	db $21,$32,$08,$00,$00,$00,$00,$00,$00,$00,$00,$FF	// Change to $21,$32,$08 to move that row of hearts above
 
 //Found the routines, now I just gotta figure out how to invert the heart printing
 //A4C6: B9 54 A2  LDA $A254,Y @ $A258 = #$24				// 0xA4D6
