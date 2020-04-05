@@ -79,28 +79,28 @@ org $992D
 // CPU $6BAC X offset for map sprite 	PRG $1942A (00 > A0)
 org $942A	// $1943A
 	db $A0
-//Lvl 2 PRG $19526 B0 > 50
+// Lvl 2 PRG $19526 B0 > 50
 org $9526	// $19536
 	db $50
-//Lvl 3 PRG $19622 C0 > 60
+// Lvl 3 PRG $19622 C0 > 60
 org $9622	// $19632
 	db $60
-//Lvl 4 PRG $1971e 10 > B0
+// Lvl 4 PRG $1971e 10 > B0
 org $971E	// $1972E
 	db $B0
-//Lvl 5 PRG $1981a F0 > 90
+// Lvl 5 PRG $1981a F0 > 90
 org $981A	// $1982A
 	db $90
 //Lvl 6 PRG $19916 C8 > 68
 org $9916	// $19926
 	db $68
-//Lvl 7 PRG $19A12 C8 > 68 
+// Lvl 7 PRG $19A12 C8 > 68 
 org $9A12	// $19A22
 	db $68
-//Lvl 8 PRG $19B0E B0 > 50 
+// Lvl 8 PRG $19B0E B0 > 50 
 org $9B0E	// $19B1E
 	db $50
-//Lvl 9 PRG $19C0A 00 > A0 
+// Lvl 9 PRG $19C0A 00 > A0 
 org $9C0A	// $19C1A
 	db $A0
 
@@ -134,10 +134,10 @@ org $831C	// $1832C
 org $835F	// $1836F
 	db $A0
 
-//PRG 18000 Table for what level you enter. Of base $16 Lvl 1 $18, Lvl 2 ... $26 Lvl 9
-//INFO: Some db tables are bigger and have different dungeon properties. 
-//After the dot map is Link's entrance for the dungeon to make an example. 
-//To-do: Describe Tables
+// PRG 18000 Table for what level you enter. Of base $16 Lvl 1 $18, Lvl 2 ... $26 Lvl 9
+// INFO: Some db tables are bigger and have different dungeon properties. 
+// After the dot map is Link's entrance for the dungeon to make an example. 
+// To-do: Describe Tables
 //*************************************
 
 
