@@ -2,6 +2,12 @@
 // AUTOMAP PLUS
 //**************************************** 
 
+define	RUPEE	$F7
+define	ARROW	$65
+define	KEY	$F9
+define	BOMB	$61
+define	LOW_X	$62
+
 bank 1;
 // Change the symbol for infinite keys from "A" to infinite symbol
 org $A5A1	// $065B1
@@ -9,10 +15,10 @@ org $A5A1	// $065B1
 
 
 // Flip heart rows in HUD:
-org $A507	// $06517
-	db $20,$D6,$08	// Originally 20 B6 08
-org $A512	// $06522
-	db $20,$B6,$08	// Originally 20 D6 08
+//org $A507	// $06517
+	//db $20,$B6,$08	// Originally 20 B6 08
+//org $A512	// $06522
+	//db $20,$96,$08	// Originally 20 D6 08
 
 org $A738	// $06748
 	cmp.b #$C0	// Originally C9 80 (CMP #$80) - (CMP #$F8 in Automap) Changes the break point for when to change the heart sprite when losing health
@@ -172,7 +178,7 @@ code_BC20:	// $17C30
 	sta.w $0254	// 8D 54 02
 code_BC25:	// $17C35
 	pla
-	jmp $77E7	// Jump to $77E7 ($07067 in PC?)
+	jmp $77E7	// Jump to $77E7 (0x07067)
 
 org $BC30	// $17C40 - Free space
 code_BC30:
@@ -395,7 +401,7 @@ subscreen_attributes:
 	db $20,$91,$C2,$6C	// PPU Transfer for side lines of HUD rectangles
 	db $20,$92,$C2,$6C	// PPU Transfer for side lines of HUD rectangles
 	db $20,$94,$C2,$6C	// PPU Transfer for side lines of HUD rectangles
-	db $20,$6B,$84,$F7,$65,$F9,$61,$FF	// PPU Transfer for Rupee, (Empty), Key and Bomb icons in HUD (Jumps 0x20 in PPU per icon)
+	db $20,$6B,$84,{RUPEE},{ARROW},{KEY},{BOMB},$FF	// PPU Transfer for Rupee, (Empty), Key and Bomb icons in HUD (Jumps 0x20 in PPU per icon)
 	db $29,$84,$09		// PPU Transfer to $2984
 	db "INVENTORY"	// Tiles for "INVENTORY"
 

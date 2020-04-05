@@ -106,6 +106,7 @@ If you want to apply any of the optional patches, you can use each Optional patc
 
 * **Trax** - For his amazing disassembly of Zelda 1, which helped with a ton of stuff, and also for a lot of feedback and help in the development of this hack.
 * **DarkSamus993** - For his ASM help towards some hacks (like the Select button Item switch)
+* **BogaaBogaa** - For his ASM help towards some hacks (like the Select button Item switch)
 * **lexluthermeister** - For his help on creating the Optional patch for the new bosses
 * All other users that gave their feedback on possible ways to improve the game over the thread, and those that gave insightful ideas.
 

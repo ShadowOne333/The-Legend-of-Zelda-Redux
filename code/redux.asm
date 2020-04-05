@@ -300,6 +300,7 @@ org $A976	// $16987 (Table for Secret Tiles Codes (6 bytes at $16986)
 // C0	Armos Statue	(C0 C1 C2 C3)
 // C0	Armos Statue	(C0 C1 C2 C3)
 
+
 // Fix cracked tiles always appearing regardless of Quest No. (by Trax)
 org $AAD0	// $16AE0
 	jsr $AC40	// Originally LDA $A976,X
@@ -388,6 +389,7 @@ org $E73D	// $1E74D
 //	and.b #$04		// Originally 29 20 - Changes the button input which moves the cursor in the Continue/Save/Retry screen
 
 
+
 //***********************************************************
 //	Kill Pols Voice by using the flute and/or arrows
 //***********************************************************
@@ -424,7 +426,11 @@ quick_select:
 // (PENDING)
 
 
-// Aquamentus color change for Dungeon 7
-bank 6;
-org $A291	// $1A29E
-	db $0F,$13,$16,$35
+
+//***********************************************************
+// Aquamentus color change from Green to Red
+//***********************************************************
+
+//bank 6;
+//org $A291	// $1A29E
+//	db $0F,$13,$16,$35
