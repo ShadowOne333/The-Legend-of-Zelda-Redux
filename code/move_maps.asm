@@ -13,25 +13,20 @@ org $934F	// $1935F
 
 org $A00E	// $1A01E
 // Repoint the subscreen palette mappings for the new Automap tiles
-	dw subscreen_attributes	// F0 BE (Pointer to $BEF0) - Originally D3 A2 (Pointer to $A2D3 or $1A2E3 in PC)
+	dw overworld_attributes	// F0 BE (Pointer to $BEF0) - Originally D3 A2 (Pointer to $A2D3 or $1A2E3 in PC)
 
 org $A07E	// $1A08E
 // Repoint attribute and tilemaps for Dungeon maps
-	dw subscreen_attributes	// db $D3,$A2 - For original Automap tilemap	
+	dw dungeon_attributes	// db $D3,$A2 - For original Automap tilemap	
 
-org $BEF0	// $1BF00
-// HUD attribute table
-subscreen_attributes:
+org $A2CD	// $1A2DD
+dungeon_attributes:
 	db $23,$C0,$10		// PPU Transfer $23C0
-	db $44,$55,$55,$00,$00,$CC,$FF,$70	// Attribute table for HUD
-	db $44,$55,$05,$00,$00,$CC,$FF,$37	// Attribute table for HUD
-
-
-// Move LIFE and hearts to the left side of the HUD
+	db $44,$55,$55,$00,$00,$00,$00,$40	// Attribute table for HUD
+	db $44,$55,$05,$00,$00,$00,$00,$04	// Attribute table for HUD
+// Move LIFE text to the left side of the HUD
 	db $20,$63,$12		// PPU Transfer to $206F
 	db "-LIFE-",$24,$24,$24,$24,$24,$24,$69,"B",$6B,$69,"A",$6B	// Tiles for item rectangles, B/A and -LIFE-
-
-
 // FOLLOWING CODE MUST BE INCLUDED SO AUTOMAP WORKS PROPERLY
 	db $20,$CF,$06		// PPU Transfer to $20CF
 	db $6E,$6A,$6D,$6E,$6A,$6D	// Tiles for the bottom of the HUD rectangles
@@ -42,7 +37,28 @@ subscreen_attributes:
 	db $20,$6B,$84,{RUPEE},{ARROW},{KEY},{BOMB},$FF	// PPU Transfer for Rupee, (Empty), Key and Bomb icons in HUD (Jumps 0x20 in PPU per icon)
 	db $29,$84,$09		// PPU Transfer to $2984
 	db "INVENTORY"	// Tiles for "INVENTORY"
+	db $FF
 
+org $BEF0	// $1BF00
+// HUD attribute table
+overworld_attributes:
+	db $23,$C0,$10		// PPU Transfer $23C0
+	db $44,$55,$55,$00,$00,$C0,$FF,$70	// Attribute table for HUD
+	db $44,$55,$05,$00,$00,$FF,$FF,$37	// Attribute table for HUD
+// Move LIFE text to the left side of the HUD
+	db $20,$63,$12		// PPU Transfer to $206F
+	db "-LIFE-",$24,$24,$24,$24,$24,$24,$69,"B",$6B,$69,"A",$6B	// Tiles for item rectangles, B/A and -LIFE-
+// FOLLOWING CODE MUST BE INCLUDED SO AUTOMAP WORKS PROPERLY
+	db $20,$CF,$06		// PPU Transfer to $20CF
+	db $6E,$6A,$6D,$6E,$6A,$6D	// Tiles for the bottom of the HUD rectangles
+	db $20,$8F,$C2,$6C	// PPU Transfer for side lines of HUD rectangles
+	db $20,$91,$C2,$6C	// PPU Transfer for side lines of HUD rectangles
+	db $20,$92,$C2,$6C	// PPU Transfer for side lines of HUD rectangles
+	db $20,$94,$C2,$6C	// PPU Transfer for side lines of HUD rectangles
+	db $20,$6B,$84,{RUPEE},{ARROW},{KEY},{BOMB},$FF	// PPU Transfer for Rupee, (Empty), Key and Bomb icons in HUD (Jumps 0x20 in PPU per icon)
+	db $29,$84,$09		// PPU Transfer to $2984
+	db "INVENTORY"	// Tiles for "INVENTORY"
+	db $FF
 
 
 //*************************************
