@@ -2,6 +2,13 @@
 // Switch Life meter and Map in HUD
 //****************************************
 
+// WARNING: THIS HACK MODIFIES CODE FROM AUTOMAP
+// This hack NEEDS to be included/compiled AFTER automap.asm to work properly
+// To compile it properly, you need to have your main.asm hack like follows:
+// incsrc automap.asm
+// incsrc move_maps.asm
+// Otherwise, this patch won't work properly
+
 bank 6;
 // PPU transfers for Automap tiles in the HUD and Subscreen
 org $934F	// $1935F
@@ -44,7 +51,7 @@ org $BEF0	// $1BF00
 overworld_attributes:
 	db $23,$C0,$10		// PPU Transfer $23C0
 	db $44,$55,$55,$00,$00,$C0,$FF,$70	// Attribute table for HUD
-	db $44,$55,$05,$00,$00,$FF,$FF,$37	// Attribute table for HUD
+	db $44,$55,$05,$00,$00,$CC,$FF,$37	// Attribute table for HUD
 // Move LIFE text to the left side of the HUD
 	db $20,$63,$12		// PPU Transfer to $206F
 	db "-LIFE-",$24,$24,$24,$24,$24,$24,$69,"B",$6B,$69,"A",$6B	// Tiles for item rectangles, B/A and -LIFE-

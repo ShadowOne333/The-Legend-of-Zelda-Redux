@@ -1,91 +1,197 @@
-//****************************************
-// Separate Arrows-only counter
-//****************************************
+//************************************************************
+// Separate Arrows-only counter 
+// THIS PATCH DEPENDS ON THE 999 RUPEE HACK
+//************************************************************
 
-// Unused RAM addresses?
-// $0677 - $067B
-// $067F
+bank 4;
+org $B042	// PRG $13042 DropList
 
-// Unused SRAM addresses by BogaaBogaa
-// CPU $7F2D-7FFE is free SRAM. Or PRG $779D
+db $22,$18,$22,$18,$23,$55,$22,$22,$18,$18	// H R H R F R H H R R    R50-H40-F10
+db $0F,$18,$55,$18,$0F,$22,$21,$18,$55,$18	// 5 R H R 5 H C R R R    R50-520-C10 
+db $22,$00,$18,$21,$18,$22,$00,$18,$00,$22	// H B R C R H B R B H    R30-H30-B30-C10 
+db $22,$22,$23,$18,$22,$23,$22,$55,$22,$18	// H H F R H F H H H R    H60-R20-F20 
 
-// $206B PPU offset to start Icon drawing       
-// $84 offset or table size.. format??
-	
-// HUD Icons values
-define	RUPEE	$F7
-define	ARROW	$65
-define	KEY	$F9
-define	BOMB	$61
-define	LOW_X	$62
+//00 = Bomb
+//0F = 5 Rupees
+//18 = Rupee
+//21 = Clock
+//22 = Heart
+//23 = Fairy
+//55 = Arrow     
 
+
+bank 1;
+//org $ACFB	// CPU $748B, PRG $06CFB  
+//	jsr $A423 		//  jsr ShopArrow, Near where it stores 01 to inventory
+//	STA $0657,y
+
+
+//Make rupee arrow counter
+org $A58C  	// PRG $0658C, PC 0x0659C
+	lda.w $0677		// Select Arrow counter instead of rupee ($066D)
+	ldy.b #$2D		// Move offset of value updater to the second line (default $302,y $2C)
+
+
+org $8926	// PRG $04926, PC 0x04936
+	jsr ShopArrow
+	nop
+
+org $AC02	// CPU $7392, PRG $06C02, PC 0x06C12
+	jmp $7EE1
+
+org $B751	// CPU $7EE1, PRG $07751, PC 0x07761
+	cmp.b #$55
+	beq ArrowDrop
+	lda.w $72A4,x            	
+	jmp.w $7395
+ArrowDrop:
+	lda.w $0659		// Switch item property - 01=Wood,02=Silver
+	beq GiveWood
+	ldy.b #$02		// Put Item ID store
+	jmp.w $7399
+GiveWood:	
+	ldy #$02
+	lda #$01		// Put Item ID store
+	jmp $7399
+
+
+org $A423	// PRG $06423, PC 0x06433
+ShopArrow:			// $6B1C ID 02 at $7392. This ID is read and put into Y	
+	tya			// Load item ID from Y
+	cmp.b #$02		// Compare ID and end if not arrow
+	beq ArrowShop
+	sec
+	bcs EndArrowShop
+ArrowShop:	 
+	lda.w $0677
+	bmi ShopArrowOverflow
+	lda.b #$3C
+	adc.w $0677
+	sta.w $0677		// Give 60 arrows
+EndArrowShop:	
+	lda.b #$40                 
+	sta.b $29 
+	rts
+ShopArrowOverflow:
+	lda.b #$3C
+	adc.w $0677
+	bpl MaxArrowShop
+	sta.w $0677		// Give 60 arrows
+	sec
+	bcs EndArrowShop
+MaxArrowShop:
+	lda.b #$FF
+	sta.w $0677
+	sec
+	bcs EndArrowShop
+
+
+org $ABD1	// CPU $7361, PRG $06BD1, PC 0x06BE1
+// GiveArrowDrop Hijack before it gets rid of the iteam
+	jsr $BFC0		// jsr GiveArrowDrop
+	nop
+	nop
+	nop
+
+
+// For Overworld
+bank 4;
+org $BFC0			// PRG $13FC0, CPU $0BFC0, PC 0x13FD0
+GiveArrowDrop:
+	lda $AC,x		// Check if the item is a arrow before it deletes.
+	cmp.b #$55
+	beq AddArrow
+BackDeleting:
+	lda.b #$FF
+	sta.b $AC,x
+	sta.b $84,x
+	rts
+AddArrow:
+	lda.w $0677
+	bmi CheckArrow		// Make it so BPL will detect overflow
+	lda.b #$04		// Amount of Arrow to give will overflow ($XX+1)
+	adc.w $0677
+	sta.w $0677
+	sec			// BackDeleting
+	bcs BackDeleting
+CheckArrow:
+	lda.b #$04		// Amount of Arrow to give will overflow ($XX+1)
+	adc.w $0677
+	bpl MaxArrow
+	sta.w $0677
+	sec			// BackDeleting
+	bcs BackDeleting
+MaxArrow:
+	lda.b #$FF
+	sta.w $0677
+	sec			// BackDeleting
+	bcs BackDeleting
+
+
+// COPY OF ABOVE CODE
+// Will run in dungeons
+bank 1;
+org $BFC0	// PRG $07FC0, CPU $0BFC0, 0x07FD0
+GiveArrowDrop:
+	lda.w $AC,x		// Check if the item is a arrow before it deletes.
+	cmp.b #$55
+	beq AddArrow
+BackDeleting:	
+	lda.b #$FF                 
+	sta.b $AC,x  
+	sta.b $84,x                
+	rts
+AddArrow:
+	lda.w $0677
+	bmi CheckArrow		// Make it so bpl will detect overflow
+	lda.b #$04		// Amount of Arrow to give will overflow ($XX+1)
+	adc.w $0677
+	sta.w $0677
+	sec			//BackDeleting
+	bcs BackDeleting
+CheckArrow:
+	lda.b #$04		// Amount of Arrow to give will overflow ($XX+1)
+	adc.w $0677
+	bpl MaxArrow
+	sta.w $0677
+	sec			// BackDeleting
+	bcs BackDeleting
+MaxArrow:
+	lda.b #$FF
+	sta.w $0677
+	sec			// BackDeleting
+	bcs BackDeleting
+
+///////////////copy////////////////
 
 bank 5;
-//Make are sutract from arrow counter
-org $8E8A	// $14E9A - CPU $8E8A, PRG $14E8A
+org $8E80	// CPU $8E80, PRG $14E80, 0x14E90
+	lda.w $0677		// Check if now Arrows (default rupee 066D)
+
+org $8E8A	// CPU $8E8A, PRG $14E8A, 0x14E9A
 	dec.w $0677
 
+
+// cpu $8E72 Check if bow in inventory
+
+
 // Shop
-// CPU $88E7
-// lda.w $066D
-// lda.w $0430,x	Load money cost in shop inventory and compares to your money. 
-// bcc 			branches RTS			Needs to be extandet to check decimal. 
-//
-// lda.w $0430,x	Loade money cost in shop inventory //cpu $88ef
+// cpu $88E7
+// lda $066D
+// lda $0430,x	Load money cost in shop inventory and compares to your money. 
+// bcc 		Branches RTS			Needs to be extandet to check decimal.
+// lda $0430,x	Load money cost in shop inventory //cpu $88ef
 
 // Item cost
-// $6ABA Base Table iteam Cost. Shop PRG $1863c
+// $6ABA Base Table item Cost. Shop PRG $1863C
 
 // Arrow ID Shop $72AC
 // $730C will run when buying item..
 
-// LDA $72A4,X   loade iteam ID to compare what to do with it           
-// TAX                      
-// TAY                      
-// JMP $E73A                
-
-
-// 999 rupee HUD update
-UpdateRupee:
-org $B8A0	// $178B0 - CPU $B8A0, PRG $178A0	
- //Original routine to loade HUD preset. You will find the preset format furter down
-	ldy.b #$3D			//Size off the preset is expanded to max $3D (default $2E)
-PreTableUpdater:	
-	lda.w $AC70,y
-	sta.w $0302,y
-	dey
-	bpl PreTableUpdater
-	// Update Values
-	lda.w $067B			// Load hundredths
-	beq setX			// If $00 store $62 (little x)
-	sta.w $031B	
-Load10th:		
-	lda.w $066D	// Load 10th
-	//and.b #$F0	// Cut upper 4bit
-	lsr		// Shift bits in place
-	lsr
-	lsr
-	lsr
-	sta.w $031C
-Load01th:
-	lda.w $066D	// Cut lower 4bit
-	beq setBlank	// Set Blank if 00 and 00
-	and.b #$0F
-	sta.w $031D
-	rts
-setX:
-	lda.b #$62
-	sta.w $031B
-	jmp Load10th
-setBlank:
-	lda.w $066D
-	beq return1
-	sta.w $031D
-return1:
-	rts
-	lda.b #$20
-	sta.w $031D
-	rts
+// LDA $72A4,X   Load iteam ID to compare what to do with it
+// TAX
+// TAY
+// JMP $E73A
 
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -93,137 +199,31 @@ return1:
 ////////////////////////////////////////////////////////////////////////////////////////
 
 // Hex 20B608 2424242424242424 20D608 2424242424242424 206C03210024 20AC03210024 20CC03210024 FF
-// Dec uuppss nnnnnnnnnnnnnnnn uuppss nnnnnnnnnnnnnnnn uuppssnnnnnn uuppssnnnnnn uuppssnnnnnn ff    
+// Dec uuppss nnnnnnnnnnnnnnnn uuppss nnnnnnnnnnnnnnnn uuppssnnnnnn uuppssnnnnnn uuppssnnnnnn FF    
 // Dec        HeartRowTop             HeartRowbot      rupee         key          bomb   	    (add two digit entry 208c022100)
 // uu - PPU page number high
 // pp - PPU page number low
 // ss - Length of data transfered
 // nn - Symbols for nametable
-// F - End of Table
+// FF - End of Table
 
-//$31C Rupees
-//$322	Keys
-//$328	Bombs
-//$32e	Arrows
+// $031C - Rupees
+// $0322 - Keys
+// $0328 - Bombs
+// $032E - Arrows
 
-
-// Table - Expanded for one Entry
-org $AC70	// $16C80
-	db $20,$B6,$08	// PPU transfer to $20D6
-	db $24,$24,$24,$24,$24,$24,$24,$24
-	db $20,$96,$08	// PPU transfer to $20B6
-	db $24,$24,$24,$24,$24,$24,$24,$24
-	db $20,$6C,$03	// PPU transfer to $206C
-	db {LOW_X},$00,$24	
-	db $20,$AC,$03	// PPU transfer to $20AC
-	db {LOW_X},$00,$24
-	db $20,$CC,$03	// PPU transfer to $20CC
-	db {LOW_X},$00,$24
-	db $20,$8C,$03	// PPU transfer to $208C
-	db {LOW_X},$00,$24,$FF
-
-
-//****************************************
-// Rupee to 999
-//****************************************
-
-bank 1;
-//Make rupee arrow counter
-org $A58C	// $0659C
-	lda.w $0677	// Select Arrow counter instead of rupee ($066D)
-	ldy.b #$2D	// Move offset of value updater to the second line (Default $0302,y $2C)
-
-//Make rupee counter decimal and extanded to 999. Also we need to count in hex too, since stores would make way more work otherwise
-org $A539	// $6549 ($37 byte)
-	//66D Rupee
-	//67D Add
-	//67E Substract
-	//67B Hundredths value
-	//67A Rupee dec
-	jmp $6C97   	//Jump to add rupee code and come back
-SubstactRupee:
-	lda.w $067E 	//Check if CounterBuffer is zero
-	cmp.b #$00
-	beq FrameCheck
-	ldx.w $066D	// Load rupee to X
-	dec.w $067E	// Decrease buffer
-	dex
-	jsr HextoDec
-	sta.w $066D	// Store decimal value	
-	lda.b #$10	// Sound 
-	sta.w $0604
-FrameCheck:
-	lda.b $15
-	lsr
-	bcs return2
-	jmp $6D08	// Jump over free newli avalible space
-return2:
-	rts  
-	fill $1A,$FF	// Until org $A570, PRG $6570
-	jsr $B8A0	// UpdateRupee
-
-// Free space
-//org $2513	//CPU 6CA3 ($1C byte)
-org $2507	// $6500, 0x06510
-AddingRupee:
-	lda.w $067D   	 	// Check if CounterBuffer is zero
-	cmp.b #$00
-	beq JumpSkipAdding
-	ldx.w $066D		// Load rupee value to X
-	dec.w $067D		// Decrease buffer
-	inx
-	jsr HextoDec		// Store decimal value
-	sta.w $066D	
-	lda.b #$10		// Sound
-	sta.w $0604
-JumpSkipAdding:   
-	jmp $6CCC		// Back to skip adding
-	fill $0D,$FF
-
-
-bank 5;		// Free space
-org $9352	// $15362, CPU 9352, PRG $15352
-HextoDec:
-	txa		// Load rupee
-	and.b #$0F	// Cut off Hhigh byte
-	cmp.b #$0F	// Check under $00
-	bcs sub10	
-	cmp.b #$0A	// Check if over $09
-	bcs add10
-	txa
-end1:
-	rts
-add10:
-	txa
-	clc
-	adc.b #$06
-	cmp.b #$A0		// Check $99 mark to add 100
-	beq addHundredths
-	rts
-sub10:
-	txa
-	sbc.b #$06
-	cmp.b #$F9		// Check $00 mark in loop sub 100
-	beq subHundredths
-	rts
-addHundredths:
-	lda.w $067B
-	clc 
-	adc.b #$01
-	cmp.b #$0A		// Max out if over 900 
-	beq maxout
-	sta.w $067B
-	lda.b #$00
-	sta.w $066D
-	rts
-subHundredths:
-	lda.w $067B
-	beq end1		// End if hundredths are $00
-	dec.w $067B
-	lda.b #$99
-	sta.w $066D
-	rts
-maxout:
-	lda.b #$99		// Add max value to decimal value
-	sta.w $066D
-	rts			// To-do: Take X and make it dec in A. Check for plus or minus and operate that wiht $067b. Also set limit!
+//--- !!! BELOW CODE IS INCLUDED IN RUPEE.ASM !!! ---\\\
+// Table preset - Expanded for one Entry
+//org $AC70	// PRG $16C70
+//	db $20,$B6,$08	// PPU transfer to $20D6
+//	db $24,$24,$24,$24,$24,$24,$24,$24
+//	db $20,$D6,$08	// PPU transfer to $20B6
+//	db $24,$24,$24,$24,$24,$24,$24,$24
+//	db $20,$6C,$03	// PPU transfer to $206C
+//	db {LOW_X},$00,$24	
+//	db $20,$AC,$03	// PPU transfer to $20AC
+//	db {LOW_X},$00,$24
+//	db $20,$CC,$03	// PPU transfer to $20CC
+//	db {LOW_X},$00,$24
+//	db $20,$8C,$03	// PPU transfer to $208C
+//	db {LOW_X},$00,$24,$FF

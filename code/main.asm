@@ -20,6 +20,7 @@ incsrc code/redux.asm		// Main ASM code for Redux
 incsrc code/bombs.asm		// Increase initial max bombs and upgrades to 10
 incsrc code/automap.asm		// Disassembly of the Automap Plus hack by snarfblam
 incsrc code/arrows.asm		// Arrow counter code by BogaaBogaa
+incsrc code/rupee.asm		// Rupee 999 counter code by BogaaBogaa
 incsrc code/move_maps.asm	// Change Hearts and Map positions in HUD
 
 //****************************************
@@ -55,4 +56,4 @@ incsrc code/tunic_colors.asm	// Make blue tunic more vivid
 
 // Optional?
 // One of the MMC conversions, either MMC3 or MMC5, or Optimum
-// This will make it possible to have animations in the game, and make a lot of free space for custom graphics and diagonal swing (maybe)
+// This will make it possible to have animations in the game, and make a lot of free space for custom graphics and diagonal swing graphics (maybe)
