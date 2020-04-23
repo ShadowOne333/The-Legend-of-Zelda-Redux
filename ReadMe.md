@@ -56,31 +56,31 @@ https://www.romhacking.net/forum/index.php?topic=29403.0
 * **[DONE]** Remove the 1 Rupee flashing, and make it green if possible
 * **[DONE]** Press the Select button to toggle the item selected for the B Button (to avoid pausing the game to select an item everytime)
 * **[DONE]** Change the duplicate bosses in Level 4 and 7 (Gleeok and Aquamentus) to Lanmola and Patra respectively.
+* **[DONE]** Have 999 rupees as the maximum amount, instead of 255. The rupee amount also needs to be saved in SRAM for when the game loads, so it starts with whatever amount you had last time (thanks to Bogaa for this feature!)
+* **[DONE]** Add a proper arrow item (arrows should only be purchased in shops, NOT as enemy drops), and an arrow counter (thanks to Bogaa for this feature!)
+* **[DONE]** Slight graphic changes to make certain sprites match their official artwork (Link now has his yellow hat line, some shield slight change, etc.). This won't be a graphic update of the game, as I still want to retain the original game's overall art design and aesthetic, but with sprites that better depict their official artwork designs.
 
 * Be able to kill the Pols Voice by playing the flute, and also with arrows to retain the original way of killing them
 * Flip the heart rows in the File Select Screen
-* Have 999 rupees as the maximum amount, instead of 255. The rupee amount also needs to be saved in SRAM for when the game loads, so it starts with whatever amount you had last time
 * Save the amount of hearts you last had if the game was saved manually, so when you load, you start with the same amount of life (this I'm not sure if it will be implemented in the end hack)
-* Slight graphic changes to make certain sprites match their official artwork (Link now has his yellow hat line, some shield slight change, etc.). This won't be a graphic update of the game, as I still want to retain the original game's overall art design and aesthetic, but with sprites that better depict their official artwork designs.
-* Add a proper arrow item (arrows should only be purchased in shops, NOT as enemy drops), and an arrow counter
 * Diagonal sword swing
 
 -------------------
 
 ## Optional patches:
 
-* Modify bomb upgrade amount to 05 per upgrade
-* Link's Awakening graphics patch
-* Unique bosses in each Dungeon/Level
-* Make each dungeon have its own unique colour palette (like in Modern Classic Edition)
+* Modify bomb upgrade amount to 05 per upgrade (Bomb Upgrades 5 instead of 10.ips)
+* Link's Awakening graphics patch (Link's Awakening GFX.ips)
+* Original NES graphics (Original NES GFX.ips)
+* Unique bosses in each Dungeon/Level (Rearranged Bosses.ips)
+* Make each dungeon have its own unique colour palette similar to Modern Classic Edition (Recoloured Dungeons.ips)
 
 -------------------
 
 ## Help needed for these points:
 
-* Add a proper arrow item (arrows should only be purchased in shops, NOT as enemy drops) so that arrows no longer take away rupees, but have their own counter; and an arrow counter
+* Modify the arrow item counter to max-out at 30 arrows with Wood Arrows, and once you obtain the Silver arrows, upgrade the amount to 60. Additionally, make all shops give out 30 arrows for 80 rupees
 * Diagonal sword swing
-* Have 999 rupees as the maximum amount, instead of 255. The rupee amount also needs to be saved in SRAM for when the game loads, so it starts with whatever amount you had last time
 * Pols Voice can be killed with the flute and/or an arrow
 * Flip the heart rows in the File Select Screen
 * Reimplementation of the warning screen from version PRG1 upon Game Over / Saving. I already implemented the whole text into it, and also repositioned the "Continue/Save/Retry" texts properly alongside their flashing. Only thing is that they are too far apart compared to the PSG1 version. What's desired here is to find a way to move the flashing and text to match that of PSG1

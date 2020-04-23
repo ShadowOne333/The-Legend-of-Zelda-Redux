@@ -42,6 +42,10 @@ incsrc code/tunic_colors.asm	// Make blue tunic more vivid
 // Uncomment the desired Optional patches
 //****************************************
 
+// Original NES Graphics
+// NOTE: This one can't be combined with the LA DX Graphics
+//incsrc code/optional/OriginalGFX.asm
+
 // Link's Awakening DX Graphics
 //incsrc code/optional/LinksAwakeningGFX.asm
 
