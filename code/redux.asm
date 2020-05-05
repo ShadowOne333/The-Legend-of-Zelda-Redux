@@ -123,11 +123,14 @@ bank 1; org $881C	// $482C
 
 bank 5;
 // (Changes Y position of the "Continue/Save/Retry text)
-org $8AE6	// $14AF6
-	db $17,$2F,$47	// Originally 4F 67 7F 
+org $8AE5	// $14AF5
+	db $50,$27,$37,$47	// Originally 4F 67 7F 
 // (Changes Y position of the red/white flashing when selecting an option)
-org $8AF1	// $14B01
-	db $C2,$CB,$D2	// Originally D2 DA E2
+org $8AEC	// 0x14AFC
+	db $20,$D2,$43
+	db $00,$FF,$CB,$CB,$D3
+//org $8AF1	// $14B01
+//	db $C2,$CB,$D2	// Originally D2 DA E2
 
 // This section still needs rework to match 1:1 the layout of the PRG1 version. Problem here is the flashing takes too much vertical space, hence why the text was moved so far apart from each other)
 
@@ -147,13 +150,13 @@ org $ACD0	// $1ACE0
 
 save_text:
 	db $23,$C0,$7F,$00	// PPU Transfer
-	db $20,$6C,$08	// PPU Transfer
-	db "CONTINUE"	// 0C 18 17 1D 12 17 1E 0E - CONTINUE
-	db $20,$CC,$04	// PPU Transfer
-	db "SAVE"	// 1C 0A 1F 0E - SAVE
-	db $21,$2C,$05	// PPU Transfer
-	db "RETRY"	// 1B 0E 1D 1B 22 - RETRY 
-	db $23,$D8,$20	// Text Box Tile attribute PPU transfer - Originally 23 D8 60 55
+	db $20,$AC,$08		// PPU Transfer (20 6C 08)
+	db "CONTINUE"		// 0C 18 17 1D 12 17 1E 0E - CONTINUE
+	db $20,$EC,$04		// PPU Transfer (20 CC 04)
+	db "SAVE"		// 1C 0A 1F 0E - SAVE
+	db $21,$2C,$05		// PPU Transfer
+	db "RETRY"		// 1B 0E 1D 1B 22 - RETRY 
+	db $23,$D8,$20		// Text Box Tile attribute PPU transfer - Originally 23 D8 60 55
 	db $FF,$5F,$5F,$5F,$5F,$5F,$5F,$FF
 	db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
 	db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
@@ -166,16 +169,41 @@ save_text:
 	db $23,$03,$01,$6E	// text
 	db $23,$04,$58,$6A	// ...
 	db $23,$1C,$01,$6D	// ...
-	db $21,$CC,$08	// PPU Transfer
-	db "CAUTION!"	// 0C 0A 1E 1D 12 18 17 - CAUTION
-	db $22,$05,$16	// PPU Transfer
+	db $21,$CC,$08		// PPU Transfer
+	db "CAUTION!"		// 0C 0A 1E 1D 12 18 17 - CAUTION
+	db $22,$05,$16		// PPU Transfer
 	db "TO AVOID DAMAGING GAME"	// 1D 18 24 0A 1F 18 12 0D 24 0D 0A 16 0A 10 12 17 10 24 10 0A 16 0E - TO AVOID DAMAGING GAME
-	db $22,$45,$16	// PPU Transfer
+	db $22,$45,$16		// PPU Transfer
 	db "SAVE DATA, HOLD IN THE"	// 12 17 0F 18 24 24 1C 0A 1F 0E 0D 28 24 24 11 18 15 0D 24 24 12 17 - INFO  SAVED,  HOLD  IN
-	db $22,$85,$16	// PPU Transfer
+	db $22,$85,$16		// PPU Transfer
 	db "RESET BUTTON WHILE YOU"	// 1B 0E 1C 0E 1D 24 24 0B 1E 1D 1D 18 17 24 24 0A 1C 24 24 22 18 1E - RESET  BUTTON  AS  YOU
-	db $22,$C5,$16	// PPU Transfer
+	db $22,$C5,$16		// PPU Transfer
 	db "TURN OFF THE POWER.   "	// 1D 1E 1B 17 24 19 18 20 0E 1B 24 18 0F 0F 63 - TURN POWER OFF.
+
+
+// Fix Game Over flashing text (by stratoform)
+bank 5;
+org $8B55	// 0x14B65
+	jsr gameover_flash_call
+	nop
+	sta.w $0305
+	rts
+
+org $BF40	// 0x17F50
+gameover_flash_call:
+	beq gameover_flash_done	// Old detour code
+
+	lda.b $13		// Get save option (0-2)
+	and.b #$03
+
+	tay			// Load correct palette
+	lda.w gameover_flash_attr,y
+
+gameover_flash_done:
+	rts
+
+gameover_flash_attr:
+	db $05,$50,$55
 
 
 //***********************************************************
@@ -338,6 +366,25 @@ altTile:
 //Fix overworld cracked walls collision:
 //org $????
 
+// Some information on collision tiles. The cracked dungeon tiles maybe work because they are hybrid (DE 58 | DE 59). Overworld tiles as we know are problem (54-57).
+
+
+//05:B06A: B9 54 B0  LDA $B054,Y @ $B058 = #$89  (overworld)
+//05:B06D: 9D 46 03  STA $0346,X @ $034A = #$89
+
+//05:B06A: B9 54 B0  LDA $B054,Y @ $B05D = #$78  (dungeon)
+//05:B06D: 9D 46 03  STA $0346,X @ $034A = #$78
+
+//5-byte mystery table (B054-B058, B059-B05D)
+//05:B070: C8        INY
+//05:B071: E8        INX
+//05:B072: E0 05     CPX #$05
+//05:B074: D0 F4     BNE $B06A
+//05:B076: 60        RTS -----------------------------------------
+
+//$07:F119: CD 4A 03  CMP $034A = #$89  ; collision tile (range check)
+//$07:F11C: 90 30     BCC $F14E         ; bcc = always walkable
+
 
 //***********************************************************
 //	Modify Ganon's palette to match artwork
@@ -379,14 +426,6 @@ org $E73D	// $1E74D
 
 
 //***********************************************************
-//	Add 999 rupee counter
-//***********************************************************
-
-// (PENDING!!!)
-// Code for converting the bytes/Hex to decimal seem to be at 66C5 and 66DE
-
-
-//***********************************************************
 // Reworked Save Selection screen, similar to Zelda 2 Redux
 //***********************************************************
 
@@ -402,7 +441,33 @@ org $E73D	// $1E74D
 //	Kill Pols Voice by using the flute and/or arrows
 //***********************************************************
 
-// (PENDING)
+// Code by Stratoform from RomHacking.net
+
+bank 4;
+org $9C36	// 0x11C46
+	jsr flute_pols_call
+
+org $BF30	// 0x13F40
+flute_pols_call:
+	jsr $79D0	// Detour code
+
+	lda.w $051B	// Flute (0) = Unused, exit
+	beq flute_pols_exit
+
+	lda.b $28,x	// Timer (0) = Start SFX
+	bne flute_pols_timer
+
+	lda.b #$44+$80-1   // Timer = x44 frames
+	sta.b $28,x
+	rts
+
+flute_pols_timer:
+	bmi flute_pols_exit	// Timer (x80+) = Playing SFX
+	// Timer (x7F) = done
+	jsr $FEA6	// Kill all pols
+
+flute_pols_exit:
+	rts
 
 
 //***********************************************************
