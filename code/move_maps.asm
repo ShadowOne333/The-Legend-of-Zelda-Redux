@@ -308,7 +308,7 @@ org $8380	// $18390
 bank 5;
 // Move HEARTS to the Left of the HUD
 org $AC70	// $16C80
-	db $20,$A2,$08	// PPU transfer to $20D6
+	db $20,$82,$08	// PPU transfer to $20D6
 	db $24,$24,$24,$24,$24,$24,$24,$24
-	db $20,$82,$08	// PPU transfer to $20B6
+	db $20,$A2,$08	// PPU transfer to $20B6
 	db $24,$24,$24,$24,$24,$24,$24,$24

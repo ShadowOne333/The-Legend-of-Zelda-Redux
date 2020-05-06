@@ -35,23 +35,19 @@ bank 6;
 org $A148	// $1A158
 	db $21,$09,$06	// Originally 21 0A 06
 
-// Flip heart rows in the File Select Screen:
-bank 2;
-// Move upper row of hearts next to the Death counter
-org $A268	// $0A278
-// Move lower row of hearts next to the Player's name
-	db $21,$32,$08,$00,$00,$00,$00,$00,$00,$00,$00,$FF	// Change to $21,$32,$08 to move that row of hearts above
 
-//Found the routines, now I just gotta figure out how to invert the heart printing
-//A4C6: B9 54 A2  LDA $A254,Y @ $A258 = #$24				// 0xA4D6
-//A254: 21 09 11 24 24 24 24 24 24 24 24 2F 00 00 00 00 00 00 00 00	// PPU Transfer for Name and Upper (starting) hearts (0xA264)
+// Flip heart rows in the File Select Screen AND in-game:
+bank 1;
+org $A70B	// 0x0671B
+	adc.b #$12	// Originally ADC #$07
+org $A718	// 0x06728
+	adc.b #$07	// Originally ADC #$12
 
-//A268: 21 32 08 00 00 00 00 00 00 00 00 FF 				// PPU Transfer for upper Hearts (0xA278)
-//         ^ Changing this to 21 12 08 positions the bottom hearts where desired.
-// 66F9 -> 6E79
-
-//A520: B9 74 A2  LDA $A274,Y @ $A278 = #$24				// 0xA530
-//A274: 21 89 03 24 24 01 21 E9 03 24 24 01 22 49 03 24 24 01 FF	// PPU Transfers for Death counter(s) (0xA284)
+bank 5;
+org $AC70	// 0x16C80
+	db $20,$82,$08	// Originally 20 A2 08
+org $AC7C	// 9x16C8C
+	db $20,$A2,$08
 
 
 // Change all of the "-" that use $62 as their Hex to $2F (to free up one tile)
@@ -122,21 +118,16 @@ bank 1; org $881C	// $482C
 //***********************************************************
 
 bank 5;
-// (Changes Y position of the "Continue/Save/Retry text)
+// Changes Y position of the "Continue/Save/Retry text
 org $8AE5	// $14AF5
 	db $50,$27,$37,$47	// Originally 4F 67 7F 
-// (Changes Y position of the red/white flashing when selecting an option)
+// Changes Y position of the red/white flashing when selecting an option to fit the new spacing
 org $8AEC	// 0x14AFC
-	db $20,$D2,$43
+	db $23,$D2,$43
 	db $00,$FF,$CB,$CB,$D3
-//org $8AF1	// $14B01
-//	db $C2,$CB,$D2	// Originally D2 DA E2
-
-// This section still needs rework to match 1:1 the layout of the PRG1 version. Problem here is the flashing takes too much vertical space, hence why the text was moved so far apart from each other)
 
 
 // New text imported into free space from the PRG1 version
-
 bank 6;
 // Pointer change
 org $A004	// $1A014
@@ -363,27 +354,38 @@ altTile:
 	lda $AC30,x	// Alternate secret tile codes table
 	rts
 
-//Fix overworld cracked walls collision:
-//org $????
 
-// Some information on collision tiles. The cracked dungeon tiles maybe work because they are hybrid (DE 58 | DE 59). Overworld tiles as we know are problem (54-57).
+//Fix overworld cracked walls collision (by stratoform):
+bank 7;
+org $F116	// 0x1F126
+	lda.b #$04	// Bank 04 (Dungeons)
+	jsr $FFAC	// Note that some paths use bank 01 later
+	jmp collision_tiles_call
 
+bank 4;
+org $BF10	// 0x13F20
+collision_tiles_call:
+	jsr $EDFA	// Old detour (Load tile #)
 
-//05:B06A: B9 54 B0  LDA $B054,Y @ $B058 = #$89  (overworld)
-//05:B06D: 9D 46 03  STA $0346,X @ $034A = #$89
+	cmp.b #$54	// $00-53 = Old detour code
+	bcc collision_tiles_normal
+	cmp.b #$58	// $54-57 = Secret tiles, solid
+	bcc collision_tiles_solid
 
-//05:B06A: B9 54 B0  LDA $B054,Y @ $B05D = #$78  (dungeon)
-//05:B06D: 9D 46 03  STA $0346,X @ $034A = #$78
+// Add more secret tile checks if needed
 
-//5-byte mystery table (B054-B058, B059-B05D)
-//05:B070: C8        INY
-//05:B071: E8        INX
-//05:B072: E0 05     CPX #$05
-//05:B074: D0 F4     BNE $B06A
-//05:B076: 60        RTS -----------------------------------------
+collision_tiles_normal:
+	cmp.w $034A	// Old range check
+	bcs collision_tiles_solid
 
-//$07:F119: CD 4A 03  CMP $034A = #$89  ; collision tile (range check)
-//$07:F11C: 90 30     BCC $F14E         ; bcc = always walkable
+	jmp $F14E	// Non-obstacle
+
+collision_tiles_solid:
+	jmp $F11E	// Solid tile
+
+// NOTE: 
+// If something other than Bank 04 needs to be restored,
+// check 8000-8003 and swap banks accordingly
 
 
 //***********************************************************
