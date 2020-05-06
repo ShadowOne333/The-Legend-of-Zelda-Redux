@@ -357,33 +357,60 @@ altTile:
 
 //Fix overworld cracked walls collision (by stratoform):
 bank 7;
+org $EEFD	// 0x1EF0D
+	lda.b #$04	// Bank 04 (Dungeons)
+	jsr $FFAC
+
+	jmp collision_hit_tiles_call
+
+
 org $F116	// 0x1F126
 	lda.b #$04	// Bank 04 (Dungeons)
-	jsr $FFAC	// Note that some paths use bank 01 later
+	jsr $FFAC
+
 	jmp collision_tiles_call
 
+
 bank 4;
-org $BF10	// 0x13F20
+org $BF00	// 0x13F10
 collision_tiles_call:
+	jsr collision_tiles_sub
+	bcs collision_tiles_exit2
+
+	jmp $F14E	// Non-obstacle
+
+collision_tiles_exit2:
+	jmp $F11E	// Obstacle
+
+collision_hit_tiles_call:
+	jsr collision_tiles_sub
+	bcs collision_hit_tiles_exit2
+
+	jmp $EF05	// Non-obstacle
+
+collision_hit_tiles_exit2:
+	jmp $EEE4	// Obstacle
+
+collision_tiles_sub:
 	jsr $EDFA	// Old detour (Load tile #)
 
 	cmp.b #$54	// $00-53 = Old detour code
 	bcc collision_tiles_normal
+
 	cmp.b #$58	// $54-57 = Secret tiles, solid
 	bcc collision_tiles_solid
 
-// Add more secret tile checks if needed
+	// Add more secret tile checks if needed
 
 collision_tiles_normal:
-	cmp.w $034A	// Old range check
-	bcs collision_tiles_solid
-
-	jmp $F14E	// Non-obstacle
+	cmp.w $034A	// Old detour (Range check)
+	rts
 
 collision_tiles_solid:
-	jmp $F11E	// Solid tile
+	sec		// Solid obstacle
+	rts
 
-// NOTE: 
+// NOTE:
 // If something other than Bank 04 needs to be restored,
 // check 8000-8003 and swap banks accordingly
 

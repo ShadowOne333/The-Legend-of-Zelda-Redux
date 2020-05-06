@@ -57,33 +57,23 @@ GiveWood:
 
 org $A423	// PRG $06423, PC 0x06433
 ShopArrow:			// $6B1C ID 02 at $7392. This ID is read and put into Y	
-	tya			// Load item ID from Y
-	cmp.b #$02		// Compare ID and end if not arrow
-	beq ArrowShop
-	sec
-	bcs EndArrowShop
-ArrowShop:	 
-	lda.w $0677
-	bmi ShopArrowOverflow
-	lda.b #$3C
-	adc.w $0677
-	sta.w $0677		// Give 60 arrows
+	cpy.b #$02		// Compare ID and end if not arrow
+	bne EndArrowShop
+	lda.w $0677		// Get arrow count
+	clc
+	adc.b #$1E		// Give 30 arrows
+	ldx.w $0659		// Get arrow type (1,2)
+	cmp.w ArrowShopMax,x
+	bcc ArrowShopStore
+	lda ArrowShopMax,x	// Limit arrows
+ArrowShopStore:
+	sta.w $0677
 EndArrowShop:	
 	lda.b #$40                 
 	sta.b $29 
 	rts
-ShopArrowOverflow:
-	lda.b #$3C
-	adc.w $0677
-	bpl MaxArrowShop
-	sta.w $0677		// Give 60 arrows
-	sec
-	bcs EndArrowShop
-MaxArrowShop:
-	lda.b #$FF
-	sta.w $0677
-	sec
-	bcs EndArrowShop
+ArrowShopMax:
+	db $0,$1E,$3C		// 0,30,60
 
 
 org $ABD1	// CPU $7361, PRG $06BD1, PC 0x06BE1
@@ -100,32 +90,27 @@ org $BFC0			// PRG $13FC0, CPU $0BFC0, PC 0x13FD0
 GiveArrowDrop:
 	lda $AC,x		// Check if the item is a arrow before it deletes.
 	cmp.b #$55
-	beq AddArrow
+	bne BackDeleting
+	txa
+	pha
+	lda.w $0677			// Get arrow count
+	clc
+	adc.b #$04			// Give 4 arrows
+	ldx.w $0659			// Get arrow type (1,2)
+	cmp.w ArrowDropMax,x
+	bcc ArrowDropStore
+	lda ArrowDropMax,x	// Limit arrows
+ArrowDropStore:
+	sta.w $0677
+	pla
+	tax
 BackDeleting:
 	lda.b #$FF
 	sta.b $AC,x
 	sta.b $84,x
 	rts
-AddArrow:
-	lda.w $0677
-	bmi CheckArrow		// Make it so BPL will detect overflow
-	lda.b #$04		// Amount of Arrow to give will overflow ($XX+1)
-	adc.w $0677
-	sta.w $0677
-	sec			// BackDeleting
-	bcs BackDeleting
-CheckArrow:
-	lda.b #$04		// Amount of Arrow to give will overflow ($XX+1)
-	adc.w $0677
-	bpl MaxArrow
-	sta.w $0677
-	sec			// BackDeleting
-	bcs BackDeleting
-MaxArrow:
-	lda.b #$FF
-	sta.w $0677
-	sec			// BackDeleting
-	bcs BackDeleting
+ArrowDropMax:
+	db $0,$1E,$3C		// 0,30,60
 
 
 // COPY OF ABOVE CODE
@@ -133,34 +118,30 @@ MaxArrow:
 bank 1;
 org $BFC0	// PRG $07FC0, CPU $0BFC0, 0x07FD0
 GiveArrowDrop:
-	lda.w $AC,x		// Check if the item is a arrow before it deletes.
+	lda $AC,x		// Check if the item is a arrow before it deletes.
 	cmp.b #$55
-	beq AddArrow
-BackDeleting:	
-	lda.b #$FF                 
-	sta.b $AC,x  
-	sta.b $84,x                
-	rts
-AddArrow:
-	lda.w $0677
-	bmi CheckArrow		// Make it so bpl will detect overflow
-	lda.b #$04		// Amount of Arrow to give will overflow ($XX+1)
-	adc.w $0677
+	bne BackDeleting
+	txa
+	pha
+	lda.w $0677		// Get arrow count
+	clc
+	adc.b #$05		// Give 4 arrows
+	ldx.w $0659		// Get arrow type (1,2)
+	cmp.w ArrowDropMax,x
+	bcc ArrowDropStore
+	lda ArrowDropMax,x	// Limit arrows
+ArrowDropStore:
 	sta.w $0677
-	sec			//BackDeleting
-	bcs BackDeleting
-CheckArrow:
-	lda.b #$04		// Amount of Arrow to give will overflow ($XX+1)
-	adc.w $0677
-	bpl MaxArrow
-	sta.w $0677
-	sec			// BackDeleting
-	bcs BackDeleting
-MaxArrow:
+	pla
+	tax
+BackDeleting:
 	lda.b #$FF
-	sta.w $0677
-	sec			// BackDeleting
-	bcs BackDeleting
+	sta.b $AC,x
+	sta.b $84,x
+	rts
+ArrowDropMax:
+	db $0,$1E,$3C		// 0,30,60
+
 
 ///////////////copy////////////////
 

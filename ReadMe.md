@@ -57,10 +57,11 @@ https://www.romhacking.net/forum/index.php?topic=29403.0
 * **[DONE]** Press the Select button to toggle the item selected for the B Button (to avoid pausing the game to select an item everytime)
 * **[DONE]** Change the duplicate bosses in Level 4 and 7 (Gleeok and Aquamentus) to Lanmola and Patra respectively.
 * **[DONE]** Have 999 rupees as the maximum amount, instead of 255. The rupee amount also needs to be saved in SRAM for when the game loads, so it starts with whatever amount you had last time (thanks to Bogaa for this feature!)
-* **[DONE]** Add a proper arrow item (arrows should only be purchased in shops, NOT as enemy drops), and an arrow counter (thanks to Bogaa for this feature!)
+* **[DONE]** Add a proper arrow enemy-drop item and an arrow counter (shops give 30 arrows when purchased), with the max arrow limit being 30 for normal Arrows, and 60 once you get the silver Arrows (thanks to Bogaa for the Arrow drop/counter code, and stratoform for the Max arrows limits!)
 * **[DONE]** Slight graphic changes to make certain sprites match their official artwork (Link now has his yellow hat line, some shield slight change, etc.). This won't be a graphic update of the game, as I still want to retain the original game's overall art design and aesthetic, but with sprites that better depict their official artwork designs.
 * **[DONE]** Be able to kill the Pols Voice by playing the flute, and also with arrows to retain the original way of killing them (Thanks to stratoform for this!)
 * **[DONE]** Flip the heart rows in the File Select Screen (Thanks again stratoform!)
+* **[DONE]** 
 
 * Save the amount of hearts you last had if the game was saved manually, so when you load, you start with the same amount of life (this I'm not sure if it will be implemented in the end hack)
 * Implementation of a Copy/Erase file system like in subsequent Zeldas, where D-Pad Up and Down control the cursor in the File Selection and pressing A brings up the Name screen (Example: ALttP)
@@ -81,7 +82,6 @@ https://www.romhacking.net/forum/index.php?topic=29403.0
 
 ## Help needed for these points:
 
-* Modify the arrow item counter to max-out at 30 arrows with Wood Arrows, and once you obtain the Silver arrows, upgrade the amount to 60. Additionally, make all shops give out 30 arrows for 80 rupees
 * Implementation of a Copy/Erase file system like in subsequent Zeldas, where D-Pad Up and Down control the cursor in the File Selection and pressing A brings up the Name screen (Example: ALttP)
 * Animated tiles for water (conversion to MMC5 for bank switch?)
 * Diagonal sword swing
@@ -108,7 +108,7 @@ If you want to apply any of the optional patches, you can use each Optional patc
 * **Trax** - For his amazing disassembly of Zelda 1, which helped with a ton of stuff, and also for a lot of feedback and help in the development of this hack.
 * **BogaaBogaa** - For his incredible help with the Arrows and 999 rupees code, and with flipping the Heart/Map positions in the HUD
 * **DarkSamus993** - For his ASM help towards some hacks (like the Select button Item switch)
-* **Stratoform** - For his help and code towards the Pols Voice flute code, fixing both the remaining stuff from porting the PRG1 Game Over screen's flashing and cracked overworld walls collision, and also the flip hearts code
+* **Stratoform** - For his help and code towards the Pols Voice flute code, fixing both the remaining stuff from porting the PRG1 Game Over screen's flashing and the cracked overworld walls collision, the flip hearts code and the max arrow limits
 * **snarfblam** - For the Automap hack, which was disassembled and modified to work with 1/4 hearts instead of 1/8 exclusively for this project
 * **gzip** - For his Select button fix and the slow waterfall animation
 * **lexluthermeister** - For his help on creating the Optional patch for the new bosses
