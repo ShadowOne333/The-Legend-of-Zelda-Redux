@@ -93,10 +93,10 @@ GiveArrowDrop:
 	bne BackDeleting
 	txa
 	pha
-	lda.w $0677			// Get arrow count
+	lda.w $0677		// Get arrow count
 	clc
-	adc.b #$04			// Give 4 arrows
-	ldx.w $0659			// Get arrow type (1,2)
+	adc.b #$05		// Give 5 arrows
+	ldx.w $0659		// Get arrow type (1,2)
 	cmp.w ArrowDropMax,x
 	bcc ArrowDropStore
 	lda ArrowDropMax,x	// Limit arrows
@@ -125,7 +125,7 @@ GiveArrowDrop:
 	pha
 	lda.w $0677		// Get arrow count
 	clc
-	adc.b #$05		// Give 4 arrows
+	adc.b #$05		// Give 5 arrows
 	ldx.w $0659		// Get arrow type (1,2)
 	cmp.w ArrowDropMax,x
 	bcc ArrowDropStore
