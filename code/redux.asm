@@ -222,10 +222,6 @@ org $A5DB	// $065EB
 
 // Dummy PPU transfer (not applied in-game, can be left without changing)
 org $A51D	// $652D - $16C96
-// 20 6C 03 62 00 24
-// 20 AC 03 62 00 24
-// 20 CC 03 62 00 24
-// 20 8C 03 62 00 24
 	db $20,$6C,$03,$59,$00,$24	// Originally 20 6C 03 21 00 24
 	db $20,$AC,$03,$59,$00,$24	// Originally 20 AC 03 21 00 24
 	db $20,$CC,$03,$59,$00,$24	// Originally 20 CC 03 21 00 24
