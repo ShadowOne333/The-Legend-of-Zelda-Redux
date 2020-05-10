@@ -2,6 +2,12 @@
 // Switch Life meter and Map in HUD
 //****************************************
 
+define	RUPEE	$F7
+define	ARROW	$65
+define	KEY	$F9
+define	BOMB	$61
+define	LOW_X	$62
+
 // WARNING: THIS HACK MODIFIES CODE FROM AUTOMAP
 // This hack NEEDS to be included/compiled AFTER automap.asm to work properly
 // To compile it properly, you need to have your main.asm hack like follows:
@@ -41,7 +47,7 @@ dungeon_attributes:
 	db $20,$91,$C2,$6C	// PPU Transfer for side lines of HUD rectangles
 	db $20,$92,$C2,$6C	// PPU Transfer for side lines of HUD rectangles
 	db $20,$94,$C2,$6C	// PPU Transfer for side lines of HUD rectangles
-	db $20,$6B,$84,{RUPEE},{ARROW},{KEY},{BOMB},$FF	// PPU Transfer for Rupee, (Empty), Key and Bomb icons in HUD (Jumps 0x20 in PPU per icon)
+	db $20,$6B,$84,{RUPEE},{KEY},{ARROW},{BOMB},$FF	// PPU Transfer for Rupee, (Empty), Key and Bomb icons in HUD (Jumps 0x20 in PPU per icon)
 	db $29,$84,$09		// PPU Transfer to $2984
 	db "INVENTORY"	// Tiles for "INVENTORY"
 	db $FF
@@ -62,7 +68,7 @@ overworld_attributes:
 	db $20,$91,$C2,$6C	// PPU Transfer for side lines of HUD rectangles
 	db $20,$92,$C2,$6C	// PPU Transfer for side lines of HUD rectangles
 	db $20,$94,$C2,$6C	// PPU Transfer for side lines of HUD rectangles
-	db $20,$6B,$84,{RUPEE},{ARROW},{KEY},{BOMB},$FF	// PPU Transfer for Rupee, (Empty), Key and Bomb icons in HUD (Jumps 0x20 in PPU per icon)
+	db $20,$6B,$84,{RUPEE},{KEY},{ARROW},{BOMB},$FF	// PPU Transfer for Rupee, (Empty), Key and Bomb icons in HUD (Jumps 0x20 in PPU per icon)
 	db $29,$84,$09		// PPU Transfer to $2984
 	db "INVENTORY"	// Tiles for "INVENTORY"
 	db $FF
@@ -301,9 +307,9 @@ org $8380	// $18390
 
 
 
-//**************
+//*************************************
 // Life meter
-//**************
+//*************************************
 
 bank 5;
 // Move HEARTS to the Left of the HUD
@@ -312,3 +318,8 @@ org $AC70	// $16C80
 	db $24,$24,$24,$24,$24,$24,$24,$24
 	db $20,$A2,$08	// PPU transfer to $20B6
 	db $24,$24,$24,$24,$24,$24,$24,$24
+// Reorganize Keys and Arrows in HUD
+	db $20,$6C,$03,$62,$00,$24	// Rupees
+	db $20,$8C,$03,$62,$64,$24	// Keys
+	db $20,$CC,$03,$62,$03,$00	// Bombs
+	db $20,$AC,$03,$62,$00,$24	// Arrows

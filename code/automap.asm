@@ -3,10 +3,10 @@
 //**************************************** 
 
 define	RUPEE	$F7
-define	ARROW	$65
+//define	ARROW	$65
 define	KEY	$F9
 define	BOMB	$61
-define	LOW_X	$62
+//define	LOW_X	$62
 
 bank 1;
 // Change the symbol for infinite keys from "A" to infinite symbol
@@ -401,9 +401,9 @@ subscreen_attributes:
 	db $20,$91,$C2,$6C	// PPU Transfer for side lines of HUD rectangles
 	db $20,$92,$C2,$6C	// PPU Transfer for side lines of HUD rectangles
 	db $20,$94,$C2,$6C	// PPU Transfer for side lines of HUD rectangles
-	db $20,$6B,$84,{RUPEE},{ARROW},{KEY},{BOMB},$FF	// PPU Transfer for Rupee, (Empty), Key and Bomb icons in HUD (Jumps 0x20 in PPU per icon)
+	db $20,$6B,$84,{RUPEE},$24,{KEY},{BOMB},$FF	// PPU Transfer for Rupee, (Empty), Key and Bomb icons in HUD (Jumps 0x20 in PPU per icon)
 	db $29,$84,$09		// PPU Transfer to $2984
-	db "INVENTORY"	// Tiles for "INVENTORY"
+	db "INVENTORY"		// Tiles for "INVENTORY"
 
 
 

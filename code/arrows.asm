@@ -21,16 +21,10 @@ db $22,$22,$23,$18,$22,$23,$22,$55,$22,$18	// H H F R H F H H H R    H60-R20-F20
 
 
 bank 1;
-//org $ACFB	// CPU $748B, PRG $06CFB  
-//	jsr $A423 		//  jsr ShopArrow, Near where it stores 01 to inventory
-//	STA $0657,y
-
-
 //Make rupee arrow counter
 org $A58C  	// PRG $0658C, PC 0x0659C
 	lda.w $0677		// Select Arrow counter instead of rupee ($066D)
 	ldy.b #$2D		// Move offset of value updater to the second line (default $302,y $2C)
-
 
 org $8926	// PRG $04926, PC 0x04936
 	jsr ShopArrow
@@ -110,7 +104,7 @@ BackDeleting:
 	sta.b $84,x
 	rts
 ArrowDropMax:
-	db $0,$1E,$3C		// 0,30,60
+	db $00,$1E,$3C		// 0,30,60
 
 
 // COPY OF ABOVE CODE
@@ -140,7 +134,7 @@ BackDeleting:
 	sta.b $84,x
 	rts
 ArrowDropMax:
-	db $0,$1E,$3C		// 0,30,60
+	db $00,$1E,$3C		// 0,30,60
 
 
 ///////////////copy////////////////
