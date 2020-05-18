@@ -140,9 +140,9 @@ text_17:
 //----------------------------------------
 
 text_18:
-	db "_YOU CAN'T USE ARROW", 'S'|{line_1}
+	db "__YOU CAN'T USE ARROW", 'S'|{line_1}
 	//db "_YOU RUN OUT OF MONEY",   '.'|{end}
-	db "____WITHOUT A BOW",   '.'|{end}
+	db "_____WITHOUT A BOW",   '.'|{end}
 
 //----------------------------------------
 
