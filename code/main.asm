@@ -10,6 +10,21 @@ banksize $4000		// set the size of each bank
 header			// rom has a header
 
 //****************************************
+//	iNES Header
+//****************************************
+//	db $4E,$45,$53,$1A	// Header (NES $1A)
+//	db 08			// 8 x 16k PRG banks
+//	db 00			// 0 x 8k CHR banks
+//	db %00010010		// Mirroring: Vertical
+	// SRAM: Not used
+	// 512k Trainer: Not used
+	// 4 Screen VRAM: Not used
+	// Mapper: 5
+//	db %00000000		// RomType: NES
+//	db $00,$00,$00,$00	// iNES Tail
+//	db $00,$00,$00,$00
+
+//****************************************
 // Redux changes
 //****************************************
 incsrc code/redux.asm		// Main ASM code for Redux
