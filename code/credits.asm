@@ -11,17 +11,36 @@ define	end	$FF  // end
 //****************************************
 // Credits text pointers
 //****************************************
+
+// The credits pointers are stored in a very odd way ($17 entries)
+// For the first entry in the credits, "STAFF" located at $AC5C (or 0xAC6C), the pointer is $AC5C.
+// The 2 byte pointers are separated into two different addresses. The lower bytes for each pointer begin at $AC2E (or 0xAC3E) with $5C. and the second/high byte of the pointers begin at $AC45 (or 0xAC55) with $AC. The two bytes combined form the pointer for the "STAFF" text. Code related to the credits begins at $AE13.
+
 bank 2;
-org $AC43  // $0AC53
-    db $D2, $E9  
-// Changes the pointers to both "THE LEGEND OF ZELDA" and the "(C)Nintendo 1986" texts
-// from $ADD1 to $ADD2 and from $ADEA to $ADE
+org $AE8A	// LDA for the pointer lower bytes
+	lda.w lower_bytes,y	// LDA $AC2E,Y
+org $AE8F	// LDA for the pointer lower bytes
+	lda.w upper_bytes,y	// LDA $AC45,Y
+
+// Pointer low byte for each entry
+org $AC2E	// 0xAC3E
+lower_bytes:
+	db $50,$59,$64,$7C,$A0,$B8,$C8,$E0
+	db $F8,$06,$14,$1B,$33,$4D,$59,$72
+	db $82,$92,$A1,$B6,$C9,$D2,$E9
+
+// Pointer high byte for each entry
+org $AC45	// 0xAE45
+upper_bytes:
+	db $AC,$AC,$AC,$AC,$AC,$AC,$AC,$AC,
+	db $AC,$AD,$AD,$AD,$AD,$AD,$AD,$AD
+	db $AD,$AD,$AD,$AD,$AD,$AD,$AD
 
 
 //****************************************
 // Credits and Post-credits text
 //****************************************
-org $AC5C  // $0AC6C
+org $B050	// 0xB060	// Originally $AC60 - 0x0AC70
 // Length, X Position, "Text"
     db $07, $0D, " STAFF "  //07 0D 24 1C 1D 0A 0F 0F 24
     db $09, $05, "EXECUTIVE"  //09 05 0E 21 0E 0C 1E 1D 12 1F 0E

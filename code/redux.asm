@@ -414,6 +414,13 @@ collision_tiles_solid:
 // If something other than Bank 04 needs to be restored,
 // check 8000-8003 and swap banks accordingly
 
+//----	Possible burnable tree tile?
+
+// PPU for the specific tiles that could be repurposed for Overworld/Dungeon use depending on area
+
+// $15A0, $15B0, $15C0, $15D0 (Up/Down Dungeon cracked walls)
+// Replacing these 4 tiles depending on whether we are on Overworld or Dungeon, could help create a custom tile for the burnable trees.
+
 
 //***********************************************************
 //	Modify Ganon's palette to match artwork

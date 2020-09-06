@@ -12,9 +12,9 @@ define	end	$FF  // end
 // Ending text pointers
 //****************************************
 bank 2;
-org $AB57	// $0AB67
+org $AB56	// $0AB67
 //This is an LDA $AB67,Y (B9 07 AB in Hex starting at $AB56)
-	dw end_text
+	lda.w end_text,y
 
 //----------------------------------------
 
