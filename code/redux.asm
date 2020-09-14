@@ -61,7 +61,9 @@ org $89F0	// $04A00 - Dash used for the Money-Making games
 
 bank 2;
 org $9DCD	// $09DDD - Elimination Mode Character detection
-	db $2F
+	db $2F,$2C	// Dash, Dot (Register Your Name input)
+org $9DD3	// $09DE3 - Elimination mode character detection
+	db $2E		// Question mark (Register Your Name input)
 org $A25F	// $0A26F - File Select File dashes
 	db $2F
 org $AD9D	// $0ADAD - 2nd Quest Ending dash
@@ -76,6 +78,10 @@ org $A127	// $1A137 - Second dash for "-SELECT-"
 	db $2F
 org $A1DE	// $1A1EE - Dash character for Register Name
 	db $2F
+org $A1E0	// $1A1F0 - Dot character for Register Name
+	db $2C
+org $A1EA	// $1A1FA - Change dot character for question mark in Register Name
+	db $2E
 org $A2A1 	// $1A2B1 - UNKNOWN - PPU transfer for something like "-100"?
 	db $2F
 org $A2A9	// $1A2B9 - UNKNOWN - PPU transfer for something like "-1     -5"?
@@ -309,7 +315,7 @@ org $A0C7	// $160D7
 
 
 
-// Overworld Walls:
+// Overworld Walls (Original):
 org $A976	// $16987 (Table for Secret Tiles Codes (6 bytes at $16986)
 	db $C8, $D8, $C4, $BC, $C0, $C0		// Originally $D8 - Bombable Wall	(D8 D9 DA DB)
 // C8	Pushable Rock	(C8 C9 CA CB)
@@ -324,7 +330,7 @@ org $A976	// $16987 (Table for Secret Tiles Codes (6 bytes at $16986)
 org $AAD0	// $16AE0
 	jsr $AC40	// Originally LDA $A976,X
 org $AC30	// $16C40
-	db $C8, $54, $C4, $BC, $C0, $C0	// Alternate secret tile codes table
+	db $C8, $54, $5A, $BC, $C0, $C0	// Alternate secret tile codes table
 // C8	Pushable Rock	(C8 C9 CA CB)
 // 54	Bombable Wall	(54 55 56 57)
 // C4	Burnable Tree	(C4 C5 C6 C7)
@@ -397,7 +403,9 @@ collision_tiles_sub:
 	cmp.b #$54	// $00-53 = Old detour code
 	bcc collision_tiles_normal
 
-	cmp.b #$58	// $54-57 = Secret tiles, solid
+	// cmp.b #$58 before the new burnable tree sprite.
+	// Changed to cmp.b #$60 so the dry tree sprite becomes solid.
+	cmp.b #$60	// $54-57 = Secret tiles, solid
 	bcc collision_tiles_solid
 
 	// Add more secret tile checks if needed
@@ -414,12 +422,77 @@ collision_tiles_solid:
 // If something other than Bank 04 needs to be restored,
 // check 8000-8003 and swap banks accordingly
 
-//----	Possible burnable tree tile?
 
+//----	Possible burnable tree tile?
+// $17930 is free space for this, up to 17C10
+
+// RAM $10 detects overworld or dungeon.
+// 00 = Overworld, 01 = Dungeon
 // PPU for the specific tiles that could be repurposed for Overworld/Dungeon use depending on area
 
-// $15A0, $15B0, $15C0, $15D0 (Up/Down Dungeon cracked walls)
+// PPU addresses correspond to the tiles we want to change: $15A0, $15B0, $15C0, $15D0 (Up/Down Dungeon cracked walls)
 // Replacing these 4 tiles depending on whether we are on Overworld or Dungeon, could help create a custom tile for the burnable trees.
+
+
+bank 3;	//PRG $C000, 0x0C010
+org $8051	// Hijack, originally JSR $8091
+	jsr TileTransfer
+org $8064	// Hijack, originally JSR $8080
+	jsr TileTransfer
+
+//Free Space
+org $ABE0 // 0x0EBF0
+TileTransfer:
+	lda.b #$15    	// Set DestPPU $15 upper byte
+	sta.w $2006   
+	lda.b #$A0	// Set DestPPU $A0 lower byte base
+	sta.w $2006
+
+	ldy.b #$40	// Tree sprite size
+	ldx.b #$00
+
+MapCheck:
+	lda.b $10	// Check if in Overworld = 00, or Dungeon = 01
+	bne WallLoad	// Load Dungeon Walls if in dungeon, else load dry tree
+
+TreeLoad:
+	lda.w BurnTree,x
+	sta.w $2007
+	inx
+	dey		// Image size to transfer
+	bne TreeLoad
+    
+	jsr $8091	// Fix Hijack
+	rts
+
+WallLoad:
+	lda.w DungeonWalls,x
+	sta.w $2007
+	inx		// Image offset
+	dey		// Image size to transfer
+	bne WallLoad
+
+	jsr $8080	// Fix Hijack
+	rts
+
+
+// Include the Burn (Dry) Tree data
+BurnTree:
+	incbin code/gfx/BurnTree.bin
+// Include the Cracked Up/Down Dungeon Walls
+DungeonWalls:
+	incbin code/gfx/DungeonWalls.bin
+
+
+//BurnTree: // This is the byte array of the image. To view it paste them as binary.
+//	db $00,$00,$64,$36,$5A,$37,$05,$11
+//	db $FF,$FF,$DD,$AE,$9A,$D7,$E5,$E1
+//	db $0B,$03,$03,$06,$06,$0E,$0B,$00
+//	db $F3,$FB,$FB,$FE,$F6,$FE,$EB,$C0
+//	db $00,$00,$00,$00,$80,$80,$A0,$A0
+//	db $FF,$FF,$BF,$1F,$9F,$9F,$BF,$BF
+//	db $44,$4A,$50,$F0,$40,$A0,$B0,$00
+//	db $5D,$59,$53,$F7,$4F,$A7,$B1,$03
 
 
 //***********************************************************

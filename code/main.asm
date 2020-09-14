@@ -25,6 +25,15 @@ header			// rom has a header
 	db $00,$00,$00,$00
 
 //****************************************
+// Mapper conversion
+//****************************************
+
+// Convert mapper from MMC1 to MMC3 or MMC5
+//incsrc code/MMC3.asm		// Convert Zelda 1 from MMC1 to MMC3
+
+// This will make it possible to have animations in the game, and make a lot of free space for custom graphics and diagonal swing graphics (maybe)
+
+//****************************************
 // Redux changes
 //****************************************
 incsrc code/redux.asm		// Main ASM code for Redux
@@ -32,6 +41,7 @@ incsrc code/redux.asm		// Main ASM code for Redux
 //****************************************
 // Gameplay changes
 //****************************************
+//incsrc code/file_select.asm	// File Select changes
 incsrc code/bombs.asm		// Increase initial max bombs and upgrades to 10
 incsrc code/automap.asm		// Disassembly of the Automap Plus hack by snarfblam
 incsrc code/arrows.asm		// Arrow counter code by BogaaBogaa
@@ -73,6 +83,4 @@ incsrc code/tunic_colors.asm	// Make blue tunic more vivid
 // Increase bomb upgrades from 4 to 5
 //incsrc code/optional/BombUpgrades5.asm
 
-// Optional?
-// One of the MMC conversions, either MMC3 or MMC5, or Optimum
-// This will make it possible to have animations in the game, and make a lot of free space for custom graphics and diagonal swing graphics (maybe)
+

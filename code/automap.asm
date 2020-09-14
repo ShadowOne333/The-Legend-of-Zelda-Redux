@@ -81,12 +81,12 @@ code_B044:	// B044:
 
 bank 5;
 org $85A0	// $145B0
-	lda.b $EB		// A5 EB
+	lda.b $EB	// A5 EB
 	and.b #$0F	// 29 0F
 	tax
 	lsr
 	pha
-	lda.b $EB		// A5 EB
+	lda.b $EB	// A5 EB
 	lsr
 	lsr
 	lsr
@@ -408,12 +408,12 @@ subscreen_attributes:
 
 
 bank 7;
-org $A4C1	// $1E4D1
+org $E4C1	// $1E4D1
 	jsr $9D70	// Jump to subroutine at $9D70 - Originally 20 80 A0 (JSR $A080)
-org $B322	// $1F332
+org $F322	// $1F332
 	jsr $FFD6	// Jump to subroutine at $FFD6 ($1FFE6 in PC) - Originally 20 E7 77 (JSR $77E7)
 
-org $BFC0	// $1FFD0
+org $FFC0	// $1FFD0 - Start of Unused Space
 	lda.b $10		// A5 10
 	bne code_FFD1		// D0 0D - BNE $FFD1
 	lda.b #$05	// A9 05

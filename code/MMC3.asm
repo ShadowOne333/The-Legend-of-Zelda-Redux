@@ -423,7 +423,7 @@ FFAC:
 	lda.b #$87
 	sta.w $8000
 	pla
-	sta.w $8001
+	sta.w $8001	// $FFC0 - Start of Unused space
 	rts
 FFC4:
 	sta.w $0302
