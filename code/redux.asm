@@ -115,8 +115,14 @@ bank 2; org $9EB0	// $09EC0
 //	Increase text printing speed
 //***********************************************************
 
-bank 1; org $881C	// $482C
+bank 1; 
+// Increase text print speed
+org $881C	// $482C
 	lda.b #$04	// Originally LDA $06
+
+// Skip SFX sound for spaces in text
+//org $884C
+//	cmp.b #$25	// Originally CMP #$25
 
 
 //***********************************************************
@@ -330,7 +336,7 @@ org $A976	// $16987 (Table for Secret Tiles Codes (6 bytes at $16986)
 org $AAD0	// $16AE0
 	jsr $AC40	// Originally LDA $A976,X
 org $AC30	// $16C40
-	db $C8, $54, $5A, $BC, $C0, $C0	// Alternate secret tile codes table
+	db $C8, $54, $58, $BC, $C0, $C0	// Alternate secret tile codes table
 // C8	Pushable Rock	(C8 C9 CA CB)
 // 54	Bombable Wall	(54 55 56 57)
 // C4	Burnable Tree	(C4 C5 C6 C7)
@@ -445,54 +451,43 @@ org $ABE0 // 0x0EBF0
 TileTransfer:
 	lda.b #$15    	// Set DestPPU $15 upper byte
 	sta.w $2006   
-	lda.b #$A0	// Set DestPPU $A0 lower byte base
+	lda.b #$40	// Set DestPPU $40 lower byte base
 	sta.w $2006
 
-	ldy.b #$40	// Tree sprite size
+	ldy.b #$C0	// Dungeon/Overworld assets size
 	ldx.b #$00
 
 MapCheck:
-	lda.b $10	// Check if in Overworld = 00, or Dungeon = 01
-	bne WallLoad	// Load Dungeon Walls if in dungeon, else load dry tree
+	lda.b $10		// Check if in Overworld = 00, or Dungeon = 01
+	bne DungeonGFXLoad	// Load Dungeon Walls if in dungeon, else load dry tree
 
-TreeLoad:
-	lda.w BurnTree,x
+OverworldGFXLoad:
+	lda.w OverworldAssets,x
 	sta.w $2007
 	inx
 	dey		// Image size to transfer
-	bne TreeLoad
+	bne OverworldGFXLoad
     
 	jsr $8091	// Fix Hijack
 	rts
 
-WallLoad:
-	lda.w DungeonWalls,x
+DungeonGFXLoad:
+	lda.w DungeonAssets,x
 	sta.w $2007
 	inx		// Image offset
 	dey		// Image size to transfer
-	bne WallLoad
+	bne DungeonGFXLoad
 
 	jsr $8080	// Fix Hijack
 	rts
 
 
-// Include the Burn (Dry) Tree data
-BurnTree:
-	incbin code/gfx/BurnTree.bin
-// Include the Cracked Up/Down Dungeon Walls
-DungeonWalls:
-	incbin code/gfx/DungeonWalls.bin
-
-
-//BurnTree: // This is the byte array of the image. To view it paste them as binary.
-//	db $00,$00,$64,$36,$5A,$37,$05,$11
-//	db $FF,$FF,$DD,$AE,$9A,$D7,$E5,$E1
-//	db $0B,$03,$03,$06,$06,$0E,$0B,$00
-//	db $F3,$FB,$FB,$FE,$F6,$FE,$EB,$C0
-//	db $00,$00,$00,$00,$80,$80,$A0,$A0
-//	db $FF,$FF,$BF,$1F,$9F,$9F,$BF,$BF
-//	db $44,$4A,$50,$F0,$40,$A0,$B0,$00
-//	db $5D,$59,$53,$F7,$4F,$A7,$B1,$03
+// Include the Burn Tree and Cracked Walls for Overworld data
+OverworldAssets:
+	incbin code/gfx/OverworldAssets.bin
+// Include the Cracked Up/Down Walls for Dungeons
+DungeonAssets:
+	incbin code/gfx/DungeonAssets.bin
 
 
 //***********************************************************
