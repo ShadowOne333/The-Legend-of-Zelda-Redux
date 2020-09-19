@@ -19,4 +19,6 @@
 // Increase bomb upgrades from 4 to 5
 //incsrc code/optional/BombUpgrades5.asm
 
-
+// Hide back all of the secrets like in vanilla Zelda
+// This means no cracked walls nor discearnible burnable trees
+//incsrc code/optional/OriginalHiddenSecrets.asm
