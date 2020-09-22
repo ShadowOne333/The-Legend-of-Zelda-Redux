@@ -35,7 +35,7 @@ org $A07E	// $1A08E
 org $A2CD	// $1A2DD
 dungeon_attributes:
 	db $23,$C0,$10		// PPU Transfer $23C0
-	db $44,$55,$55,$00,$00,$00,$00,$40	// Attribute table for HUD
+	db $44,$55,$55,$00,$00,$00,$00,$00	// Attribute table for HUD
 	db $44,$55,$05,$00,$00,$00,$00,$04	// Attribute table for HUD
 // Move LIFE text to the left side of the HUD
 	db $20,$63,$12		// PPU Transfer to $206F
@@ -172,8 +172,8 @@ org $835F	// $1836F
 
 // LEVEL-X text
 org $9D04	// $19D14
-	db $20,$56,$07
-	db "LEVEL-0"
+	db $20,$56,$09	// Originally $20,$56,$07
+	db "DUNGEON-"	// Originally "LEVEL-0"
 	db $FF
 
 // 1ST QUEST \\
@@ -312,6 +312,10 @@ org $8380	// $18390
 //*************************************
 
 bank 5;
+// Move Dungeon numeral two tiles to the right (DUNGEON-X)
+org $B02F // 0x1703F
+    sta $6827	// Originally STA $6825
+
 // Move HEARTS to the Left of the HUD
 org $AC70	// $16C80
 	db $20,$82,$08	// PPU transfer to $20D6

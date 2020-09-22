@@ -1,8 +1,54 @@
 //****************************************
-// Title screen palette changes
+// Title screen changes
 //****************************************
 
+//****************************************
+// Hyrule Fantasy subtitle tiles
+//****************************************
+
+bank 6;
+// Tiles
+org $AA15	// 0x1AA25
+	db $E2,$24,$24,$5D,$54,$56,$58,$5A,$5C,$C2,$C3	// Originally E2 24 24 24 24 24 24 24 C1 C2 C3
+	db $C4,$C5,$55,$57,$59,$5B,$5D,$24,$24,$24,$E3	// Originally C4 C5 24 24 24 24 24 24 24 24 E3
+// Attribute table
+org $AC9F	// 0x1ACAF
+	db $6E,$5F,$57,$5D,$DF,$BB	// Originally 6E 5F 55 5D DF BB
+
 bank 2;
+// Attribute table
+org $9500	// 0x0x9510
+	db $12		// Originally 22
+org $9510	// 0x0x9520
+	db $12		// Originally 22
+org $9978	// 0x0x9988
+	db $12		// Originally 22
+org $9988	// 0x0x9998
+	db $12		// Originally 22
+org $9998	// 0x0x99A8
+	db $12		// Originally 22
+org $99A8	// 0x0x99B8
+	db $12		// Originally 22
+org $99B8	// 0x0x99C8
+	db $12		// Originally 22
+org $99C8	// 0x0x99D8
+	db $12		// Originally 22
+org $99D8	// 0x0x99E8
+	db $12		// Originally 22
+org $99E8	// 0x0x99F8
+	db $12		// Originally 22
+org $99F8	// 0x0x9A08
+	db $12		// Originally 22
+org $9A08	// 0x0x9A18
+	db $12		// Originally 22
+org $9A18	// 0x0x9A28
+	db $12		// Originally 22
+org $9A28	// 0x0x9A38
+	db $12		// Originally 22
+org $9A38	// 0x0x9A48
+	db $12		// Originally 22
+org $9A48	// 0x0x9A58
+	db $12		// Originally 22
 
 //****************************************
 // Waterfall slow animation
