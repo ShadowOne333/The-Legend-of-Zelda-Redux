@@ -17,7 +17,7 @@ org $811B	// $0C12B-$0D12A
 	incbin code/optional/la_gfx/la_gfx02a.bin
 	incbin code/optional/la_gfx/la_gfx02b.bin
 // NPC and enemy sprites
-org $911B	// $0D12B-$0EBEF
+org $915B	// $0D12B-$0EBEF
 	incbin code/optional/la_gfx/la_gfx03a.bin
 	incbin code/optional/la_gfx/la_gfx03b.bin
 	incbin code/optional/la_gfx/la_gfx03c.bin
@@ -28,6 +28,6 @@ org $911B	// $0D12B-$0EBEF
 	incbin code/optional/la_gfx/la_gfx03h.bin
 // Overworld Cracked Walls and Burnable Tree
 org $AC10	// 0x0EC20
-	incbin /code/optional/la_gfx/OverworldAssets.bin
+	incbin code/optional/la_gfx/OverworldAssets.bin
 // Dungeons Cracked Walls
-	incbin /code/optional/la_gfx/DungeonAssets.bin
+	incbin code/optional/la_gfx/DungeonAssets.bin

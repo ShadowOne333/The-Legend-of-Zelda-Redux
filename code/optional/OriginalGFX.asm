@@ -17,7 +17,7 @@ org $811B	// $0C12B-$0D12A
 	incbin code/optional/original_gfx/originalGFX_02a.bin
 	incbin code/optional/original_gfx/originalGFX_02b.bin
 // NPC and enemy sprites
-org $911B	// $0D12B-$0EBEF
+org $915B	// $0D12B-$0EBEF
 	incbin code/optional/original_gfx/originalGFX_03a.bin
 	incbin code/optional/original_gfx/originalGFX_03b.bin
 	incbin code/optional/original_gfx/originalGFX_03c.bin
@@ -28,9 +28,9 @@ org $911B	// $0D12B-$0EBEF
 	incbin code/optional/original_gfx/originalGFX_03h.bin
 // Overworld Cracked Walls and Burnable Tree
 org $AC10	// 0x0EC20
-	incbin /code/optional/original_gfx/OverworldAssets.bin
+	incbin code/optional/original_gfx/OverworldAssets.bin
 // Dungeons Cracked Walls
-	incbin /code/optional/original_gfx/DungeonAssets.bin
+	incbin code/optional/original_gfx/DungeonAssets.bin
 
 // Restore Ganon's original palette
 bank 6;
