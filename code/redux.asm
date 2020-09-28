@@ -481,7 +481,7 @@ DungeonGFXLoad:
 	jsr $8080	// Fix Hijack
 	rts
 
-
+org $AC10	// 0x0EC20
 // Include the Burn Tree and Cracked Walls for Overworld data
 OverworldAssets:
 	incbin code/gfx/OverworldAssets.bin

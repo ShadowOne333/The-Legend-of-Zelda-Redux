@@ -111,8 +111,9 @@ If you want to apply any of the optional patches, you can use each Optional patc
 * **Stratoform** - For his help and code towards the Pols Voice flute code, fixing both the remaining stuff from porting the PRG1 Game Over screen's flashing and the cracked overworld walls collision, the flip hearts code and the max arrow limits
 * **snarfblam** - For the Automap hack, which was disassembled and modified to work with 1/4 hearts instead of 1/8 exclusively for this project
 * **gzip** - For his Select button fix and the slow waterfall animation
+* **abw** - For the code cleanup and optimization on Bank 6 that made the repointing of the "LEVEL-X" text possible
 * **lexluthermeister** - For his help on creating the Optional patch for the new bosses
-* All other users that gave their feedback on possible ways to improve the game over the thread, and those that gave insightful ideas.
+* All other users that gave their feedback on possible ways to improve the game over at the [RomHacking.net](https://www.romhacking.net/forum/index.php?topic=29403.0) thread, and those that gave insightful ideas and mockups!
 
 -------------------
 

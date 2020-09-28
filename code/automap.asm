@@ -414,15 +414,15 @@ org $F322	// $1F332
 	jsr $FFD6	// Jump to subroutine at $FFD6 ($1FFE6 in PC) - Originally 20 E7 77 (JSR $77E7)
 
 org $FFC0	// $1FFD0 - Start of Unused Space
-	lda.b $10		// A5 10
-	bne code_FFD1		// D0 0D - BNE $FFD1
+	lda.b $10	// A5 10
+	bne code_FFD1	// D0 0D - BNE $FFD1
 	lda.b #$05	// A9 05
 	jsr $FFAC	// 20 AC FF
 	jsr $BC66	// 20 66 BC
 	lda.b #$06	// A9 06
 	jsr $FFAC	// 20 AC FF
 code_FFD1:	// $1FFE1
-	inc.b $11		// E6 11 
+	inc.b $11	// E6 11 
 	rts
 org $FFD6	// $1FFE6
 	pha

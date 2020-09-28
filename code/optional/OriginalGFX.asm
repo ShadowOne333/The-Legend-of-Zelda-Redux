@@ -4,14 +4,35 @@
 
 bank 1; org $8DB4	// $04DC4-$06003
 // Title screen and Intro graphics
-	incbin code/optional/originalGFX_00.bin
+	incbin code/optional/original_gfx/originalGFX_00a.bin
+	incbin code/optional/original_gfx/originalGFX_00b.bin
 bank 2; org $807F	// $0808F-$0900F
 // Link, items, HUD and Font sprites 
-	incbin code/optional/originalGFX_01.bin
+	incbin code/optional/original_gfx/originalGFX_01a.bin
+	incbin code/optional/original_gfx/originalGFX_01b.bin
+	incbin code/optional/original_gfx/originalGFX_01c.bin
 bank 3; 
 // Dungeon and overworld tiles
 org $811B	// $0C12B-$0D12A
-	incbin code/optional/originalGFX_02.bin
+	incbin code/optional/original_gfx/originalGFX_02a.bin
+	incbin code/optional/original_gfx/originalGFX_02b.bin
 // NPC and enemy sprites
-org $911B	// $0D12B-$0F12B
-	incbin code/optional/originalGFX_03.bin
+org $911B	// $0D12B-$0EBEF
+	incbin code/optional/original_gfx/originalGFX_03a.bin
+	incbin code/optional/original_gfx/originalGFX_03b.bin
+	incbin code/optional/original_gfx/originalGFX_03c.bin
+	incbin code/optional/original_gfx/originalGFX_03d.bin
+	incbin code/optional/original_gfx/originalGFX_03e.bin
+	incbin code/optional/original_gfx/originalGFX_03f.bin
+	incbin code/optional/original_gfx/originalGFX_03g.bin
+	incbin code/optional/original_gfx/originalGFX_03h.bin
+// Overworld Cracked Walls and Burnable Tree
+org $AC10	// 0x0EC20
+	incbin /code/optional/original_gfx/OverworldAssets.bin
+// Dungeons Cracked Walls
+	incbin /code/optional/original_gfx/DungeonAssets.bin
+
+// Restore Ganon's original palette
+bank 6;
+org $A205
+	db $0F,$16,$2C,$3C
