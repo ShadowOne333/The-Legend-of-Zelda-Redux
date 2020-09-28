@@ -103,7 +103,7 @@ org $A2F4	// $1A304 - Second dash for "-LIFE-'
 bank 6; org $9CEB	// $19CFB
 	db $0F,$29,$27,$17	// Black, green, beige, brown
 	db $0F,$22,$27,$17	// Black, blue, beige, brown
-	db $0F,$26,$27,$17	// Black, red, beige, brown
+	db $0F,$16,$27,$17	// Black, red, beige, brown
 
 
 // Change palette for the Inner Heart in Elimination Mode

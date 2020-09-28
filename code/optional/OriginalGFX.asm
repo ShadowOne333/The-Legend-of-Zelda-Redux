@@ -17,7 +17,7 @@ org $811B	// $0C12B-$0D12A
 	incbin code/optional/original_gfx/originalGFX_02a.bin
 	incbin code/optional/original_gfx/originalGFX_02b.bin
 // NPC and enemy sprites
-org $915B	// $0D12B-$0EBEF
+org $915B	// $0D16B-$0EBEF
 	incbin code/optional/original_gfx/originalGFX_03a.bin
 	incbin code/optional/original_gfx/originalGFX_03b.bin
 	incbin code/optional/original_gfx/originalGFX_03c.bin
