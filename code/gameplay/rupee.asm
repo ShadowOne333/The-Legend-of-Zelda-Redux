@@ -1,6 +1,6 @@
-//****************************************
-// 999 Rupee counter
-//****************************************
+//***********************************************************
+//		999 Rupee counter
+//***********************************************************
 
 // 999 Rupee HUD update. We will use an extanded HUD since 
 // we would need to be rearranged and mad compatible with arrows patch
@@ -12,10 +12,11 @@ define	KEY	$F9
 define	BOMB	$61
 define	LOW_X	$62
 
+//------------------------------------
 
 bank 5;
 // Table preset - Expanded for one Entry
-org $AC70	// $16C80
+org $AC70	// 0x16C80
 	db $20,$B6,$08	// PPU transfer to $20D6
 	db $24,$24,$24,$24,$24,$24,$24,$24
 	db $20,$96,$08	// PPU transfer to $20B6
@@ -91,7 +92,7 @@ org $A58C	// PRG $0658C, PC 0x0659C
 // $067A - Rupee dec
 // $0679 - Rupee hex hundredths
 
-org $A539	// CPU $6CC9 ($37 byte), PC 0x06549
+org $A539	// 0x06549
 // Do another jump and do the hex counter first and reset buffer
 	jmp $6C97		// Jump add rupee code and come back
 Substrrupee:
@@ -118,7 +119,7 @@ EndFrameCheck:
 	
 
 // Free space
-org $A507 		//CPU $6C97, PRG $6507, PC 0x06517
+org $A507	// CPU $6C97, 0x06517
 AddingRupee:
 	lda.w $067D		// Check if CounterBuffer is zero
 	cmp.b #$00
@@ -137,7 +138,7 @@ JumpSkipAdding:
 
 
 bank 5;		// Free space
-org $9352	// CPU $9352, PRG $15352, PC 0x15362
+org $9352	// CPU $9352, 0x15362
 HextoDec:
 	txa			// Load rupee
 	and.b #$0F		// Cut off Hhigh byte
@@ -187,7 +188,7 @@ maxout:
 	rts			// To do take X and make it dec in A. Check for plus or minus and operate that wiht $067B. Also set limit!
 
 GenerateHexValue:
-// True table at $B900, PRG $17900
+// True table at $B900, PRG $17900, PC 0x17910
 // Table for 100th place, then add extra bit
 	lda.w $067A		// Load 10
 	and.b #$0F		// Take lower bit

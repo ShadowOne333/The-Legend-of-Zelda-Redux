@@ -2,22 +2,22 @@
 //	Link's Awakening DX Graphics
 //***********************************************************
 
-bank 1; org $8DB4	// $04DC4-$06003
+bank 1; org $8DB4	// 0x04DC4-0x06003
 // Title screen and Intro graphics
 	incbin code/optional/la_gfx/la_gfx00a.bin
 	incbin code/optional/la_gfx/la_gfx00b.bin
-bank 2; org $807F	// $0808F-$0900F
+bank 2; org $807F	// 0x0808F-0x0900F
 // Link, items, HUD and Font sprites 
 	incbin code/optional/la_gfx/la_gfx01a.bin
 	incbin code/optional/la_gfx/la_gfx01b.bin
 	incbin code/optional/la_gfx/la_gfx01c.bin
 bank 3; 
 // Dungeon and overworld tiles
-org $811B	// $0C12B-$0D12A
+org $811B	// 0x0C12B-0x0D12A
 	incbin code/optional/la_gfx/la_gfx02a.bin
 	incbin code/optional/la_gfx/la_gfx02b.bin
 // NPC and enemy sprites
-org $915B	// $0D16B-$0EBEF
+org $915B	// 0x0D16B-0x0EBEF
 	incbin code/optional/la_gfx/la_gfx03a.bin
 	incbin code/optional/la_gfx/la_gfx03b.bin
 	incbin code/optional/la_gfx/la_gfx03c.bin
@@ -58,7 +58,7 @@ org $9BEF	// 0x19BFF
 	db $0F,$29,$27,$07	// Black, green, beige, brown
 
 // Change palette of Link on File Select screen
-org $9CEB	// $19CFB
+org $9CEB	// 0x19CFB
 	db $0F,$29,$27,$07	// Black, green, beige, brown
 	db $0F,$22,$27,$07	// Black, blue, beige, brown
 	db $0F,$16,$27,$07	// Black, red, beige, brown

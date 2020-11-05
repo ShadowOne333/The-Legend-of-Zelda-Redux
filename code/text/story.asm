@@ -1,92 +1,77 @@
-//****************************************
-// Table file
-//****************************************
-table code/text.tbl,ltr
+//***********************************************************
+//	Zelda 1 Intro Story Text
+//***********************************************************
 
 //****************************************
-// Control codes
+//	Table file
+//****************************************
+table code/text/text.tbl,ltr
+
+//****************************************
+//	Control codes
 //****************************************
 define	end	$FF  // end
 
-//****************************************
-// Ending text pointers
-//****************************************
-bank 2;
-org $AB56	// $0AB67
-//This is an LDA $AB67,Y (B9 07 AB in Hex starting at $AB56)
-	lda.w end_text,y
-
-//----------------------------------------
-
-org $AB07	// $AB17
-end_text:
-	db " AND SO,"			//24 0A 17 0D 24 1C 18 28
-	db "PEACE RETURNS TO HYRULE."	//19 0E 0A 0C 0E 24 1B 0E 1D 1E 1B 17 1C 24 1D 18 24 11 22 1B 1E 15 0E 2C
-	db "      THE END.  "		//24 24 24 24 24 24 1D 11 0E 24 0E 17 0D 2C 24 24
-	db "    ",{end}	   		//24 24 24 24 FF
-
-//----------------------------------------
-
-//****************************************
-// Introduction Text
-//****************************************
+//***********************************************************
+//	Introduction Text
+//***********************************************************
 bank 6; 
-org $A48F	// $1A49F
+org $A48F	// 0x1A49F
 	db "#<# THE LEGEND OF ZELDA #<>#"
-org $A4FA	// $1A50A
+org $A4FA	// 0x1A50A
 	db "LONG AGO, GANON, PRINCE  "
-org $A540	// $1A550
+org $A540	// 0x1A550
 	db "OF DARKNESS, STOLE THE   "
-org $A586	// $1A596
+org $A586	// 0x1A596
 	db "TRIFORCE OF POWER.       "
-org $A5CC	// $1A5DC
+org $A5CC	// 0x1A5DC
 	db "PRINCESS ZELDA OF HYRULE "
-org $A612	// $1A622
+org $A612	// 0x1A622
 	db "BROKE THE TRIFORCE OF    "
-org $A658	// $1A668
+org $A658	// 0x1A668
 	db "WISDOM INTO 8 PIECES AND "
-org $A69E	// $1A6AE
+org $A69E	// 0x1A6AE
 	db "HID THEM FROM GANON      "
-org $A6E4	// $1A6F4
+org $A6E4	// 0x1A6F4
 	db "BEFORE SHE WAS KIDNAPPED "
-org $A72A	// $1A73A
+org $A72A	// 0x1A73A
 	db "BY HIS MINIONS.          "
-org $A770	// $1A780
+org $A770	// 0x1A780
 	db " LINK, FIND THE 8 PIECES "
-org $A7B6	// $1A7C6
+org $A7B6	// 0x1A7C6
 	db "    AND RESCUE ZELDA.    "
 
 // Empty spaces to clean up the quotation marks from the Story text
-org $A4D6	// $1A4E6
+org $A4D6	// 0x1A4E6
 	db "                          "
-org $A51C	// $1A52C
+org $A51C	// 0x1A52C
 	db "                          "
-org $A562	// $1A572
+org $A562	// 0x1A572
 	db "                          "
-org $A5A8	// $1A5B8
+org $A5A8	// 0x1A5B8
 	db "                          "
-org $A5EE	// $1A5FE
+org $A5EE	// 0x1A5FE
 	db "                          "
-org $A634	// $1A644
+org $A634	// 0x1A644
 	db "                          "
-org $A67A	// $1A68A
+org $A67A	// 0x1A68A
 	db "                          "
-org $A6C0	// $1A6D0
+org $A6C0	// 0x1A6D0
 	db "                          "
-org $A706	// $1A716
+org $A706	// 0x1A716
 	db "                          "
-org $A74C	// $1A75C
+org $A74C	// 0x1A75C
 	db "                          "
-org $A792	// $1A7A2
+org $A792	// 0x1A7A2
 	db "                          "
-org $A7D8	// $1A7E8
+org $A7D8	// 0x1A7E8
 	db "                          "
 
-//****************************************
-// Introduction Text Attribute Table
-//****************************************
+//***********************************************************
+//	Introduction Text Attribute Table
+//***********************************************************
 
-org $A818  // $1A828
+org $A818	// 0x1A828
 	db $23, $C0, $20	// PPU transfer
 	db $FF, $FF, $00, $00, $00, $00, $FF, $FF  // THE LEGEND OF ZELDA
 	db $FF, $0B, $0A, $8A, $AA, $0A, $0E, $FF  // Long ago, Ganon, Prince of Darkness, stole the
@@ -107,18 +92,19 @@ org $A818  // $1A828
 
 	db $FF
 
-//****************************************
-// Remove Automap text from title screen
-//****************************************
+//***********************************************************
+//	Remove Automap text from title screen
+//***********************************************************
 
-org $A8B4  // $1A8C4
+org $A8B4	// 0x1A8C4
 	db "                     "
 
-//****************************************
-// Treasures text pointers
-//****************************************
+//***********************************************************
+//	Treasures text pointers
+//***********************************************************
 
-bank 2; org $94AD  // $094BD
+bank 2; 
+org $94AD	// 0x094BD
 	dw treasure_00, treasure_01, treasure_02, treasure_03
 	dw treasure_04, treasure_05, treasure_06, treasure_07
 	dw treasure_08, treasure_09, treasure_10, treasure_11
@@ -128,15 +114,16 @@ bank 2; org $94AD  // $094BD
 	dw treasure_24, treasure_25, treasure_26, treasure_27
 	dw treasure_28
 
-//****************************************
-// Dialogue
-//****************************************
+//***********************************************************
+//	Treasure List
+//***********************************************************
 
-org $929A	// $092AA
-
+org $929A	// 0x092AA
+//----------------------------------------
 treasure_00:
 	// X Position, "Text"
-	db $00, "><><># LIST OF TREASURES #<><><>",{end}
+	//db $00, "><><># LIST OF TREASURES #<><><>",{end}
+	db $00, "><><><># LIST OF ITEMS #<><><><>",{end}
 //00 E5 E4 E5 E4 E5 E6 24 15 12 1C 1D 24 18 0F 24 1D 1B 0E 0A 1C 1E 1B 0E 1C 24 E6 E4 E5 E4 E5 E4 E5 FF
 //----------------------------------------
 treasure_01:
@@ -251,3 +238,5 @@ treasure_28:
 	db $0C, "TRIFORCE",{end}
 //0C 1D 1B 12 0F 18 1B 0C 0E FF
 //----------------------------------------
+
+

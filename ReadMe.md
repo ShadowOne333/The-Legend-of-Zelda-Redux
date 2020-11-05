@@ -23,7 +23,7 @@
 
 ## The Legend of Zelda Redux
 
-Continuing over from the Zelda II Redux hack, The Legend of Zelda Redux aims to tackle some of the odd design and programming decisions from the original NES classic to revitalize and give new life to the beloved and cherish classic.
+Continuing over from the Zelda II Redux hack, The Legend of Zelda Redux aims to tackle some of the odd design and programming decisions from the original NES classic to revitalize and give new life to the beloved and cherished classic.
 
 This hack tries to address a lot of points to make the game fit with the rest of the series (and Zelda 2 Redux) by doing some rebalancing and QoL changes, and also some visual flare into the game, without compromising the original game's design. Be sure to check the full Changelog inside the ReadMe file for the full list of changes made to this hack, and also don't forget to check the optional patches too!
 

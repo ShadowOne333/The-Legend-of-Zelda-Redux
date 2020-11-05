@@ -1,7 +1,7 @@
-//*******************************************************************
+//*****************************************************************
 // 	Optional patches
 // Uncomment the desired Optional patches
-//*******************************************************************
+//*****************************************************************
 
 // Original NES Graphics
 // NOTE: This one CAN'T be combined with the LA DX Graphics
@@ -20,5 +20,5 @@
 //incsrc code/optional/BombUpgrades5.asm
 
 // Hide back all of the secrets like in vanilla Zelda
-// This means no cracked walls nor discearnible burnable trees
+// This means no cracked walls nor discernible burnable trees
 //incsrc code/optional/OriginalHiddenSecrets.asm

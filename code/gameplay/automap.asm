@@ -1,6 +1,17 @@
+//***********************************************************
+//		AUTOMAP PLUS (BY SNARFBLAM)
+//	Disassembled and modified for 1/4 hearts 
+//		decrements by ShadowOne333
+//*********************************************************** 
+
 //****************************************
-// AUTOMAP PLUS
-//**************************************** 
+//	Table file
+//****************************************
+table code/text/text.tbl,ltr
+
+//****************************************
+//	Control codes
+//****************************************
 
 define	RUPEE	$F7
 //define	ARROW	$65
@@ -8,37 +19,39 @@ define	KEY	$F9
 define	BOMB	$61
 //define	LOW_X	$62
 
+//***********************************************************
+
 bank 1;
 // Change the symbol for infinite keys from "A" to infinite symbol
-org $A5A1	// $065B1
+org $A5A1	// 0x065B1
 	lda.b #$64	// Originally A9 0A (LDA #$0A)
 
 
 // Flip heart rows in HUD:
-//org $A507	// $06517
+//org $A507	// 0x06517
 	//db $20,$B6,$08	// Originally 20 B6 08
-//org $A512	// $06522
+//org $A512	// 0x06522
 	//db $20,$96,$08	// Originally 20 D6 08
 
-org $A738	// $06748
+org $A738	// 0x06748
 	cmp.b #$C0	// Originally C9 80 (CMP #$80) - (CMP #$F8 in Automap) Changes the break point for when to change the heart sprite when losing health
-org $A741	// $06751
+org $A741	// 0x06751
 	jmp $BD42	// Jump to $BD42 ($17D52 in PC address) - Originally A9 65 D0 02 (LDA #$65, BNE $A747 or $6757 in PC)
 	nop		// Originally $02 - NOP a leftover byte the original Automap code forgot
 
 
 bank 2;
-org $A2C7	// $0A2D7
+org $A2C7	// 0x0A2D7
 	jsr $B020	// Jump to subroutine at $B020 (or $0B030 in PC) - Originally 20 64 A7 (JSR $A764, or $0A774 in PC)
-org $A5FE	// $0A60E
+org $A5FE	// 0x0A60E
 	jsr $B010	// Jump to subroutine at $B010 (or $0B020 in PC) - Originally 20 25 E6 (JSR $E625, or $1E635 in PC)
-org $A77A	// $0A78A
+org $A77A	// 0x0A78A
 	jsr $B000	// Jump to subroutine at $B000 (or $0B010 in PC) - Originally 20 2A 9D (JSR $9D2A, or $9D3A in PC)
-org $ABB5	// $0ABC5
+org $ABB5	// 0x0ABC5
 	jmp $B026	// Jump to $B026 (or $0B036 in PC) - Originally 20 64 A7 (JMP $AF5A, or $0AF6A in PC)
 
 
-org $B000	// $0B010 - Free space
+org $B000	// 0x0B010 - Free space
 	jsr $B037	// 20 37 B0
 code_B003:	// B003:
 	lda.w $7F50,x	// BD 50 7F
@@ -80,7 +93,7 @@ code_B044:	// B044:
 
 
 bank 5;
-org $85A0	// $145B0
+org $85A0	// 0x145B0
 	lda.b $EB	// A5 EB
 	and.b #$0F	// 29 0F
 	tax
@@ -97,11 +110,11 @@ org $85A0	// $145B0
 	lda.b #$01	// A9 01
 	cpy.b #$00	// C0 00
 	beq code_85BA	// F0 04
-code_85B6:	// $85B6:
+code_85B6:	// 0x85B6:
 	asl
 	dey
 	bne code_85B6	// D0 FC
-code_85BA:	// $85BA:
+code_85BA:	// 0x85BA:
 	ora.w $7F50,x	// 1D 50 7F
 	sta.w $7F50,x	// 9D 50 7F
 	pla
@@ -111,11 +124,11 @@ code_85BA:	// $85BA:
 	jsr $BC30	// 20 30 BC
 	jmp $A9F4	// 4C F4 A9
 
-org $A8BE	// $168CE
+org $A8BE	// 0x168CE
 	jsr $85A0	// Jump to subroutine at $85A0 (or $145B0 in PC) - Originally 20 F4 A9 (JSR $A9F4, or $16A04 in PC)
 
 
-org $AF20	// $16F30
+org $AF20	// 0x16F30
 	lda.b $10	// A5 10
  	beq code_AF2E	// F0 0A
 	lda.b $14	// A5 14
@@ -123,22 +136,22 @@ org $AF20	// $16F30
 	bne code_AF2E	// D0 04
 	lda.b #$7E	// A9 7E
 	sta.b $14	// 85 14
-code_AF2E:	// $16F3E
+code_AF2E:	// 0x16F3E
 	inc.b $13	// E6 13
 	rts
 
 
-org $B01A	// $1702A
+org $B01A	// 0x1702A
 	jmp $AF20	// Jump to $AF20, or 16F30 in PC - Originally E6 13 60 (INC $13, RTS)
 
-org $B1F2	// $17202
+org $B1F2	// 0x17202
 	cmp.b #$D7	// Originally CMP $F8
 	bcs code_B1FD	// B0 07
 	clc
 	adc.b #$18	// Originally ADC #$06
 	sta.w $0670	// 8D 70 06
 	rts
-code_B1FD:	// $1720D
+code_B1FD:	// 0x1720D
 	lda.b #$00
 	sta.w $0670	// 8D 70 06
 	jsr $746C	// 20 6C 74
@@ -154,7 +167,7 @@ code_B214:
 	rts
 
 
-org $BC00	// $17C10 - Free space
+org $BC00	// 0x17C10 - Free space
 	pha
 	lda.b $10	// A5 10
 	bne code_BC25	// D0 20
@@ -162,7 +175,7 @@ org $BC00	// $17C10 - Free space
 	cmp.b #$FF	// C9 FF
 	beq code_BC0F	// F0 03
 	sta.w $7F29	// 8D 29 7F
-code_BC0F:	// $17C1F
+code_BC0F:	// 0x17C1F
 	lda.b $15	// A5 15
 	lsr
 	lsr
@@ -173,14 +186,14 @@ code_BC0F:	// $17C1F
 	lda.w $7F29	// AD 29 7F
 	sta.w $0254	// 8D 54 02
 	bne code_BC25	// D0 05
-code_BC20:	// $17C30
+code_BC20:	// 0x17C30
 	lda #$FF	// A9 FF
 	sta.w $0254	// 8D 54 02
-code_BC25:	// $17C35
+code_BC25:	// 0x17C35
 	pla
 	jmp $77E7	// Jump to $77E7 (0x07067)
 
-org $BC30	// $17C40 - Free space
+org $BC30	// 0x17C40 - Free space
 code_BC30:
 	stx.w $6C02	// 8E 02 6C
 	sty.w $6C03	// 8C 03 6C
@@ -344,11 +357,11 @@ code_BD42:	// BD42: 1/4 Hearts subroutine
 
 
 bank 6;
-org $8089	// $18099 - Free space
+org $8089	// 0x18099 - Free space
 	jmp $FFC0	// Jump to $FFC0 (or $1FFD0 in PC) - Originally E6 11 60 (INC $11, RTS)
 
 // PPU transfers for Automap tiles in the HUD and Subscreen
-org $934F	// $1935F
+org $934F	// 0x1935F
 	//db $20,$62,$48,$F5
 	//db $20,$82,$48,$F5 
 	//db $20,$A2,$48,$F5
@@ -361,7 +374,7 @@ org $934F	// $1935F
 	db $FF
 
 // ASM... for what?
-org $9D70	// $19D80
+org $9D70	// 0x19D80
 	jsr $A080	// 20 80 A0
 	lda.b $10	// A5 10
 	bne code_9D87	// D0 10
@@ -378,17 +391,17 @@ code_9D87:	// 9D87:
 code_9D8C:	// 9D8C:
 	rts
 
-org $A00E	// $1A01E
+org $A00E	// 0x1A01E
 // Repoint the subscreen palette mappings for the new Automap tiles
 	dw subscreen_attributes	// F0 BE (Pointer to $BEF0) - Originally D3 A2 (Pointer to $A2D3 or $1A2E3 in PC)
 
-org $A07E	// $1A08E
+org $A07E	// 0x1A08E
 // Repoint CPU address (?)
 	// dw cpu_address	// D3 A2 (Pointer to $A2D3) - Originally 02 03 (Pointer to $0302)
 	db $D3,$A2
 
 // Attribute table and tilemap for the Automap graphics in the HUD and Subscreen
-org $BEF0	// $1BF00
+org $BEF0	// 0x1BF00
 subscreen_attributes:
 	db $23,$C0,$10		// PPU Transfer $23C0
 	db $C0,$FF,$70,$00,$00,$44,$55,$55	// Attribute table for HUD
@@ -408,12 +421,12 @@ subscreen_attributes:
 
 
 bank 7;
-org $E4C1	// $1E4D1
+org $E4C1	// 0x1E4D1
 	jsr $9D70	// Jump to subroutine at $9D70 - Originally 20 80 A0 (JSR $A080)
-org $F322	// $1F332
+org $F322	// 0x1F332
 	jsr $FFD6	// Jump to subroutine at $FFD6 ($1FFE6 in PC) - Originally 20 E7 77 (JSR $77E7)
 
-org $FFC0	// $1FFD0 - Start of Unused Space
+org $FFC0	// 0x1FFD0 - Start of Unused Space
 	lda.b $10	// A5 10
 	bne code_FFD1	// D0 0D - BNE $FFD1
 	lda.b #$05	// A9 05
@@ -421,16 +434,18 @@ org $FFC0	// $1FFD0 - Start of Unused Space
 	jsr $BC66	// 20 66 BC
 	lda.b #$06	// A9 06
 	jsr $FFAC	// 20 AC FF
-code_FFD1:	// $1FFE1
+code_FFD1:	// 0x1FFE1
 	inc.b $11	// E6 11 
 	rts
-org $FFD6	// $1FFE6
+org $FFD6	// 0x1FFE6
 	pha
 	lda.w $8000	// AD 00 80
 	cmp.b #$20	// C9 20
 	bne code_FFE2	// D0 04
 	pla
 	jmp $BC00	// 4C 00 BC
-code_FFE2:	// $1FFF2	
+code_FFE2:	// 0x1FFF2	
 	pla
 	jmp $77E7 	// 4C E7 77
+
+

@@ -1,10 +1,10 @@
 //************************************************************
-// Separate Arrows-only counter 
-// THIS PATCH DEPENDS ON THE 999 RUPEE HACK
+//		Separate Arrows-only counter 
+//	THIS PATCH DEPENDS ON THE 999 RUPEE HACK
 //************************************************************
 
 bank 4;
-org $B042	// PRG $13042 DropList
+org $B042	// 0x13042 DropList
 
 db $22,$18,$22,$18,$23,$55,$22,$22,$18,$18	// H R H R F R H H R R    R50-H40-F10
 db $0F,$18,$55,$18,$0F,$22,$21,$18,$55,$18	// 5 R H R 5 H C R R R    R50-520-C10 
@@ -22,18 +22,18 @@ db $22,$22,$23,$18,$22,$23,$22,$55,$22,$18	// H H F R H F H H H R    H60-R20-F20
 
 bank 1;
 //Make rupee arrow counter
-org $A58C  	// PRG $0658C, PC 0x0659C
+org $A58C  	// 0x0659C
 	lda.w $0677		// Select Arrow counter instead of rupee ($066D)
 	ldy.b #$2D		// Move offset of value updater to the second line (default $302,y $2C)
 
-org $8926	// PRG $04926, PC 0x04936
+org $8926	// 0x04936
 	jsr ShopArrow
 	nop
 
-org $AC02	// CPU $7392, PRG $06C02, PC 0x06C12
+org $AC02	// CPU $7392, 0x06C12
 	jmp $7EE1
 
-org $B751	// CPU $7EE1, PRG $07751, PC 0x07761
+org $B751	// CPU $7EE1, 0x07761
 	cmp.b #$55
 	beq ArrowDrop
 	lda.w $72A4,x            	
@@ -49,7 +49,7 @@ GiveWood:
 	jmp $7399
 
 
-org $A423	// PRG $06423, PC 0x06433
+org $A423	// 0x06433
 ShopArrow:			// $6B1C ID 02 at $7392. This ID is read and put into Y	
 	cpy.b #$02		// Compare ID and end if not arrow
 	bne EndArrowShop
@@ -70,7 +70,7 @@ ArrowShopMax:
 	db $0,$1E,$3C		// 0,30,60
 
 
-org $ABD1	// CPU $7361, PRG $06BD1, PC 0x06BE1
+org $ABD1	// CPU $7361, 0x06BE1
 // GiveArrowDrop Hijack before it gets rid of the iteam
 	jsr $BFC0		// jsr GiveArrowDrop
 	nop
@@ -80,9 +80,9 @@ org $ABD1	// CPU $7361, PRG $06BD1, PC 0x06BE1
 
 // For Overworld
 bank 4;
-org $BFC0			// PRG $13FC0, CPU $0BFC0, PC 0x13FD0
+org $BFC0	// PRG $13FC0, 0x13FD0
 GiveArrowDrop:
-	lda $AC,x		// Check if the item is a arrow before it deletes.
+	lda $AC,x		// Check if the item is an arrow before it deletes.
 	cmp.b #$55
 	bne BackDeleting
 	txa
@@ -110,7 +110,7 @@ ArrowDropMax:
 // COPY OF ABOVE CODE
 // Will run in dungeons
 bank 1;
-org $BFC0	// PRG $07FC0, CPU $0BFC0, 0x07FD0
+org $BFC0	// 0x07FD0
 GiveArrowDrop:
 	lda $AC,x		// Check if the item is a arrow before it deletes.
 	cmp.b #$55
@@ -140,10 +140,10 @@ ArrowDropMax:
 ///////////////copy////////////////
 
 bank 5;
-org $8E80	// CPU $8E80, PRG $14E80, 0x14E90
+org $8E80	// 0x14E90
 	lda.w $0677		// Check if now Arrows (default rupee 066D)
 
-org $8E8A	// CPU $8E8A, PRG $14E8A, 0x14E9A
+org $8E8A	// 0x14E9A
 	dec.w $0677
 
 
