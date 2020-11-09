@@ -12,6 +12,7 @@
 // arrows.asm
 // automap.asm
 // rupee.asm
+// Always include the move_maps.asm file after those specified ASM files
 
 
 //***********************************************************
@@ -31,6 +32,30 @@ define	KEY	$F9
 define	BOMB	$61
 define	LOW_X	$62
 
+
+//***********************************************************
+//		HUD changes
+//***********************************************************
+
+//------------------------------------
+//	Life meter changes
+//------------------------------------
+
+bank 5;
+// Move HEARTS to the Left of the HUD
+org $AC70	// 0x16C80
+	db $20,$82,$08	// PPU transfer to $20D6
+	db $24,$24,$24,$24,$24,$24,$24,$24
+	db $20,$A2,$08	// PPU transfer to $20B6
+	db $24,$24,$24,$24,$24,$24,$24,$24
+// Reorganize Keys and Arrows in HUD
+	db $20,$6C,$03,$62,$00,$24	// Rupees
+	db $20,$8C,$03,$62,$64,$24	// Keys
+	db $20,$CC,$03,$62,$03,$00	// Bombs
+	db $20,$AC,$03,$62,$00,$24	// Arrows
+
+//------------------------------------
+//	Main HUD changes
 //------------------------------------
 
 bank 6;
@@ -42,6 +67,8 @@ org $934F	// 0x1935F
 	db $20,$D6,$08,$48,$49,$4A,$4B,$4C,$4D,$4E,$4F 
 	db $FF
 
+
+// Pointers for Dungeon and Overworld tile mappins
 org $A00E	// 0x1A01E
 // Repoint the subscreen palette mappings for the new Automap tiles
 	dw overworld_attributes	// F0 BE (Pointer to $BEF0) - Originally D3 A2 (Pointer to $A2D3 or $1A2E3 in PC)
@@ -50,6 +77,8 @@ org $A07E	// 0x1A08E
 // Repoint attribute and tilemaps for Dungeon maps
 	dw dungeon_attributes	// db $D3,$A2 - For original Automap tilemap	
 
+
+// Dungeon tiles Attributes
 org $A2CD	// 0x1A2DD
 dungeon_attributes:
 	db $23,$C0,$10		// PPU Transfer $23C0
@@ -70,6 +99,8 @@ dungeon_attributes:
 	db "INVENTORY"	// Tiles for "INVENTORY"
 	db $FF
 
+
+// Overworld tiles Attributes
 org $BEF0	// 0x1BF00
 // HUD attribute table
 overworld_attributes:
@@ -319,155 +350,24 @@ org $8380	// 0x18390
 
 
 //***********************************************************
-//	Change "LEVEL-0" to "DUNGEON-0" (by abw)
+//	Change "LEVEL-0" to "DUNGEON-0"
 //***********************************************************
+
 // LEVEL-X text changed to "DUNGEON-X" for text that appears above the Dungeon maps
-
-define	level_string_ram_addr	$6C80
-
-// Re-arrange existing code to free up space for a JSR to new code
-org $8047	// 0x18057
-// Indirect control flow target
-L06_8047:
-	lda.b $10
-	asl
-	tax
-	ldy.b $16
-	lda.w $062D,y
-	bne L06_805E
-	lda.w $8000,x
-	sta.b $00
-	lda.w $8001,x
-	jmp L06_8067
-L06_805E:
-	lda.w $802A,x
-	sta.b $00
-	lda.w $802B,x
-L06_8067:
-	sta.b $01
-	ldy.b #$03
-	jsr setup_copy_range	// Set up copy destination start ($02) and end ($04) variables
-	jmp L06_80D7		// Read data from ($00) and write it to ($02) through to ($04); exits with Y == #$00
-	nop			// Maintain original code alignment
-
-// Indirect control flow target
-L06_8070:
-	lda.b $10
-	asl
-	tax
-	lda.w $8014,x
-	sta.b $00
-	lda.w $8015,x
-	sta.b $01
-	ldy.b #$07
-	jsr setup_copy_range	// Set up copy destination start ($02) and end ($04) variables
-	jsr L06_80D7		// Read data from ($00) and write it to ($02) through to ($04); exits with Y == #$00
-	sty.b $13
-	nop			// Maintain original code alignment
-L06_8089:
-	jmp $FFC0		// JMP $FFC0 required by Automap!
-// If not using Automap, substitute JMP $FFC0 for the following
-//	inc.b $11
-//	rts
-
-// Indirect control flow target
-L06_808C:
-	lda.b #$D8	// Inlining low byte of L06_9CD8
-	sta.b $00
-	lda.b #$9C	// Inlining high byte of L06_9CD8
-	sta.b $01
-	ldy.b #$0B
-	jsr setup_copy_range	// Set up copy destination start ($02) and end ($04) variables
-	jsr L06_80D7		// Read data from ($00) and write it to ($02) through to ($04); exits with Y == #$00
-	sty.b $13
-
-// Copy the "DUNGEON-X" string from ROM to cartridge RAM
-copy_level_text:
-	ldy.b #$0D 		// 13 = length of PPU address (2) + text length (1) + text (9) + string end token (1)
-loop:
-	lda.w level_text-1,y
-	sta {level_string_ram_addr}-1,y
-	dey
-	bne loop
-	rts
-
-copy_ranges:
-	dw $687E,$6B7D
-	dw $6B7E,$6C7D
-	dw $67F0,$687D
-
-setup_copy_range:
-	ldx.b #$04
-copy_loop:
-	lda.w copy_ranges,y
-	sta.b $01,x
-	dey
-	dex
-	bne copy_loop
-	rts
-
-L06_80D7:
-	ldy.b #$00
-L06_80D9:
-	lda.b ($00),y
-	sta.b ($02),y
-	lda.b $02
-	cmp.b $04
-	bne INC_read_write_addrs
-	lda.b $03
-	cmp.b $05
-	bne INC_read_write_addrs
-	inc.b $13
-	rts
-
-// Optimize existing code to free up space for a new routine
-INC_read_write_addrs:
-	inc.b $02
-	bne done_write_addr_INC
-	inc.b $03
-done_write_addr_INC:
-	inc.b $00
-	bne done_read_addr_INC
-	inc.b $01
-done_read_addr_INC:
-	jmp L06_80D9
-
-// String bytes
-//org $9D90	// 0x19DA0, Free Space
-level_text:
-	db $20,$56,$09	// Originally $20,$56,$07
-	db "DUNGEON-0"	// Originally "LEVEL-0"
-	db $FF
-
-// The old "LEVEL-0" string still gets copied to RAM $681C, but is no longer used
-org $9D04	// 0x19D14 - Original location
-	db $20,$56,$07	// Originally $20,$56,$07
-	db "LEVEL-0"	// Originally "LEVEL-0"
-	db $FF
-
-// Update pointer to new string for Dungeons
-org $A00C	// 0x1A01C
-	dw {level_string_ram_addr}		// Originally $681C
 
 bank 5;
 // Move Dungeon numeral two tiles to the right (DUNGEON-X)
-org $B02F	// 0x1703F
-// Update level number write address
-	sta.w {level_string_ram_addr}+11	// Originally STA $6825
+org $B02F // 0x1703F
+	sta $6827	// Originally STA $6825
+
+bank 6;
+// LEVEL-X text
+org $9D04	// $19D14
+	db $20,$56,$09	// Originally $20,$56,$07
+	db "DUNGEON-"	// Originally "LEVEL-0"
+//	db $FF
 
 
-//***********************************************************
-//		Life meter
-//***********************************************************
+//-----------------------------
 
-// Move HEARTS to the Left of the HUD
-org $AC70	// 0x16C80
-	db $20,$82,$08	// PPU transfer to $20D6
-	db $24,$24,$24,$24,$24,$24,$24,$24
-	db $20,$A2,$08	// PPU transfer to $20B6
-	db $24,$24,$24,$24,$24,$24,$24,$24
-// Reorganize Keys and Arrows in HUD
-	db $20,$6C,$03,$62,$00,$24	// Rupees
-	db $20,$8C,$03,$62,$64,$24	// Keys
-	db $20,$CC,$03,$62,$03,$00	// Bombs
-	db $20,$AC,$03,$62,$00,$24	// Arrows
+

@@ -56,6 +56,7 @@ org $AE8F	// 0x0AE9F
 // LDA for the pointer lower bytes table
 	lda.w high_bytes,y	// LDA $AC45,Y
 
+
 // Pointer low byte for each entry
 org $AC2E	// 0x0AC3E
 low_bytes:
@@ -75,6 +76,11 @@ high_bytes:
 	db credits_12>>8,credits_13>>8,credits_14>>8,credits_15>>8
 	db credits_16>>8,credits_17>>8,credits_18>>8,credits_19>>8
 	db credits_20>>8,credits_21>>8,credits_22>>8
+
+
+org $AC5C	// 0x0AC6C
+// Blank out all of the original Credits text previous data (for extra free space in case it's needed). This gives 0x19E bytes of free space!
+	fillto $ADFA,$FF
 
 //***********************************************************
 //   "Saving Zelda" 1st and 2nd text
