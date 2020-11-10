@@ -126,12 +126,8 @@ OW_BlipUpdate:	// 0x17C1F
 	lda.b $15	// Get frame counter
 
 // Blink every 32 frames
-	lsr
-	lsr
-	lsr
-	lsr
-	lsr
-	bcc l_BC20	// BCC $08
+	and #$1F
+	beq l_BC20	// BCC $08
 
 // Show blip
 	lda.w {MapBlipY}	// Map Blip Y
