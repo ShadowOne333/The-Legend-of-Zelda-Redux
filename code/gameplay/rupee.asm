@@ -2,8 +2,8 @@
 //		999 Rupee counter
 //***********************************************************
 
-// 999 Rupee HUD update. We will use an extanded HUD since 
-// we would need to be rearranged and mad compatible with arrows patch
+// 999 Rupee HUD update. We will use an extended HUD since 
+// it would need to be rearranged and made compatible with arrows patch
 
 // HUD Icons values
 define	RUPEE	$F7
@@ -115,7 +115,7 @@ EndFrameCheck:
 	rts
 	fill $17,$FF		// Until org $A570, PRG $6570
 	jsr $9397		// jsr GenerateHexValue, PRG $15397
-	jsr $b8a0		// UpdateRupee
+	jsr $B8A0		// UpdateRupee
 	
 
 // Free space

@@ -7,6 +7,14 @@
 // Substract 0x790? from the address to get the ROM address?
 
 //***********************************************************
+//	FIXES
+//***********************************************************
+
+1) Fix Automap replacing a certain value in the palette when exiting from a staircase inside dungeons (RAM $6C00, should be $1A and is instead $00 with Automap)
+2) Fix Move Maps having issues rendering the Subscreen map of Dungeon 6 in 1st Quest
+
+
+//***********************************************************
 //	Bank switching
 //***********************************************************
 

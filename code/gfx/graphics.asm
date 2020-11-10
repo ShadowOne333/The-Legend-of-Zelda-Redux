@@ -40,9 +40,4 @@ org $915B
 // 0x0E7DB-0x0EBEF - Dungeon 9 Bosses (Ganon, Patra) and Zelda/Triforce
 	incbin code/gfx/data_03h.bin
 
-bank 5;
-// Automap tilemap (Filling map tiles)
-org $AD00	// 0x16D10-0x16F0C
-	incbin code/gfx/data_04.bin
-
 

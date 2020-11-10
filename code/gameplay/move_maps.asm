@@ -67,6 +67,7 @@ org $934F	// 0x1935F
 	db $20,$D6,$08,$48,$49,$4A,$4B,$4C,$4D,$4E,$4F 
 	db $FF
 
+//------------------------------------
 
 // Pointers for Dungeon and Overworld tile mappins
 org $A00E	// 0x1A01E
@@ -77,6 +78,7 @@ org $A07E	// 0x1A08E
 // Repoint attribute and tilemaps for Dungeon maps
 	dw dungeon_attributes	// db $D3,$A2 - For original Automap tilemap	
 
+//------------------------------------
 
 // Dungeon tiles Attributes
 org $A2CD	// 0x1A2DD
@@ -99,6 +101,7 @@ dungeon_attributes:
 	db "INVENTORY"	// Tiles for "INVENTORY"
 	db $FF
 
+//------------------------------------
 
 // Overworld tiles Attributes
 org $BEF0	// 0x1BF00
@@ -132,10 +135,8 @@ overworld_attributes:
 // Overworld Link dot offset
 // CPU $93CE X offset for map sprite	PRG $1932E (00 > A0)
 // This offset is shared between 1st and 2nd Quest overworld maps
-org $932E  // 0x1933E
-	db $A0
-org $992D
-	db $10
+org $932E	// 0x1933E
+	db $A0	// Originally $00
 
 
 // DUNGEONS \\
@@ -182,6 +183,7 @@ org $9B0E	// 0x19B1E
 org $9C0A	// 0x19C1A
 	db $A0
 
+//------------------------------------
 
 // 2ND QUEST DOTS
 // Lvl 1 PRG $18174 (E0 > 80)
@@ -274,6 +276,8 @@ org $9C2B	// 0x19C3B
 	db $20,$96,$08,$FF,$FF,$67,$FF,$FF,$67,$FF,$FF
 	db $20,$B6,$48,$FF
 	db $20,$D7,$06,$FF,$67,$FF,$FF,$67,$FF
+
+//------------------------------------
 
 // 2ND QUEST \\
 // Map for Level 1 - 2nd Quest
@@ -368,6 +372,6 @@ org $9D04	// $19D14
 //	db $FF
 
 
-//-----------------------------
+//------------------------------------
 
 
