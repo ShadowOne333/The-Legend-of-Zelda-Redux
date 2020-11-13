@@ -10,8 +10,7 @@
 //	FIXES
 //***********************************************************
 
-1) Fix Automap replacing a certain value in the palette when exiting from a staircase inside dungeons (RAM $6C00, should be $1A and is instead $00 with Automap)
-2) Fix Move Maps having issues rendering the Subscreen map of Dungeon 6 in 1st Quest
+(NONE)
 
 
 //***********************************************************
@@ -43,6 +42,7 @@
 //bank 5; org $8B01	// $14B11
 //	and.b #$04		// Originally 29 20 - Changes the button input which moves the cursor in the Continue/Save/Retry screen
 
+
 //***********************************************************
 // 	Reworked Credits
 //***********************************************************
@@ -57,6 +57,7 @@ $AC16
 
 50 59 6E 80 98 B0 C0 D8 F0 02 14 25
 31 4B 57 70 80 90 9F B4 C7 D0 E7
+
 
 //***********************************************************
 // Save Hearts number if last session had 3+ hearts of health

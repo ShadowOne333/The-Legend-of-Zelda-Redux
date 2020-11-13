@@ -12,6 +12,7 @@ table code/text/text.tbl,ltr
 //****************************************
 define	end	$FF  // end
 
+
 //***********************************************************
 //	Introduction Text
 //***********************************************************
@@ -67,30 +68,38 @@ org $A792	// 0x1A7A2
 org $A7D8	// 0x1A7E8
 	db "                          "
 
+
 //***********************************************************
 //	Introduction Text Attribute Table
 //***********************************************************
 
+// Introduction text attribute table
+// ———————————————
 org $A818	// 0x1A828
-	db $23, $C0, $20	// PPU transfer
-	db $FF, $FF, $00, $00, $00, $00, $FF, $FF  // THE LEGEND OF ZELDA
-	db $FF, $0B, $0A, $8A, $AA, $0A, $0E, $FF  // Long ago, Ganon, Prince of Darkness, stole the
-	db $FF, $A0, $A0, $A0, $A0, $A0, $00, $FF  // Triforce of Power. Princess Zelda of Hyrule
-	db $FF, $05, $05, $45, $51, $50, $50, $FF  // Broke the Triforce of Wisdom into 8 pieces and
+	db $23,$C0,$20	// PPU transfer
+	db $FF,$FF,$00,$00,$00,$00,$FF,$FF  // THE LEGEND OF ZELDA
+	db $FF,$0B,$0A,$8A,$AA,$0A,$0E,$FF  // Long ago, Ganon, Prince of Darkness, stole the
+	db $FF,$A0,$A0,$A0,$A0,$A0,$00,$FF  // Triforce of Power. Princess Zelda of Hyrule
+	db $FF,$05,$05,$45,$51,$50,$50,$FF  // Broke the Triforce of Wisdom into 8 pieces and
 
-	db $23, $E0, $20	// PPU transfer
-	db $FF, $05, $01, $00, $81, $A0, $00, $FF  // Hid them from Ganon before she was kidnapped
-	db $FF, $00, $00, $00, $00, $80, $A0, $FF  // by his minions. Link, find the 8 pieces
-	db $FF, $AF, $AB, $AA, $6A, $59, $2A, $FF  // and rescue Zelda.
-	db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF  // 
+	db $23,$E0,$20	// PPU transfer
+	db $FF,$05,$01,$00,$81,$A0,$00,$FF  // Hid them from Ganon before she was kidnapped
+	db $FF,$00,$00,$00,$00,$80,$A0,$FF  // by his minions. Link, find the 8 pieces
+	db $FF,$AF,$AB,$AA,$6A,$59,$2A,$FF  // and rescue Zelda.
+	db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF  // 
 
-	db $2B, $D0, $02
-	db $FF, $03
 
-	db $2B, $D6, $02
-	db $FF, $FF
+// List of Treasures attribute table
+// ———————————————
+	db $2B,$D0,$02
+	db $FF,$FF
 
+	db $2B,$D6,$02
+	db $FF,$FF
+
+// Terminator
 	db $FF
+
 
 //***********************************************************
 //	Remove Automap text from title screen
@@ -98,6 +107,7 @@ org $A818	// 0x1A828
 
 org $A8B4	// 0x1A8C4
 	db "                     "
+
 
 //***********************************************************
 //	Treasures text pointers
@@ -114,6 +124,7 @@ org $94AD	// 0x094BD
 	dw treasure_24, treasure_25, treasure_26, treasure_27
 	dw treasure_28
 
+
 //***********************************************************
 //	Treasure List
 //***********************************************************
@@ -122,8 +133,7 @@ org $929A	// 0x092AA
 //----------------------------------------
 treasure_00:
 	// X Position, "Text"
-	//db $00, "><><># LIST OF TREASURES #<><><>",{end}
-	db $00, "><><><># LIST OF ITEMS #<><><><>",{end}
+	db $00, "<><><>#  LIST OF ITEMS  #<><><><",{end}
 //00 E5 E4 E5 E4 E5 E6 24 15 12 1C 1D 24 18 0F 24 1D 1B 0E 0A 1C 1E 1B 0E 1C 24 E6 E4 E5 E4 E5 E4 E5 FF
 //----------------------------------------
 treasure_01:

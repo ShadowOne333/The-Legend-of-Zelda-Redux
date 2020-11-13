@@ -171,11 +171,12 @@ SafeBlipUpdate:
 	pha		// Need to preserve A
 	lda.w $8000	// Load address $8000
 	cmp.b #$20	// Is this bank 5? (checking for a known value)
-	bne +	// BNE $04
+	bne l_FFE2	// BNE $04
 	pla
 	jmp BlipUpdate	// Jump to Blip Update
 
-+;	pla	// 0x1FFF2
+l_FFE2:		// 0x1FFF2
+	pla
 	jmp $77E7 	// Jump to $77E7
 
 
