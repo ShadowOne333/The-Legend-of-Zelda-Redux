@@ -22,7 +22,7 @@ org $A0C7	// 0x160D7
 
 // Overworld Walls (Original):
 org $A976	// 0x16987 (Table for Secret Tiles Codes (6 bytes at $16986)
-	db $C8, $D8, $C4, $BC, $C0, $C0		// Originally $D8 - Bombable Wall	(D8 D9 DA DB)
+	db $C8,$D8,$C4,$BC,$C0,$C0		// Originally $D8 - Bombable Wall	(D8 D9 DA DB)
 // C8	Pushable Rock	(C8 C9 CA CB)
 // D8	Bombable Wall	(D8 D9 DA DB)
 // C4	Burnable Tree	(C4 C5 C6 C7)
@@ -34,8 +34,10 @@ org $A976	// 0x16987 (Table for Secret Tiles Codes (6 bytes at $16986)
 // Fix cracked tiles always appearing regardless of Quest No. (by Trax)
 org $AAD0	// 0x16AE0
 	jsr $AC40	// Originally LDA $A976,X
+
+// Free space
 org $AC30	// 0x16C40
-	db $C8, $54, $58, $BC, $C0, $C0	// Alternate secret tile codes table
+	db $C8,$54,$58,$BC,$C0,$C0	// Alternate secret tile codes table
 // C8	Pushable Rock	(C8 C9 CA CB)
 // 54	Bombable Wall	(54 55 56 57)
 // C4	Burnable Tree	(C4 C5 C6 C7)

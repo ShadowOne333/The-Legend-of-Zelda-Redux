@@ -108,7 +108,9 @@ bank 1; org $A5A1	// 0x065B1
  
 // Blip update routine
 // ——————
-bank 5; org $BC00	// 0x17C10 - Free space
+bank 5; org $BDF0	// 0x17E00 - Free space
+// Original Automap location at $BC00 (0x17C10)
+// Moved for Zelda Redux to allow for more free space range
 BlipUpdate:
 	pha
 
@@ -501,7 +503,10 @@ define	SingleTileMacroByte	$6BFD
 define	PpuMapMacroLen	$0B		// 11 Bytes: 8 tiles + 3-byte header
 define	MapTiles	$30
 
-bank 5; org $BC30	// 0x17C40 - Free space
+
+bank 5; org $BE19	// 0x17E29 - Free space
+// Original Automap location at $BC30 (0x17C40)
+// Moved for Zelda Redux to allow for more free space range
 UpdateMapTile:
 //————————
 // A – Unused

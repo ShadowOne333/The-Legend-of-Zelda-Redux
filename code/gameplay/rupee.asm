@@ -234,7 +234,8 @@ Reset:
 	rts
 
 
-org $B900	// CPU $B900, PRG $17900, PC 0x17910
+org $ACA0	// 0x16CB0, Originally $B8F0, 0x17900
+// CPU $B8F0, PRG $178F0, PC 0x17900 (Originally 0x17910)
 TrueTableHex10:		
 // This table needs only to get base 8 bit to find out that we have enough money.
 // So there are a lot of FF needed you could mistake as free space.
