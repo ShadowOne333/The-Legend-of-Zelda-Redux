@@ -105,8 +105,8 @@ overworld_column_data:
 
 // Screen P-1 column definitions, $154F8 / 0x15508
 // Modified 3rd and 14th columns
-	db $13,$09,$A9,$02,$67,$70,$02,$67
-	db $D7,$70,$02,$67,$70,$A8,$0A,$13
+	db $FB,$79,$A9,$02,$67,$70,$02,$67	// $13,$00
+	db $D7,$70,$02,$67,$70,$A8,$7A,$45	// $00,$13
 
 //------------------------------------
 
@@ -140,9 +140,9 @@ overworld_column_data:
 	db $A0,$06,$2A,$A6,$A7,$F1,$A9,$02
 
 // Screen H-2 column definitions, $15578 / 0x15588
-// Modified 6th & 8th column
-	db $A5,$A4,$C8,$A0,$83,$A1,$B4,$69	// $02,$B0
-	db $B0,$B0,$B0,$73,$73,$73,$73,$73
+// Modified 6th, 8th & 12th column
+	db $A5,$A4,$C8,$A0,$83,$FE,$B4,$69	// $02,$B0
+	db $B0,$B0,$B0,$FF,$73,$73,$73,$73	// $73
 
 // Screen I-2 column definitions, $15588 / 0x15598
 // Modified 9th column
@@ -180,7 +180,7 @@ overworld_column_data:
 // Screen P-2 column definitions, $155F8 / 0x15608
 // Modified 14th column
 	db $02,$02,$64,$66,$E5,$D8,$65,$66
-	db $E5,$F3,$64,$F2,$F3,$02,$A8,$6E	// 
+	db $E5,$F3,$64,$F2,$F3,$02,$A8,$45	// 
 
 //------------------------------------
 
@@ -219,7 +219,7 @@ overworld_column_data:
 
 // Screen H-3 column definitions, $15678 / 0x15688
 // Modified 6th column
-	db $91,$51,$97,$91,$51,$6A,$13,$C3	// $97
+	db $91,$51,$97,$91,$51,$6A,$6F,$C3	// $97
 	db $58,$58,$58,$91,$51,$97,$85,$47
 
 // Screen I-3 column definitions, $15688 / 0x15698
@@ -258,7 +258,7 @@ overworld_column_data:
 // Screen P-3 column definitions, $156F8 / 0x15708
 // Modifies 1st, 2nd, 13th, 15th and 16th columns
 	db $09,$A9,$67,$70,$02,$67,$87,$70	// $00,$02
-	db $02,$67,$70,$02,$A8,$00,$0A,$13	// $02,$00,$00
+	db $02,$67,$70,$02,$A8,$00,$0A,$45	// $02,$00,$00,$13
 
 //------------------------------------
 
@@ -283,30 +283,31 @@ overworld_column_data:
 	db $02,$B7,$D2,$B7,$02,$4F,$00,$00	// $B6
 
 // Screen E-4 column definitions, $15748 / 0x15758
-// Modified 8th & 14th column
+// Modified 8th, 14th & 16th column
 	db $00,$A9,$B7,$02,$B7,$02,$B7,$2E	// $02
-	db $07,$39,$47,$47,$47,$4E,$91,$78	// $47
+	db $07,$39,$47,$47,$47,$4E,$91,$FC	// $47,$78
 
 // Screen F-4 column definitions, $15758 / 0x15768
-	db $78,$78,$78,$78,$B8,$51,$97,$91
+	db $78,$78,$78,$FD,$B8,$51,$97,$91
 	db $51,$51,$51,$97,$91,$51,$51,$97
 
 // Screen G-4 column definitions, $15768 / 0x15778
 	db $91,$97,$58,$58,$91,$51,$97,$91
-	db $97,$13,$13,$13,$13,$13,$13,$13
+	db $6A,$6F,$13,$13,$13,$13,$13,$13	// $97,$13
 
 // Screen H-4 column definitions, $15778 / 0x15788
 // Modified 2nd, 3rd, 14th and 15th columns (Dungeon 1 Entrance)
-	db $13,$09,$A9,$64,$F2,$F3,$64,$65
-	db $66,$E5,$D8,$66,$02,$A8,$0B,$12
+	db $FB,$09,$A9,$64,$F2,$F3,$64,$65
+	db $66,$E5,$D8,$66,$02,$A8,$0B,$FA
 
 // Screen I-4 column definitions, $15788 / 0x15798
 	db $12,$12,$12,$12,$12,$12,$44,$18
 	db $18,$17,$28,$17,$25,$17,$17,$15
 
 // Screens J-4, C-5 & D-5 column definitions, $15798 / 0x157A8
-	db $00,$A9,$02,$77,$02,$53,$54,$D1
-	db $D1,$54,$56,$02,$77,$02,$A8,$00
+// Modified 7th and 10th columns
+	db $00,$A9,$02,$77,$02,$53,$7B,$D1	// $54
+	db $D1,$7C,$56,$02,$77,$02,$A8,$00	// $54
 
 // Screen K-4 column definitions, $157A8 / 0x157B8
 // Modified 3rd & 16th columns
@@ -329,9 +330,9 @@ overworld_column_data:
 	db $08,$35,$36,$36,$36,$36,$36,$36
 
 // Screen P-4 column definitions, $157E8 / 0x157F8
-// Modified 5th column
+// Modified 5th & 16th column
 	db $36,$36,$36,$36,$4D,$52,$D0,$52	// $36
-	db $86,$E1,$13,$13,$13,$13,$13,$13
+	db $86,$E1,$13,$13,$13,$13,$13,$13	// $13
 
 //------------------------------------
 
@@ -354,9 +355,9 @@ overworld_column_data:
 	db $18,$45,$13,$13,$13,$13,$13,$13
 
 // Screen F-5 column definitions, $15828 / 0x15838
-// Modified 2nd, 3rd, 14th and 15th columns (Dungeon 4 Entrance)
-	db $13,$09,$02,$02,$67,$70,$02,$67	// $00,$02
-	db $D7,$70,$02,$67,$70,$02,$0A,$13	// $02,$00
+// Modified 1st, 2nd, 3rd, 14th, 15th and 16th columns (Dungeon 4 Entrance)
+	db $FB,$09,$02,$02,$67,$70,$02,$67	// $13,$00,$02
+	db $D7,$70,$02,$67,$70,$02,$0A,$45	// $02,$00,$13
 
 // Screen G-5 column definitions, $15838 / 0x15848
 	db $13,$13,$13,$13,$13,$13,$43,$92
@@ -419,12 +420,13 @@ overworld_column_data:
 	db $18,$76,$27,$76,$17,$76,$28,$16
 
 // Screen E-6 column definitions, $15918 / 0x15928
+// Modified 15th column
 	db $16,$16,$17,$76,$76,$26,$17,$23
-	db $23,$46,$52,$48,$48,$52,$37,$37
+	db $23,$46,$52,$48,$48,$52,$5F,$37	// $37
 
 // Screen F-6 column definitions, $15928 / 0x15938
-// Modified 2nd & 15th column
-	db $37,$5E,$52,$52,$86,$13,$13,$92	// $37
+// Modified 2nd,6th,7th & 15th column
+	db $37,$5E,$52,$52,$86,$E1,$43,$92	// $37,$13,$13
 	db $D0,$52,$36,$52,$36,$52,$5F,$37	// $37
 
 // Screen G-6 column definitions, $15938 / 0x15948
@@ -489,7 +491,8 @@ overworld_column_data:
 	db $A5,$08,$08,$A4,$A5,$08,$A4,$02
 
 // Screen F-7 column definitions, $15A18 / 0x15A28
-	db $02,$A5,$08,$E3,$18,$12,$12,$5D	// $08
+// Modified 6th and 7th columns
+	db $02,$A5,$08,$E3,$18,$FA,$44,$5D	// $12,$12
 	db $08,$08,$33,$08,$32,$08,$A4,$02
 
 // Screen G-7 column definitions, $15A28 / 0x15A38
@@ -556,7 +559,8 @@ overworld_column_data:
 	db $F5,$70,$B7,$02,$B7,$02,$A8,$00
 
 // Screen F-8 column definitions, $15B18 / 0x15B28
-	db $00,$A9,$10,$C0,$E3,$13,$13,$A3
+// Modified 6th and 7th columns
+	db $00,$A9,$10,$C0,$E3,$45,$FB,$A3	// $13,$13
 	db $33,$02,$32,$02,$33,$02,$02,$02
 
 // Screen G-8 column definitions, $15B28 / 0x15B38
@@ -726,7 +730,7 @@ l_17A0C:	// $40-$4F, 0x15D7C
 // New columns
 	db $F7,$77,$77,$77,$33,$5B		// $4A
 	db $F7,$77,$77,$77,$37,$33,$1B		// $4B
-	db $C5,$45,$17,$4E,$4E,$32,$1B		// $4C
+	db $C8,$48,$17,$4E,$4E,$32,$1B		// $4C
 	db $C5,$45,$07,$4E,$4E,$33,$1B		// $4D
 	db $DB,$34,$0E,$4E,$06,$45,$45		// $4E
 	db $CA,$4E,$4E,$4E,$32,$5B		// $4F
@@ -764,7 +768,8 @@ l_17A7A:	// $60-$6F, 0x15E55
 	db $9B,$35,$4E,$4E,$06,$45,$45		// $6B
 	db $9B,$34,$4E,$4E,$06,$45,$45		// $6C
 	db $DB,$5B,$4E,$16,$45,$45		// $6D
-	db $C5,$05,$48,$48,$08,$45,$05		// $13
+	db $C5,$05,$48,$48,$08,$45,$05		// $6E
+	db $C8,$48,$08,$45,$45,$45		// $6F
 l_17AB5:	// $70-$7F, 0x15EC2
 	db $DB,$0E,$23,$25,$4E,$4E,$1A,$1B	// $70
 	db $DB,$4E,$0E,$26,$4E,$0E,$1A,$1B	// $71
@@ -774,7 +779,12 @@ l_17AB5:	// $70-$7F, 0x15EC2
 	db $D9,$4E,$0E,$26,$4E,$0E		// $75
 	db $D9,$4E,$4E,$4E,$4E,$0E		// $76
 	db $DB,$4E,$19,$0E,$19,$4E,$1A,$1B	// $77
-	db $DB,$5B,$5B,$45			// $78
+	db $DB,$5B,$5B,$06,$45,$45	// $78 (Changed, Fixed)
+// New columns
+	db $B2,$5B,$5B,$5B,$5B,$5B		// $79
+	db $B3,$5B,$5B,$5B,$5B,$5B		// $7A
+	db $DB,$0E,$06,$45,$07,$4E,$33,$1B	// $7B
+	db $DB,$0E,$06,$45,$07,$4E,$32,$1B	// $7C
 l_17AF0:	// $80-$8F, 0x15F3A
 	db $C5,$05,$5B,$5B			// $80
 	db $DB,$5B,$27,$0E,$1A,$5B		// $81
@@ -808,10 +818,10 @@ l_17B6F:	// $A0-$AF
 	db $DB,$35,$4E,$4E,$0E,$33		// $A9
 l_17BB4:	// $B0-$BF
 	db $DB,$5B,$07,$4E,$4E,$4E		// $B0
-	db $DB,$0E,$06,$05,$45,$2F,$0E,$1A,$1B	// $B1
-	db $DB,$0E,$06,$05,$45,$2E,$0E,$1A,$1B	// $B2
+	db $DB,$0E,$06,$05,$45,$2F,$0E,$33,$1B	// $B1
+	db $DB,$0E,$06,$05,$45,$2E,$0E,$32,$1B	// $B2
 	db $CA,$4A,$0A,$0E,$1A		// UNUSED! $B3, 179
-	db $DB,$5B,$15,$45,$45,$45		// $B4
+	db $DB,$5B,$15,$48,$48,$48		// $B4
 	db $DB,$4E,$4E,$4E,$0E			// $B5
 	db $CA,$4E,$4E,$4E,$0E,$1A,$1B		// $B6
 	db $DB,$4E,$2C,$0E,$2C,$4E,$1A,$1B	// $B7
@@ -845,7 +855,12 @@ l_17C69:	// $E0-$EF
 	db $DB,$4E,$4E,$1C,$1F,$0E,$1A,$1B	// $E5
 	db $DB,$5B,$1B,$35,$4E,$33		// $E6
 	db $DB,$5B,$1B,$34,$4E,$32		// $E7
-	db $DB,$4E,$4E,$4E,$0E,$33		// $E8
+	db $DB,$4E,$4E,$4E,$0E,$33,$1B		// $E8
+
+	fillto $BDF0,$FF
+
+// Change address of the whole $F0-$FF entries to get the extra space required for the last new columns
+org $AF80	// 0x16F90
 l_17C9D:	// $F0-$FF
 	db $9B,$5B,$34,$4E,$0E,$32		// $F0
 	db $DB,$1B,$35,$4E,$0E,$33,$1B		// $F1
@@ -857,8 +872,14 @@ l_17C9D:	// $F0-$FF
 	db $C5,$45,$07,$4E,$28,$59,$19		// $F7
 	db $DB,$4D,$4D,$12,$4D,$1A,$1B		// $F8
 	db $DB,$77,$77,$77,$37,$1A,$1B		// $F9
+// New columns
+	db $C8,$48,$08,$0B,$48,$48,$08		// $FA
+	db $C9,$49,$09,$49,$49,$49,$09		// $FB
+	db $DB,$5B,$1B,$34,$06,$45,$45		// $FC
+	db $DB,$5B,$1B,$35,$06,$45,$45		// $FD
+	db $DB,$5B,$35,$4E,$4E,$33,$1B		// $FE
+	db $DB,$5B,$07,$4E,$4E,$32,$1B		// $FF
 
-	fillto $BDF0,$FF
 
 
 //------------------------------------

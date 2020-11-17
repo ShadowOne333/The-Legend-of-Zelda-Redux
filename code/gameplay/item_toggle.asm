@@ -15,23 +15,24 @@ bank 7; org $EC3C  // 0x1EC4C
 
 bank 5; org $BFC0  // 0x17FD0
 quick_select:
+// New method by gzip
 	lda.b #$01	// PAD_RIGHT
 	ldy.w $0656	// Load current item
 	jsr $B7A8	// Get next item $B7C8 (use 'jsr $B7A8' to also play SFX)
 // Old Letter overflow fix by gzip
-	ldy.w $0656	// Load current item position
+	ldy.w $0656	// Load current item position into Y
 	cpy.b #$10	// Compare if value is $10 (out of range)
-	bpl out_range	// BPL $03 - Go to out_range if its out of range
-	jmp return	// End routine
-out_range:
-	ldy.w $065F	// Load Magical Rod address
-	cpy.b #$01	// Check if Magic Rod is obtained
-	bne no_rod	// BNE $08 - Jump to no_rod if there's no Rod
-	lda.b #$08	// If Magic Rod is obtained, load its position
-	sta.w $0656	// Store Rod position in current item position
-	jmp return	// End routine
-no_rod:
-	lda.b #$00	// Load value $00 into stack
-	sta.w $0656	// Store $00 in the current item position
-return:
-	rts
+	bpl out_range	// BPL $03 - Branch if greater than or equal to $10 (out of range
+	jmp l_BFDE	// Otherwise, skip to return
+out_range:	// $BFD2, 0x17FE2
+	lda.b #$08	// Load rod value into A
+	sta.w $0656	// Set current item to rod
+	ldy.w $065F	// Load rod status into Y
+	cpy.b #$01	// Check if rod is present (1)
+	bne l_BFDF	// BNE $01, Branch back to beginning if there's no rod (0)
+l_BFDE:
+	rts		// Otherwise, return
+l_BFDF:
+	jmp quick_select	// Jump back to beginning so the correct item is set
+
+
