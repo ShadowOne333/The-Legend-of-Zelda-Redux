@@ -61,12 +61,7 @@ https://www.romhacking.net/forum/index.php?topic=29403.0
 * **[DONE]** Slight graphic changes to make certain sprites match their official artwork (Link now has his yellow hat line, some shield slight change, etc.). This won't be a graphic update of the game, as I still want to retain the original game's overall art design and aesthetic, but with sprites that better depict their official artwork designs.
 * **[DONE]** Be able to kill the Pols Voice by playing the flute, and also with arrows to retain the original way of killing them (Thanks to stratoform for this!)
 * **[DONE]** Flip the heart rows in the File Select Screen (Thanks again stratoform!)
-* **[DONE]** 
-
-* Save the amount of hearts you last had if the game was saved manually, so when you load, you start with the same amount of life (this I'm not sure if it will be implemented in the end hack)
-* Implementation of a Copy/Erase file system like in subsequent Zeldas, where D-Pad Up and Down control the cursor in the File Selection and pressing A brings up the Name screen (Example: ALttP)
-* Animated tiles for water (maybe bushes). Perhaps this could be done by converting the ROM to something like MMC3/MMC5 for bank switching
-* Diagonal sword swing
+* **[DONE]** New column definitions to make the overworld look more polished, adding corners, rounded edges and other slight stuff so the overworld doesn't look as blocky.
 
 -------------------
 
@@ -82,10 +77,18 @@ https://www.romhacking.net/forum/index.php?topic=29403.0
 
 ## Help needed for these points:
 
-* Implementation of a Copy/Erase file system like in subsequent Zeldas, where D-Pad Up and Down control the cursor in the File Selection and pressing A brings up the Name screen (Example: ALttP)
-* Animated tiles for water (conversion to MMC5 for bank switch?)
-* Diagonal sword swing
+* Save the amount of hearts you last had if the game was saved manually, so when you load, you start with the same amount of life (this I'm not sure if it will be implemented in the end hack)
+* Make recently bombed overworld walls have a new arched cave entrance tile, without the tile losing its properties from the previous tile $24 (new tiles are $54-$57): https://www.romhacking.net/forum/index.php?topic=29403.msg404505#msg404505
+* Rework the Credits for the game to have full names show up for each developer (like in Zelda 2 Redux): https://www.romhacking.net/forum/index.php?topic=29403.msg403636#msg403636
+* Implement water animation. Either by using the current CHR-RAM method, or changing to CHR-ROM or MMC3 mappers with bank swapping for animation.
 
+
+-------------------
+
+## Dropped features (sadly):
+
+* **Diagonal sword swing.** Currently, Infidelity has been the only person to implement a Diagonal Sword swing into Zelda 1, and sadly, without someone willing to help on this feature, it's quite out of my reach.
+* Implementation of a Copy/Erase file system like in subsequent Zeldas, where D-Pad Up and Down control the cursor in the File Selection and pressing A brings up the Name screen (Example: ALttP). Could possibly be done, but it's also a missing/dropped feature from Zelda 2 Redux.
 
 -------------------
 

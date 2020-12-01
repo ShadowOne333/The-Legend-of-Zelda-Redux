@@ -77,3 +77,8 @@ blank_rest:
 	fill $04,$FF
 
 
+// Change "TRIFORCE" for "TRIFORCE OF WISDOM"
+//org $9D5B	// 0x19D6B
+//	db $2B,$A7,$12		// Originally 2B AC 08
+//	db "TRIFORCE OF WISDOM"	// TRIFORCE
+//	db $FF

@@ -1,5 +1,5 @@
 //***********************************************************
-//	Cracked Walls Tilemaps 
+//	Cracked Walls & Burnable Trees Tilemaps 
 //***********************************************************
 
 // New tilemaps for bombable walls in Dungeons:
@@ -20,7 +20,7 @@ org $A0C7	// 0x160D7
 
 
 
-// Overworld Walls (Original):
+// Original Overworld Walls & Trees:
 org $A976	// 0x16987 (Table for Secret Tiles Codes (6 bytes at $16986)
 	db $C8,$D8,$C4,$BC,$C0,$C0		// Originally $D8 - Bombable Wall	(D8 D9 DA DB)
 // C8	Pushable Rock	(C8 C9 CA CB)
@@ -35,12 +35,13 @@ org $A976	// 0x16987 (Table for Secret Tiles Codes (6 bytes at $16986)
 org $AAD0	// 0x16AE0
 	jsr $AC40	// Originally LDA $A976,X
 
-// Free space
+
+// New Overworld Cracked Walls and Burnable Trees, Free space
 org $AC30	// 0x16C40
-	db $C8,$54,$58,$BC,$C0,$C0	// Alternate secret tile codes table
+	db $C8,$58,$5C,$BC,$C0,$C0	// Alternate secret tile codes table
 // C8	Pushable Rock	(C8 C9 CA CB)
-// 54	Bombable Wall	(54 55 56 57)
-// C4	Burnable Tree	(C4 C5 C6 C7)
+// 54	Bombable Wall	(58 59 5A 5B)
+// C4	Burnable Tree	(5C 5D 5E 5F)
 // BC	Pushable Tomb	(BC BD BE BF)
 // C0	Armos Statue	(C0 C1 C2 C3)
 // C0	Armos Statue	(C0 C1 C2 C3)
@@ -107,7 +108,7 @@ collision_hit_tiles_exit2:
 collision_tiles_sub:
 	jsr $EDFA	// Old detour (Load tile #)
 
-	cmp.b #$54	// $00-53 = Old detour code
+	cmp.b #$58	// $00-54 = Old detour code
 	bcc collision_tiles_normal
 
 	// cmp.b #$58 before the new burnable tree sprite.
@@ -126,8 +127,15 @@ collision_tiles_solid:
 	rts
 
 
+// Add rock arc at the top of bombable walls, so they don't look as plain black squares
+//bank 4; org $8F08	// 0x10F18
+// Modification so the bombed walls use out custom arc cave tiles ($54,$55,$56,$57) instead of being all black tiles ($24)
+//	lda.b #$54	// Originally LDA #$24
+
+
+
 //***********************************************************
-//	Burnable Tree Tiles
+//	Tile Loading
 //***********************************************************
 
 // $17930 is free space for this, up to 17C10

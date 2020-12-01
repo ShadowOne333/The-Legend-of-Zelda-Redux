@@ -758,10 +758,10 @@ l_17A7A:	// $60-$6F, 0x15E55
 	db $C5,$45,$07,$4E			// $62
 	db $D9,$59,$4E,$15,$48,$48		// $63
 	db $DB,$0E,$1C,$1F,$4E,$4E,$1A,$1B	// $64
-	db $DB,$0E,$1D,$0C,$4E,$4E,$1A,$1B	// $65
+	db $DB,$0E,$1D,$0D,$4E,$4E,$1A,$1B	// $65 (Changed)
 	db $DB,$0E,$1E,$20,$4E,$4E,$1A,$1B	// $66
 	db $DB,$0E,$21,$24,$4E,$4E,$1A,$1B	// $67
-	db $DB,$0E,$22,$0C,$4E,$4E,$4A		// $68
+	db $DB,$0E,$22,$0D,$4E,$4E,$4A		// $68 (Changed)
 // New columns
 	db $DB,$5B,$05,$2E,$4E,$4E,$0E		// $69
 	db $DB,$1B,$35,$0E,$31,$45,$45,$05	// $6A
@@ -793,7 +793,7 @@ l_17AF0:	// $80-$8F, 0x15F3A
 	db $DB,$1B,$35,$4E,$4E,$0E,$1A,$1B	// $84
 	db $9B,$27,$4E,$4E,$06			// $85
 	db $C5,$45,$05,$2F,$4E,$4E,$0E		// $86
-	db $DB,$0E,$22,$0C,$4E,$4E,$4A		// $87
+	db $DB,$0E,$22,$0D,$4E,$4E,$4A		// $87 (Changed)
 	db $DB,$0E,$14,$0E,$29,$0E,$14,$4E,$0E	// $88
 l_17B2E:	// $90-$9F, 0x15FA5
 	db $DB,$35,$4E,$4E,$4E,$1A,$1B		// $90
@@ -844,7 +844,7 @@ l_17C27:	// $D0-$DF
 	db $DB,$1B,$27,$07,$4E,$1A,$5B,$1B	// $D4
 	db $CE,$4E,$4E,$4E,$33,$5B		// $D5
 	db $DB,$5B,$1B,$0E,$15,$48,$48		// $D6
-	db $DB,$0E,$2D,$0C,$4E,$4E,$4A		// $D7
+	db $DB,$0E,$2D,$0D,$4E,$4E,$4A		// $D7 (Changed)
 	db $DB,$0E,$1C,$1F,$0E,$1E,$20,$0E,$1A,$1B	// $D8
 l_17C69:	// $E0-$EF
 	db $C8,$48,$08				// $E0
@@ -867,7 +867,7 @@ l_17C9D:	// $F0-$FF
 	db $DB,$0E,$1E,$20,$0E,$1C,$1F,$0E,$1A,$1B	// $F2
 	db $DB,$4E,$4E,$1E,$20,$0E,$1A,$1B	// $F3
 	db $D9,$59,$19,$4E,$4E,$59		// $F4
-	db $DB,$0E,$2D,$0C,$4E,$4E,$1A,$1B	// $F5
+	db $DB,$0E,$2D,$0D,$4E,$4E,$1A,$1B	// $F5 (Changed)
 	db $CE,$4E,$0E,$31,$05			// $F6
 	db $C5,$45,$07,$4E,$28,$59,$19		// $F7
 	db $DB,$4D,$4D,$12,$4D,$1A,$1B		// $F8
@@ -880,6 +880,34 @@ l_17C9D:	// $F0-$FF
 	db $DB,$5B,$35,$4E,$4E,$33,$1B		// $FE
 	db $DB,$5B,$07,$4E,$4E,$32,$1B		// $FF
 
+
+//***********************************************************
+//	Dungeon screens column changes
+//***********************************************************
+
+// Tile codes for Dungeons
+//bank 5; org $A718	// 0x16728
+//	db $B0,$74,$94,$B4,$70,$68,$F4,$24	// Originally B0 74 94 B4 70 68 F4 24
+// 169F4 Tile, 163D4 Columns, 0E Water, 27 New
+
+org $A9B4	// 0x169C4
+	db $24,$24,$24,$24	// Dungeons Passages Top of Stairs (black) / Cave Entrance in OW
+	db $6F,$6F,$6F,$6F	// Dungeons Passages Stairs
+	db $F3,$F3,$F3,$F3	// Dungeons Passages Background (blocked)
+	db $FA,$FA,$FA,$FA	// Dungeons Passages Walls (bricks)
+	db $98,$95,$26,$26	// Top left corner coast
+	db $90,$95,$90,$95	// Water tile
+	db $8F,$90,$8F,$90	// Top water coast
+	db $95,$96,$95,$96	// Bottom water coast
+	db $8E,$93,$90,$95	// Left water coast
+	db $90,$95,$92,$97	// Right water coast
+	db $74,$74,$75,$75	// Mountain Stairs
+	db $76,$77,$76,$77	// Water ledges / logs
+// Modified to make Cave Entrances rounded instead of blocky
+	db $54,$24,$56,$24	// Dungeons Passages Walkable Space (black) & Cave Entrances OW, Originally F3 24 F3 24
+	db $24,$24,$24,$24	// Overworld Caves Ground
+	db $26,$26,$26,$26	// Overworld Ground
+	db $89,$88,$8B,$88	// Waterfall end
 
 
 //------------------------------------

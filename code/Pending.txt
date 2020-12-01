@@ -6,6 +6,7 @@
 // For addresses between 0000 and 7FFF:
 // Substract 0x790? from the address to get the ROM address?
 
+
 //***********************************************************
 //	FIXES
 //***********************************************************
@@ -26,7 +27,8 @@
 //***********************************************************
 
 // (PENDING)
-
+Possibly, modify the tile loading so it replaces a certain tile for another one already loaded (water corners or edges)
+For the water tiles with no borders, mirror them horizontally (similar to the Fire sprite but slower)
 
 //***********************************************************
 // Reworked Save Selection screen, similar to Zelda 2 Redux

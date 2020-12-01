@@ -68,7 +68,7 @@ incsrc code/gameplay/manual_save.asm	// Save manually by pressing Pause and then
 incsrc code/gameplay/misc.asm		// Miscellaneous hacks
 incsrc code/gameplay/pols_voice.asm	// Kill Pols Voices by using Flute or Arrows
 incsrc code/gameplay/rupee.asm		// 999 Rupee counter code by BogaaBogaa
-incsrc code/gameplay/overworld_screens.asm	// Changes some columns for certain screen in the Overworld to not look as blocky
+incsrc code/gameplay/overworld_screens.asm	// Changes some columns for certain screens in the Overworld to not look as blocky
 incsrc code/gameplay/visible_secrets.asm	// Discernible secrets for bombable (cracked) walls in both Overworld and Dungeons, and burnable trees in the Overworld
 incsrc code/gameplay/move_maps.asm	// Change Hearts and Map positions in HUD (INCLUDE AFTER HUD, ARROWS, RUPEE AND AUTOMAP CODE!)
 
