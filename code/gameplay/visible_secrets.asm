@@ -108,7 +108,7 @@ collision_hit_tiles_exit2:
 collision_tiles_sub:
 	jsr $EDFA	// Old detour (Load tile #)
 
-	cmp.b #$58	// $00-54 = Old detour code
+	cmp.b #$54	// $00-54 = Old detour code
 	bcc collision_tiles_normal
 
 	// cmp.b #$58 before the new burnable tree sprite.
@@ -128,9 +128,14 @@ collision_tiles_solid:
 
 
 // Add rock arc at the top of bombable walls, so they don't look as plain black squares
-//bank 4; org $8F08	// 0x10F18
+bank 4; org $8F08	// 0x10F18
 // Modification so the bombed walls use out custom arc cave tiles ($54,$55,$56,$57) instead of being all black tiles ($24)
-//	lda.b #$54	// Originally LDA #$24
+	lda.b #$54	// Originally LDA #$24
+
+// Fix recently bombed overworld wall collision and tile properties (Unsure what this does precisely)
+// (Routine for the following code begins at $ABC4 (0x16BD4)
+bank 5; org $ABED	// 0x16BFD
+	cmp.b #$57	// Originally CMP #$27
 
 
 
