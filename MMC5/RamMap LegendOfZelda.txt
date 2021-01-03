@@ -1,0 +1,647 @@
+<------------------------------------------------>
+ |  Zelda - RAM Map								  |
+<------------------------------------------------>
+Credits: 			Trax, RHDN, bogaabogaa
+
+	.....................
+	.INDEX:				.
+	.					.
+	.Zero Page:	#016	.
+	.RAM:		#215	.
+	.Formats: 	#365 	.
+	.SRAM:		#524	.
+	.PRG ROM:	#580	.
+	.....................
+
+Address     Function                    Details
+----------- --------------------------- -----------------------------------------
+00          Multiple Functions          X-coords of sprite, ...     
+01          Multiple Functions          Y-coords of sprite, ...     
+02          Multiple Functions          Tile # for sprite (Left Half), ...  
+03          Multiple Functions          Tile # for sprite (Right Half), ...     
+04          Multiple Functions          Attributes for sprite (Left Half), ...  
+05          Multiple Functions          Attributes for sprite (Right Half), ...     
+06           ?          
+07		    Multiple Functions                                    
+08
+09
+0A
+0B
+0C
+0D
+0E
+0F			Multiple Functions			Linkes Move Direction (01,FF), ...
+
+10          Current Level               (0 = Overworld)
+11           ?          
+12          Game Mode                   0=Title/transitory    1=Selection Screen
+                                        5=Normal              6=Preparing Scroll
+                                        7=Scrolling           4=Finishing Scroll;
+                                        E=Registration        F=Elimination 
+
+13			Routine Index      
+14			PPU Loading Index
+15          Frame counter       
+16          Current save slot           $00=first, $01=second, $02=third; On selection/registration/elimination screens: $03=fourth option, $04=fifth option
+17-23       Individual Randomizer 
+
+28			(,X to update $00, ...)
+29          Timer/Countdown          Used for dialog text and is a Countdown until Enemy #1 can do his action(See Below) again
+
+
+2A          Countdown until Enemy #2 can do his main action(Shoot a Projectile,Jump,etc.)again
+2B          Countdown until Enemy #3 can do his main action(See Above)again
+2C          Countdown until Enemy #4 can do his main action(See Above)again
+2D          Countdown until Enemy #5 can do his main action(See Above)again
+2E          Countdown until Enemy #6 can do his main action(See Above)again
+2F           ?
+30          Countdown until Rock #1 and Zola's Fireball start to move
+31          Countdown until Rock #2 and Zola's Fireball start to move
+32          Countdown until Rock #3 and Zola's Fireball start to move and until Zola start his next animation
+33          Countdown until Zola start his next animation
+34           ?
+35           ?
+36           ?
+37          Countdown until bait disappears (3 cycle before disappearence)
+38          Countdown until bomb explode or flame (Magical Rod or Candle) disappears
+39-3B        ?
+3C          Countdown until Link and enemies can move again after the recorder was use
+3D-4B        ?          
+4C          Countdown until Link can use his sword again after touching a White Bubble  
+4D-4F        ?  
+50          Counts number of enemies killed without taking damage, resets to 0 once it reaches 10 ("10th enemy has the bomb" RAM address)  
+
+51
+5C	 		Vertical Scrolling Offset (high byte)
+
+66          ROM Offset for start of current Song Data (Low Byte)    
+67          ROM Offset for start of current Song Data (High Byte)   
+68           ?  
+69           ?  
+6A          Pulse-2 Channel Frequency Offset    
+6B          Pulse-1 Channel Frequency Offset    
+6C          Offset related to Music Pointers    
+6D           ?  
+6E          Rhythmic Offset             For current note of Pulse 2 Incidental Music
+6F          Rhythmic Countdown          For Pulse 2 incidental music (Uses value at $6E)
+
+70          Link's X-position on the screen
+71          Enemy #1 X-position          Also used for dropped enemy item
+72          Enemy #2 X-position          Also used for dropped enemy item
+73          Enemy #3 X-position          Also used for dropped enemy item
+74          Enemy #4 X-position          Also used for dropped enemy item
+75          Enemy #5 X-position          Also used for dropped enemy item
+76          Enemy #6 X-position          Also used for dropped enemy item
+77          Enemy #4 Projectile X-position
+78          Enemy #1 Projectile X-position 
+79          Enemy #2 Projectile X-position   
+7A          Enemy #3 Projectile and Zola(On Some Screen) X-position
+7B          Zola X position (On Some screen )
+7C           ?
+7D          Link's Sword X-position (As a Melee Weapon)
+7E          Link's Sword X-position (As a Projectile)   
+7F          Boomerang/Bait X-position   
+80          Flame/Bomb #1 X-position
+81          Flame/Bomb #2 X-position
+82          Link's Arrow X-position     
+83           ? 
+ 
+84          Link's Y-position on the screen     
+85          Enemy #1 Y-position          Also used for dropped enemy item
+86          Enemy #2 Y-position          Also used for dropped enemy item
+87          Enemy #3 Y-position          Also used for dropped enemy item
+88          Enemy #4 Y-position          Also used for dropped enemy item
+89          Enemy #5 Y-position          Also used for dropped enemy item
+8A          Enemy #6 Y-position          Also used for dropped enemy item
+8B          Enemy #4 Projectile Y-position
+8C          Enemy #1 Projectile Y-position
+8D          Enemy #2 Projectile Y-position
+8E          Enemy #3 Projectile and Zola(On Some Screen) Y-position
+
+8F          Zola Y-position (On Some Screen)
+90           ?  
+91          Link's Sword Y-position  (As a Melee Weapon)
+92          Link's Sword Y-position  (As a Projectile)   
+93          Boomerang/Bait Y-position   
+94          Flame/Bomb #1 Y-position 
+95          Flame/Bomb #2 Y-position
+96          Link's Arrow Y-position     
+97          Dungeon Floor Item
+
+98          Links Direction             $08=North, $04=South, $01=East, $02=West
+99          Enemy #1 Direction (See Above)
+9A          Enemy #2 Direction (See Above)
+9B          Enemy #3 Direction (See Above)
+9C          Enemy #4 Direction (See Above)
+9D          Enemy #5 Direction (See Above)
+9E          Enemy #6 Direction (See Above)
+9F          Enemy #4 Projectile Direction(See Below)
+A0          Enemy #1 Projectile Direction             $08=North, $04=South, $01=East, $02=West(Diagonal direction are equal to $(Xdirection+Ydirection))
+A1          Enemy #2 Projectile Direction (See Above)
+A2          Enemy #3 Projectile Direction (See Above)
+A3           ?
+A4           ?
+A5          Link's Sword Direction (As a Melee weapon)          $08=North, $04=South, $01=East, $02=West
+A6          Link's Sword Direction (As a Projectile)
+A7          Boomerang Direction 
+A8          Flame (Candle or Magic Rod) Direction
+A9           ?
+AA          Arrow and Magic Rod's projectile Direction $08=North, $04=South, $01=East, $02=West
+AB          Type of item in screen  The value indicates item type (Bomb, Heart, Rupee, etc)
+AC          Link's Animation
+
+AD			Used for Text in Caves
+AD          Type of dropped enemy item #1 
+AE          Type of dropped enemy item #2 
+AF          Type of dropped enemy item #3 
+B0          Type of dropped enemy item #4 
+B1          Type of dropped enemy item #5 
+B2          Type of dropped enemy item #6 
+
+B3          State of Enemy #4 Projectile (See Below)
+B4          State of Enemy #1 Projectile         $00=Not Existant, $10=In Movement, $20=Start of Blowing Animation, $28=End of Blowing Animation, $30=Being Deflected by Shield
+B5          State of Enemy #2 Projectile (See Above)
+B6          State of Enemy #3 Projectile (See Above)
+B7          State of Enemy #? Projectile (See Above)
+B8           ?
+B9          Link's Sword Animation
+BA          State of Link's Sword(As a Projectile) and Magic             $00=Not Existant, $10=In Movement, $11=Blowing Animation, $80=Magic Onscreen
+BB          State of Bait and Link's Boomerang            $10-$17=Rotation of boomerang when going away, $24=Turnaround of Boomerang, $28=Blowing Animation of Boomerang, $50-$57=Rotation of boomerang when coming back, $80=Bait Onscreen(First cycle of 0x0037), $81=Bait Onscreen(Second cycle of 0x0037), $82 Bait Onscreen(Last cycle of 0x0037)
+BC          State of Link's Bomb and Flame #1          $12=Bomb Onscreen, $13=Bomb's Smoke Onscreen, $14=Bomb's Smoke Dissappearing, $21=Flame #1 is Moving, $22=Flame #1 is static
+BD          State of Link's Flame #2            $21=Flame #2 is Moving, $22=Flame #2 is static
+BE          State of Link's Arrow and Magical rod animation          $00=Not Existant, $10=In Movement, $20=Start of Blowing Animation, $28=End of Blowing Animation, $31-$35=Magical Rod Animation
+BF           ?
+C1           ?
+C2          Dropped Enemy Item  
+C3          Dropped Enemy Item  
+C4-DF        ?  
+E0          Game Paused?                $00=No, $01=Yes
+E1          Item Menu Scrolling Animation  
+E2-E7        ?          
+E8          Screen Scrolling?           $00=No, $08=Northbound, $04=Southbound, $01=Eastbound, $02=Westbound
+E9           ?          
+EA           ?          
+EB          Map location                Value equals map x location + 0x10 * map y location
+EC			Next Location
+ED-F7        ?  
+F8          Player 1 Buttons            (Last Frame)   R = 1, L = 2, D = 4, U = 8, Start = 10, Select = 20, B = 40, A = 80
+F9          Player 2 Buttons            (Last Frame)   (See above)
+FA          Player 1 Buttons            Pressed    $08=Up, $04=Down, $01=Right, $02=Left $80=A, $40=B, $20=Select, $10=Start 
+FB          Player 2 Buttons            Pressed    (See Above)
+FC          Subscreen Y-scroll position Used for storyboard text and subscreen position
+FD          Subscreen X-scroll position This is always zero when not scrolling.
+FE           ?  
+FF           ?
+
+100-1FF		Stack Memory
+			Format?? Content??
+
+1EF-1FF		End of Stack Content??
+
+200-2FF		AOM Table "Mirror??"
+200			Heart Position Save file Select Screen
+		
+			Format:??
+			F8=??Emtery
+
+254			Ypos Link object "Dot" on Map:		
+255			Tile
+256			Palette
+257			Xpos
+
+258			Ypos Boss object "Dot" on Map:		
+259			Tile
+25A			Palette
+25B			Xpos
+
+			
+			
+302-32A		HUD Tilemap (to updated PPU over $2007)
+			Hex Values 20B608 2424242424242424 20D608 2424242424242424 206C03210024 20AC03210024 20CC03210024 FF
+			Desciption uuppss nnnnnnnnnnnnnnnn uuppss nnnnnnnnnnnnnnnn uuppssnnnnnn uuppssnnnnnn uuppssnnnnnn ff    
+							  HeartRowTop             HeartRowbot      rupee         key          bomb   	    
+			
+			uu = PPU page number high
+			pp = PPU page number low
+			ss = Length of data transfered
+			nn = Symbols for nametable
+			ff = End of Table
+-33F??		Open Space??
+
+
+
+34F: ,X Enemy Code
+
+358: Event trigger. $5E=LakeDrain, $01-$3f, Enemies,$50 oldman,$60,Drops
+35A: Event Code ?
+
+394,X: Inter-Tile Offset (0-F)
+3A8,X: Time before item disappears
+3BC,X: Link/Enemy Velocity/SubSpeed
+
+3F8,X: Movement Direction ?
+
+405,X
+
+410 
+412,X: Enemy Status
+415 What text to write (caves stores)
+416	Offset of letters
+
+RAM     Function                    Details
+------- --------------------------- -----------------------
+04CD    Screen options              The entry from ROM:0x18680 for the current room     Overworld: stair placement, quest secrets, Link's V placement, monster entry
+0513    Candle used                 Whether Link has used the candle on the current screen  $00=No, $01=Yes
+051D								World offset byte for graphics loading  
+0523								Randomizer
+0526    Cave return screen          Overworld room to return to when exiting the underworld   
+052A			 					Enemies Killed (resets after 9)
+052E    Sword disable               Red Bubble Sword Disable switch: $01 if Link's use of his sword has been disabled by a red bubble, $00 otherwise.
+052F    Maze counter                Used for screens 0x61 (forest maze) and 0x1B (mountain room south of level 5)    
+05F0                                Related to current frequency being played by Triangle channel   
+05F1    Triangle Reverb             Reverb on/off status for Triangle on current song   
+05F4    Rhythm table pointer        for current song   
+0600    Song Trigger                Song ID#'s are written here to activate; value is copied over to $609 within a frame. $600 is then zeroed-out.
+0602    Pulse 2 I.M. Trigger        Incidental Music ID#'s for Pulse 2 are written here; value is copied over to $607 within a frame. 
+0604    Pulse 1 I.M. Trigger        Incidental Music ID#'s for Pulse 1 are written here; value is copied over to $605 within a frame.
+0605    Pulse 1 I.M. Type           $80=?, $40=1 Heart Warning, $20=Set Bomb, $10=Small Heart Pickup, $08=Key Pickup, $04=Magic Cast, $02=Boomerang Stun, $01=Arrow Deflected            
+0606    Sound Effects   			(see sound effect table below)
+0607    Pulse 2 I.M. Type           $80=Death Spiral, $40=Continue Screen, $20=Enemy Burst, $10=Whistle, $08=Bomb Pickup, $04=Secret Revealed, $02=Key Appears, $01=Rupee Pickup
+0609    Songtype currently active   $80=Title, $40=Dungeon, $20=Level 9, $10=Ending, $08=Item, $04=Triforce, $02=Ganon, $01=Overworld
+060A    Pulse 2 pos                 Current position within Pulse 2 part (with respect to overall music program)    
+060B    Pulse 1 pos                 Current position within Pulse 1 part (with respect to overall music program)    
+060C    Triangle pos                Current position within Triangle part (with respect to overall music program)   
+060D    Noise pos                   Current position within Noise part (with respect to overall music program)  
+060E     ?  
+060F    Pulse 1 cycle               Current cycle duration for notes played on Pulse 1 channel  Uses value from rhythm lookup table
+0610    Pulse 2 cycle               Current cycle duration for notes played on Pulse 2 channel  Uses value from rhythm lookup table
+0611    Pulse 2 rhythm              Countdown from Pulse 2's current rhythm offset  Uses value from rhythm lookup table
+0612    Pulse 2 countdown           volume fade  
+0613    Pulse 1 rhythem             Countdown from Pulse 1's current rhythm offset  Uses value from rhythm lookup table
+0614    Pulse 1 countdown           volume fade  
+0615    Triangle cycle              Current cycle duration for notes played on Triangle channel     Uses value from rhythm lookup table
+0616    Note countdown              Countdown from value in $615 until next note is to be played    
+0617     ?  
+0618    Pulse 2 I.M. offset         Offset into Pulse 2 Incidental Music data 
+0619    Pulse reverb                Reverb on/off status for BOTH Pulse channels on current song    $80=on, $01=off
+061A     ?  
+061B    Pulse 2 rhythm counter      Countup to Pulse 2 rhythm offset    
+061C    Pulse 1 rhythm counter      Countup to Pulse 1 rhythm offset    
+061D                                ??? (seems to count upward as $616 counts down)    Value is always [$615] - [$616] + 1.
+061E    Triangle repeat counter     Number of repeats remaining if in Triangle repeat cycle     
+061F    Triangle Song pos           Position within song program of current Triangle repeat coda (return point)     
+0620    Screen history write index  Contains the index of the next screen history slot to write to (see below)
+0621    Screen history 1            One of five recently visited map locations
+0622    Screen history 2            One of five recently visited map locations
+0623    Screen history 3            One of five recently visited map locations
+0624    Screen history 4            One of five recently visited map locations
+0625    Screen history 5            One of five recently visited map locations
+0626     ?  
+0627    Killed enemy count          Number of killed enemies in current screen
+0628    Unused  
+0629    Unused  
+062A    Unused  
+062B    Unused  
+062C    Unused  
+062D    Current quest               save slot 1: $00=First, $01=Second
+062E    Current quest               save slot 2: $00=First, $01=Second
+062F    Current quest               save slot 3: $00=First, $01=Second
+0630    Number of deaths            save slot 1   
+0631    Number of deaths            save slot 2   
+0632    Number of deaths            save slot 3   
+0633    Slot 1 Present              Save Slot 1 present (Cursor will bypass Slot 1 if set to $00)
+0634    Slot 2 Present              Save Slot 2 present (Cursor will bypass Slot 2 if set to $00)
+0635    Slot 3 Present              Save Slot 3 present (Cursor will bypass Slot 3 if set to $00)
+0636    Register Your Name Present  Register Your Name option present (Cursor will bypass "Register Your Name" if set to $00)
+0637    Elimination Mode Present    Elimination Mode option present (Cursor will bypass "Elimination Mode" if set to $00)
+0638    Slot 1 Player name          Player Name for Save Slot 1 (8 bytes)
+0640    Slot 2 Player name          Player Name for Save Slot 2 (8 bytes)
+0648    Slot 3 Player name          Player Name for Save Slot 3 (8 bytes)
+0650    Heart Cont. (File Select)   Low Nibble = how many hearts are filled. High Nybble = No. of heart containers - 1
+                                    Ex: $22 = 3 Heart Containers with all 3 filled
+0651    Fill hearts (File Select)   $FF = Full.
+0652    Heart Cont. (File Select)   Low Nibble = how many hearts are filled. High Nybble = No. of heart containers - 1
+                                    Ex: $22 = 3 Heart Containers with all 3 filled
+0653    Fill hearts (File Select)   $FF = Full.
+0654    Heart Cont. (File Select)   Low Nibble = how many hearts are filled. High Nybble = No. of heart containers - 1
+                                    Ex: $22 = 3 Heart Containers with all 3 filled
+0655    Fill hearts (File Select)   $FF = Full.
+0656    Selected item pos [B]       Cursor position for selecting Link's B item     
+0657    Current sword               $00=None, $01=Sword, $02=White Sword, $03=Magical Sword
+0658    Number of Bombs     
+0659    Arrow status                $00=None, $01=Arrow, $02=Silver Arrow
+065A    Bow in Inventory            $00=False, $01=True
+065B    Status of candle            $00=None, $01=Blue Candle, $02=Red Candle
+065C    Whistle in Inventory        $00=False, $01=True
+065D    Food in Inventory           $00=False, $01=True
+065E    Potion in Inventory         $00=None/Letter, $01=Life Potion, $02=2nd Potion
+065F    Magical Rod in Inventory    $00=False, $01=True
+0660    Raft in Inventory           $00=False, $01=True
+0661    Magic Book in Inventory     $00=False, $01=True
+0662    Ring in Inventory           $00-None, $01-Blue Ring, $02-Red Ring. Note: Changing this value will not change Link's color.
+0663    Step Ladder in Inventory    $00=False, $01=True
+0664    Magical Key in Inventory    $00=False, $01=True
+0665    Power Bracelet in Invenotry $00=False, $01=True
+0666    Letter in Inventory         $00=False, $01=True, Link can buy potions from the old woman if $02.
+0667    Compass in Inventory        One bit per level
+0668    Map in Inventory            One bit per level
+0669    Compass in Inventory        (Level 9)
+066A    Map in Inventory            (Level 9)
+066B	Free??
+066C    Clock possessed             $00=False, $01=True
+066D    Number of Rupees
+066E    Number of Keys
+066F    Heart Containers            Low Nibble = how many hearts are filled. High Nybble = Number of heart containers - 1
+                                    Ex: $10 = 2 Heart Containers with none filled
+										xxxx ....	Number of Heart Containers
+										.... xxxx	Number of filled hearts
+0670    Partial heart               $00 = empty, $01 to $7F = half full, $80 to $FF = full.
+0671    Triforce pieces             One bit per piece
+0674    Boomerang in Inventory      $00=False, $01=True. Note: 0x0675 overrides this variable.
+0675    Magical Boomerang Inventory	$00=False, $01=True.
+0676    Magic Shield in Inventory   $00=False, $01=True.
+0677	Free??
+0678	Free??
+0679	Free??
+067A	Free??
+067B	Free??
+067C    Maximum number of bombs     Starts out as $08.
+067D    Number of rupees to add     
+067E    Number of rupees to subtract
+067F	?? Screen State (Bit 7 = Secret Discovered)
+
+
+
+700-800??
+
+
+
+<------------------------------------------------>
+ |   Formats 								   |
+<------------------------------------------------>
+
+Sounds: (RAM $602)
+
+	01 = Rupee Taken
+	02 = Object Appears
+	04 = Secret Found
+	08 = Object Taken
+	10 = Flute Chime
+	20 = Enemy Killed
+	40 = Game Over Tune
+	80 = Link Death
+	
+	
+	
+Iteam ID# Stores,..,..
+	00=Sword
+	01=Bomb
+	02=Arrow
+	03=Bow
+	04=Candle
+	05=Flote
+	06=Bait
+	07=Potion
+	08=Wand
+	09=Raft
+	0A=Book
+	0B=Ring
+	0C=Ladder
+	0D=Alpha Key
+	0E=Braclet 
+	0F=Letter Blue
+	10=Compass
+	11=Letter Orange 1
+	12=Compass
+	13=Letter Orange 2
+	14=Ferry
+	15=Clock
+	16=Rubby one
+	17=Key
+	18=HeartContainer
+	19=Heart
+	1A=Triforce
+	1B=Glitched 1
+	1C=Rubby Blue
+	1D=Bumerang
+	1E=Bumerang Blue
+	1F=BigShild
+	20=Glitched (MasterSword) 2
+	21=Glitched 3
+	22=Glitched 4
+	23=Glitched 5 (MagicBeam)
+	24=Glitched 6 (PuffCloud) 
+	25=Glitched 7
+	..
+	FF=Glitched E1
+
+
+Iteam ID# Enemy,..,..
+	00=Bomb
+	01=Sword Wood
+	02=Sword Iron
+	03=Sword Master
+	04=Bait
+	05=Flute
+	06=CandleBlue
+	07=CandleRed
+	08=Glitch (looks like poop)
+	09=Nothing
+	0A=Bow
+	0B=Alpha Key
+	0C=Raft
+	0D=Ladder
+	0E=Glitched
+	0F=Rubby Blue
+	10=Wand
+	11=Book
+	12=Ring Blue
+	13=Ring Red
+	14=Bracelet
+	15=Letter Blue
+	16=Compass
+	17=Letter Orange
+	18=Rubby one
+	19=Key
+	1A=HeartContainer
+	1B=Triforce
+	1C=BigShild
+	1D=Bumerang
+	1E=Bumerang Blue
+	1F=Potion Blue
+	20=Potion Red
+	21=Clock
+	22=Heart
+	23=Ferry
+	24=Glitched (Ferry)
+	..
+	28=Glitched (remove bomb)
+	29=Glitched (double bomb)
+	..
+	55=Arrow Normal??
+	.. till
+	FF=Glitched Iteams
+
+Text Table:
+
+	00=0
+	01=1
+	02=2
+	03=3
+	04=4
+	05=5
+	06=6
+	07=7
+	08=8
+	09=9
+	0A=a
+	0B=b
+	0C=c
+	0D=d
+	0E=e
+	0F=f
+	10=g
+	11=h
+	12=i
+	13=j
+	14=k
+	15=l
+	16=m
+	17=n
+	18=o
+	19=p
+	1A=q
+	1B=r
+	1C=s
+	1D=t
+	1E=u
+	1F=v
+	20=w
+	21=x
+	22=y
+	23=z
+	24=_ 
+	25=~
+	28=,
+	29=!
+	2A='
+	2B=&
+	2C=.
+	2D="
+	2E=?
+	2F=-
+
+
+
+
+<------------------------------------------------>
+ |   Cartridge SRAM Data					    |
+<------------------------------------------------>
+
+
+RAM		ROM				Difference
+
+6000					NameTable Player Name Save one
+600a					NameTable Player Name Save tow
+6010					NameTable Player Name Save three
+
+6530	->	6AAF				Tile Mapping Codes for Current Screen (B * 2 * 20 = 2C0 bytes)
+
+67f0					..??
+6804    				Link's tunic color          $29 = green, $32 = blue, $16 = red
+
+6880					This is used in Game but also for SaveFunction. 
+6880					SaveStatePlayerOne	Name??
+6898					SaveStatePlayerOne 	Iteam
+						PRG $a6c6
+							LDY #$27 		TableSize                
+							LDA $0657,Y     $67e  RAM Location      
+							STA ($C0),Y     $6997 SRAM Location      
+							DEY
+						PRG $a7b3 			After it will be copyed to beginning of SRAM 
+							LDY #$07                 
+							LDA ($C4),Y    	$6883          
+							STA ($04),Y     $6005         
+							DEY                      
+68c0					??							
+6910-6a8f				End of Player one SaveTable??
+							
+6B92    				Link's tunic color          Overwritten with 0x6804 when Link exits a cave or enters or exits a level
+
+6827	->	19D0F		134E8
+
+
+Pointer table for Column Definitions
+
+687E	->	8A00		2182		Screen Attributes - Table 0
+68FE	->	8A80		2182		Screen Attributes - Table 1
+697E	->	8B00		2182		Screen Attributes - Table 2
+69FE	->	8B80		2182		Screen Attributes - Table 3
+6A7E	->	8C00		2182		Screen Attributes - Table 4
+6AFE	->	8C80		2182		Screen Attributes - Table 5
+
+6BA2	->	Enemy Quantities (4 bytes)
+6BA6	->	Link's Starting Vertical Position (Various Data)
+6BA7	->	Stairs Positions (4 bytes)
+
+6BAF-6BB0	19331		12782
+
+
+Offset in Cartridge RAM for Screen Status (Overworld Various Data)
+
+6BB1		Level Number
+
+6C90	->	6500		790		Code
+6D80	->	65F0
+6DC7	->	6637
+6E39	->	66A9
+6E6E	->	66DE
+6EF9	->	6769
+6F29	->	6799
+6F73	->	67E3
+700F	->	687F
+701F	->	688F		790
+728E	->	6AFE		790		Code (called at 16A52)
+7314	->	6B84		790
+73AA	->	6C1A		790
+7613	->	6E83		790		Table
+
+7A4A	->	72BA		790		Enemy Damage Table
+
+7E26	->	7696		790
+
+
+
+<------------------------------------------------>
+ |   PRG ROM THINGS								   |
+<------------------------------------------------>
+
+Info:
+Enemy Drop List PRG 13040 cpu b042
+	List A
+	$1304c
+	$13051-13055
+ 
+	130bb hardcoded ferry (23)
+
+$prg 1942b Spawn room for Link lvl 1
+$prg 1942c Boss room for lvl 1
+$69ad Offset throu sward dungeon (7116 sword)
+
+
+$e862 Routine to draw bombed tiles
+
+Go to walk routine after pressing D-Pad
+	//prg $1f0ac Decides where you press (cpu f0ac)
+	//  LDA $0F   		Lade Value??                
+	//  LSR A         	Devide A          
+	//  BCS $F0CB     	Branch walk right (JSR $6FC1) Left     
+	//  LSR A          Devide A           
+	//  BCS $F0D5     	Branch walk left (JSR $6FE8) Right        
+	//  LSR A          Devide A        
+	//  BCS $F0C1     	Branch walk left (JSR $6FC1) Up       
+	//  JSR $6FE8     	(JSR $6FE8) Down           
+	//  LDA $84,X                
+	//  SBC #$00                 
+	//  STA $84,X                
+	//  RTS                  
