@@ -54,7 +54,10 @@ PPUDestLow:
 	db $28,$29,$2A,$2B
 org $AC22	// 0x0AC32
 PPUDestOffset:	// Line Breaks
-	db $46,$10,$90,$84,$24,$30,$01,$48
+	//db $46,$10,$90,$84,$24,$30,$01,$48
+	//db $03,$25,$05,$40
+	//          vv      vv  vv
+	db $46,$10,$50,$84,$30,$60,$01,$48
 	db $03,$25,$05,$40
 
 // Pointer low byte for each entry
@@ -136,7 +139,8 @@ credits_05:
 credits_06:
 	db $09,$0C,"DESIGNER:"	// Designer... Toshihiko Nakago
 credits_07:
-	db $0B,$0B,"PROGRAMMER:"		// Programmer... Yasunari Soejima
+	//db $0B,$0B,"PROGRAMMER:"		// Programmer... Yasunari Soejima
+	db $01,$0B," "
 credits_08:
 	db $10,$08,"YASUNARI SOEJIMA"		// Yasunari Soejima
 credits_09:
@@ -211,14 +215,25 @@ LoopText3:
 	rts
 
 Text4:
-	cmp.b #$22
-	bne EndExtraCredit
-	ldx.b #$13	// Length of name
+	cmp.b #$21
+	bne Text5
+	ldx.b #$11	// Length of name
 LoopText4:
 	lda.w credits_New3,x
 	sta.w $0309,x
 	dex
 	bne LoopText4
+	rts
+
+Text5:
+	cmp.b #$22
+	bne EndExtraCredit
+	ldx.b #$13	// Length of name
+LoopText5:
+	lda.w credits_New4,x
+	sta.w $0309,x
+	dex
+	bne LoopText5
 	rts
 
 EndExtraCredit:	
@@ -229,6 +244,8 @@ credits_New1:
 credits_New2:
 	db $FF,"    TAKASHI TEZUKA"	
 credits_New3:
+	db $FF,"      PROGRAMMER:"
+credits_New4:
 	db $FF,"   TOSHIHIKO NAKAGO"		
 //credits_New5:
 //	db $FF,"Toshihiko Nakago"

@@ -165,9 +165,7 @@ bank 7; org $F322	// 0x1F332, Per-frame update hijack
 // This code really  belongs under the "Map blip blinking" section, but is placed with DoWholeMapHijack, because
 // they need to be placed together in the tiny bit of free space in the fixed bank.
 
-// However, this was moved back for compilation with xkas, as we can specify the bank for each code without issues.
 
-// COLLIDES WITH MMC5
 bank 7; org $FFD6	// 0x1FFE6
 SafeBlipUpdate:
 // Only runs the blip-flashing code when it is banked in.
@@ -501,7 +499,7 @@ define	PlayerMapData	$7F50
 define	PpuMapMacroBase	$6BCD	// Map macros
 define	SingleTileMacro	$6BFA	// Single map tile macro
 define	SingleTileMacroByte	$6BFD
-define	PpuMapMacroLen	$0B		// 11 Bytes: 8 tiles + 3-byte header
+define	PpuMapMacroLen	$0B	// 11 Bytes: 8 tiles + 3-byte header
 define	MapTiles	$30
 
 
@@ -518,14 +516,14 @@ l_BC30:
 	stx.w {mapVar_X}	// Store mapVar_X
 	sty.w {mapVar_Y}	// Store mapVar_Y
 
-	txa		// X = X * 2
+	txa			// X = X * 2
 	asl
 	tax
 
 // We need to extract four bits out of the player’s "explored map data" and use them as a tile index
 	lda.w {MapRam},x	// Load map byte, MapRam,X
 	jsr ProcessMapByte	// Get relevant two bits, ProcessMapByte
-	sta.w {mapVar}	// Store semi-calculated tile value, mapVar
+	sta.w {mapVar}		// Store semi-calculated tile value, mapVar
  	sta.w {MapBits_Left}	// Store at MapBits_Left address
 
 	ldy.w {mapVar_Y}	// Load mapVar_Y
@@ -534,7 +532,7 @@ l_BC30:
 	sta.w {MapBits_Right}	// Store to MapBits_Right address
 
 // Set flag to update single tile on screen
-	lda.b #$01	// Load $01
+	lda.b #$01		// Load $01
 	sta.w {tileFlag}	// Store at tileFlag address $6C00
 	jsr RenderMapTile	// Jump to RenderMapTile routine
 	rts
@@ -565,16 +563,16 @@ l_BC63:		// BC63:
 
 DrawWholeMap:
 // Prepare PPU to write map data
-	lda.w $2002	// AD 02 20 -> PPU_STATUS = #$30
+	lda.w $2002		// AD 02 20 -> PPU_STATUS = #$30
 	lda.b #{VRAM_MapTiles}>>8	// Set PPU address #>VRAM_MapTiles (High byte)
-	sta.w $2006	// 8D 06 20 -> PPU_ADDRESS = #$00
+	sta.w $2006		// 8D 06 20 -> PPU_ADDRESS = #$00
 	lda.b #{VRAM_MapTiles}		// Set PPU address #>VRAM_MapTiles (Low byte)
-	sta.w $2006	// 8D 06 20 -> PPU_ADDRESS = #$00
+	sta.w $2006		// 8D 06 20 -> PPU_ADDRESS = #$00
 
-	lda.b #$00	// Loop over Y
+	lda.b #$00		// Loop over Y
 	sta.w {mapLoop_Y}	// Store at mapLoop_Y address
 l_BC78:		// BC78
-	lda.b #$00	// Loop over X
+	lda.b #$00		// Loop over X
 	sta.w {mapLoop_X}	// Store at mapLoop_X address
 l_BC7D:		// BC7D
 	ldx.w {mapLoop_X}	// Render one map tile (mapLoop_X)
@@ -589,13 +587,13 @@ l_BC7D:		// BC7D
 
 	inc.w {mapLoop_X}	// Increase value of mapLoop_X
 	lda.w {mapLoop_X}	// Load value of mapLoop_X
-	cmp.b #$08	// Compare with $08
-	bne l_BC7D	// BNE $E6
+	cmp.b #$08		// Compare with $08
+	bne l_BC7D		// BNE $E6
 
 	inc.w {mapLoop_Y}	// Increase value of mapLoop_Y
 	lda.w {mapLoop_Y}	// Load value of mapLoop_Y
-	cmp.b #$04	// Compare with $04
-	bne l_BC78	// BNE $D7
+	cmp.b #$04		// Compare with $04
+	bne l_BC78		// BNE $D7
 	rts
 
 SendTileToPPU:	// $BCA2, 0x17CB2
@@ -802,7 +800,6 @@ bank 6; org $8089	// 0x18099 - Free space
 // This routine must go in the fixed bank because bank-swapping is
 // needed to run the desired code.
 
-// COLLIDES WITH MMC5
 bank 7; org $FFC0	// 0x1FFD0 - Start of Unused Space
 DoWholeMapHijack:
 	lda.b {LevelNumber}	// Only run this routine for the overworld
