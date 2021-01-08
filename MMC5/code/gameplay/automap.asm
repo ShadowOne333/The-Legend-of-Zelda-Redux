@@ -228,7 +228,7 @@ org $8BA1
 	nop
 //--------------------------------------------
 
-org $a8be
+org $A8BE
 	jsr VisitedMapFlags		// !!
 
 org $A8DE	// May be the initial thing should not be used?

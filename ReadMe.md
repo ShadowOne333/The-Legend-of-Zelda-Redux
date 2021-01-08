@@ -62,6 +62,8 @@ https://www.romhacking.net/forum/index.php?topic=29403.0
 * **[DONE]** Be able to kill the Pols Voice by playing the flute, and also with arrows to retain the original way of killing them (Thanks to stratoform for this!)
 * **[DONE]** Flip the heart rows in the File Select Screen (Thanks again stratoform!)
 * **[DONE]** New column definitions to make the overworld look more polished, adding corners, rounded edges and other slight stuff so the overworld doesn't look as blocky.
+* **[DONE]** Make recently bombed overworld walls have a new arched cave entrance tile, without the tile losing its properties from the previous tile $24 (new tiles are $54-$57): https://www.romhacking.net/forum/index.php?topic=29403.msg404505#msg404505
+* **[DONE]** Rework the Credits for the game to have full names show up for each developer (like in Zelda 2 Redux): https://www.romhacking.net/forum/index.php?topic=29403.msg403636#msg403636
 
 -------------------
 
@@ -78,9 +80,7 @@ https://www.romhacking.net/forum/index.php?topic=29403.0
 ## Help needed for these points:
 
 * Save the amount of hearts you last had if the game was saved manually, so when you load, you start with the same amount of life (this I'm not sure if it will be implemented in the end hack)
-* Make recently bombed overworld walls have a new arched cave entrance tile, without the tile losing its properties from the previous tile $24 (new tiles are $54-$57): https://www.romhacking.net/forum/index.php?topic=29403.msg404505#msg404505
-* Rework the Credits for the game to have full names show up for each developer (like in Zelda 2 Redux): https://www.romhacking.net/forum/index.php?topic=29403.msg403636#msg403636
-* Implement water animation. Either by using the current CHR-RAM method, or changing to CHR-ROM or MMC3 mappers with bank swapping for animation.
+* Implement water animation. MMC5 animation is already working, only one pending is MMC1 (partially working, just need to fix Automap, Visible Secrets and Item Toggle for a full release).
 
 
 -------------------
@@ -109,13 +109,13 @@ If you want to apply any of the optional patches, you can use each Optional patc
 ## Credits
 
 * **Trax** - For his amazing disassembly of Zelda 1, which helped with a ton of stuff, and also for a lot of feedback and help in the development of this hack.
-* **BogaaBogaa** - For his incredible help with the Arrows and 999 rupees code, and with flipping the Heart/Map positions in the HUD
-* **DarkSamus993** - For his ASM help towards some hacks (like the Select button Item switch)
-* **Stratoform** - For his help and code towards the Pols Voice flute code, fixing both the remaining stuff from porting the PRG1 Game Over screen's flashing and the cracked overworld walls collision, the flip hearts code and the max arrow limits
+* **BogaaBogaa** - For his incredible help with the Arrows and 999 rupees code, flipping the Heart/Map positions in the HUD, reworked credits, MMC5 bank swaping and its animation and the extra dialogue for the cave warp screens.
+* **Fiskbit** - For the MMC1 Animation, which uses a special NES 2.0 header.
+* **DarkSamus993** - For his ASM help towards some hacks (like the Select button Item switch).
+* **Stratoform** - For his help and code towards the Pols Voice flute code, fixing both the remaining stuff from porting the PRG1 Game Over screen's flashing and the cracked overworld walls collision, the flip hearts code and the max arrow limits.
 * **snarfblam** - For the Automap hack, which was disassembled and modified to work with 1/4 hearts instead of 1/8 exclusively for this project
-* **gzip** - For his Select button fix and the slow waterfall animation
-* **abw** - For the code cleanup and optimization on Bank 6 that made the repointing of the "LEVEL-X" text possible
-* **lexluthermeister** - For his help on creating the Optional patch for the new bosses
+* **gzip** - For his Select button fix and the title screen slow waterfall animation.
+* **lexluthermeister** - For his help on creating the Optional patch for the new bosses.
 * All other users that gave their feedback on possible ways to improve the game over at the [RomHacking.net](https://www.romhacking.net/forum/index.php?topic=29403.0) thread, and those that gave insightful ideas and mockups!
 
 -------------------
