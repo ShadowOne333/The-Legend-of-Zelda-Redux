@@ -47,6 +47,10 @@ define	kMmc1Control4KbChr	%0010000
 // This should be a power of 2. Additional banks will have to be added to the dAnimatedGraphicsBank tables.
 define kNumAnimationBanks	4
 
+// Overworld secret tiles offset (Redux)
+define dOW_Secrets	$AC10	// 0x0EC20
+define dOW_Secrets_End	$ACD0	// 0x0ECE0
+
 
 //****************************************
 //	iNES Header
@@ -316,36 +320,66 @@ dAnimatedGraphicsBankListHigh:
     db dAnimatedGraphicsBank3>>8
 
 // Destination (big endian), source (little endian), size (little endian). Max 256 bytes. Negative-terminated.
+// GFX		PPU
+// Automap	$1300
+// Secrets	$1540
+// 1st Water	$1780
+// 2nd Water	$1880
+
 dAnimatedGraphicsBank1:
-	db $18,$90
-	dw dWaterfallFrame1
-	dw dWaterfallFrame1_End-dWaterfallFrame1
+// Overworld secrets
+	db $15,$40
+	dw {dOW_Secrets}
+	dw {dOW_Secrets_End}-{dOW_Secrets}
+
+// 1st Half of Water graphics
+	db $17,$80
+	dw dOW_1st_Frame1
+	dw dOW_1st_Frame1_End-dOW_1st_Frame1
+
+// 2nd Half of Water graphics
+	db $18,$80
+	dw dOW_2nd_Frame1
+	dw dOW_2nd_Frame1_End-dOW_2nd_Frame1
 	db $FF
 
-//.IF $ - dAnimatedGraphicsBank1 > 256
-//	.ERROR dAnimatedGraphicsBank1 too large.
-//.ENDIF
 
 dAnimatedGraphicsBank2:
-	db $18,$90
-	dw dWaterfallFrame2
-	dw dWaterfallFrame2_End-dWaterfallFrame2
+// Overworld secrets
+	db $15,$40
+	dw {dOW_Secrets}
+	dw {dOW_Secrets_End}-{dOW_Secrets}
+
+// 1st Half of Water graphics
+	db $17,$80
+	dw dOW_1st_Frame2
+	dw dOW_1st_Frame2_End-dOW_1st_Frame2
+
+// 2nd Half of Water graphics
+	db $18,$80
+	dw dOW_2nd_Frame2
+	dw dOW_2nd_Frame2_End-dOW_2nd_Frame2
 	db $FF
 
-//.IF $ - dAnimatedGraphicsBank2 > 256
-//	.ERROR dAnimatedGraphicsBank2 too large.
-//.ENDIF
 
 dAnimatedGraphicsBank3:
-	db $18,$90
-	dw dWaterfallFrame3
-	dw dWaterfallFrame3_End-dWaterfallFrame3
+// Overworld secrets
+	db $15,$40
+	dw {dOW_Secrets}
+	dw {dOW_Secrets_End}-{dOW_Secrets}
+
+// 1st Half of Water graphics
+	db $17,$80
+	dw dOW_1st_Frame3
+	dw dOW_1st_Frame3_End-dOW_1st_Frame3
+
+// 2nd Half of Water graphics
+	db $18,$80
+	dw dOW_2nd_Frame3
+	dw dOW_2nd_Frame3_End-dOW_2nd_Frame3
 	db $FF
 
-//.IF $ - dAnimatedGraphicsBank3 > 256
-//	.ERROR dAnimatedGraphicsBank3 too large.
-//.ENDIF
-
+//------------------------------------
 
 CopyAnimatedTiles:
 	ldx.b $04
@@ -395,22 +429,36 @@ CopyAnimatedTiles_Done:
 	rts
 
 
-dWaterfallFrame1:
-	incbin code/animation/waterfall_frame1.chr
-dWaterfallFrame1_End:
+// 780->83F, 880->99F
+// OW Water tiles, 1st Half, 1st Frame
+dOW_1st_Frame1:
+	incbin code/animation/ow_1st_frame1.chr
+dOW_1st_Frame1_End:
 
-dWaterfallFrame2:
-	incbin code/animation/waterfall_frame2.chr
-dWaterfallFrame2_End:
+// OW Water tiles, 2nd Half, 1st Frame
+dOW_2nd_Frame1:
+	incbin code/animation/ow_2nd_frame1.chr
+dOW_2nd_Frame1_End:
 
-dWaterfallFrame3:
-	incbin code/animation/waterfall_frame3.chr
-dWaterfallFrame3_End:
+// OW Water tiles, 1st Half, 2nd Frame
+dOW_1st_Frame2:
+	incbin code/animation/ow_1st_frame2.chr
+dOW_1st_Frame2_End:
 
+// OW Water tiles, 2nd Half, 2nd Frame
+dOW_2nd_Frame2:
+	incbin code/animation/ow_2nd_frame2.chr
+dOW_2nd_Frame2_End:
 
-//.IF $ > $BF50
-//	.ERROR Exceeded region at 03:ABDB.
-//.ENDIF
+// OW Water tiles, 1st Half, 3rd Frame
+dOW_1st_Frame3:
+	incbin code/animation/ow_1st_frame3.chr
+dOW_1st_Frame3_End:
+
+// OW Water tiles, 2nd Half, 3rd Frame
+dOW_2nd_Frame3:
+	incbin code/animation/ow_2nd_frame3.chr
+dOW_2nd_Frame3_End:
 
 
 //----------------------------------------

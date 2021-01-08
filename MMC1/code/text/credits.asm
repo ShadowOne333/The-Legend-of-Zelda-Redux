@@ -54,11 +54,8 @@ PPUDestLow:
 	db $28,$29,$2A,$2B
 org $AC22	// 0x0AC32
 PPUDestOffset:	// Line Breaks
-	//db $46,$10,$90,$84,$24,$30,$01,$48
-	//db $03,$25,$05,$40
-	//          vv      vv  vv
-	db $46,$10,$50,$84,$30,$60,$01,$48
-	db $03,$25,$05,$40
+	db $46,$10,$50,$84,$30,$60,$01,$48	// Originally $46,$10,$90,$84,$24,$30,$01,$48
+	db $03,$25,$05,$40	// Originally $03,$25,$05,$40
 
 // Pointer low byte for each entry
 org $AC2E	// 0x0AC3E
@@ -69,7 +66,7 @@ low_bytes:
 	db credits_12,credits_13,credits_14,credits_15
 	db credits_16,credits_17,credits_18,credits_19
 	db credits_20,credits_21,credits_22
-	db credits_New1,credits_New2,credits_New3
+	db credits_New1,credits_New2,credits_New3,credits_New4
 // Pointer high byte for each entry
 org $AC45	// 0x0AC55
 high_bytes:
@@ -79,7 +76,7 @@ high_bytes:
 	db credits_12>>8,credits_13>>8,credits_14>>8,credits_15>>8
 	db credits_16>>8,credits_17>>8,credits_18>>8,credits_19>>8
 	db credits_20>>8,credits_21>>8,credits_22>>8
-	db credits_New1>>8,credits_New2>>8,credits_New3>>8
+	db credits_New1>>8,credits_New2>>8,credits_New3>>8,credits_New4>>8
 
 org $AC5C	// 0x0AC6C
 // Blank out all of the original Credits text previous data (for extra free space in case it`s needed). This gives 0x19E bytes of free space!
@@ -139,8 +136,7 @@ credits_05:
 credits_06:
 	db $09,$0C,"DESIGNER:"	// Designer... Toshihiko Nakago
 credits_07:
-	//db $0B,$0B,"PROGRAMMER:"		// Programmer... Yasunari Soejima
-	db $01,$0B," "
+	db $01,$0B," "	// Removed "PROGRAMMER:" and added it as extended text - db $0B,$0B,"PROGRAMMER:"
 credits_08:
 	db $10,$08,"YASUNARI SOEJIMA"		// Yasunari Soejima
 credits_09:
@@ -246,9 +242,7 @@ credits_New2:
 credits_New3:
 	db $FF,"      PROGRAMMER:"
 credits_New4:
-	db $FF,"   TOSHIHIKO NAKAGO"		
-//credits_New5:
-//	db $FF,"Toshihiko Nakago"
+	db $FF,"   TOSHIHIKO NAKAGO"
 
 
 org $ABC0	// 0x0ABD0

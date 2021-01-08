@@ -82,7 +82,7 @@ org $ABD1	// CPU $7361, 0x06BE1
 bank 4;
 org $BFC0	// PRG $13FC0, 0x13FD0
 GiveArrowDrop:
-	lda $AC,x		// Check if the item is an arrow before it deletes.
+	lda.b $AC,x		// Check if the item is an arrow before it deletes.
 	cmp.b #$55
 	bne BackDeleting
 	txa
