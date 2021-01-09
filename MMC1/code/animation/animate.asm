@@ -47,10 +47,6 @@ define	kMmc1Control4KbChr	%0010000
 // This should be a power of 2. Additional banks will have to be added to the dAnimatedGraphicsBank tables.
 define kNumAnimationBanks	4
 
-// Overworld secret tiles offset (Redux)
-define dOW_Secrets	$AC10	// 0x0EC20
-define dOW_Secrets_End	$ACD0	// 0x0ECE0
-
 
 //****************************************
 //	iNES Header
@@ -116,13 +112,6 @@ CopyBufferToPpuBank1_LowPart:
 
 	fill $09,$00
 
-//.IF $ > $8DB4
-//	.ERROR Exceeded allocated region.
-//.ENDIF
-//.IF $ < $8DB4
-//	.DSB $8DB4 - $, $00  // Force a crash if this is executed.
-//.ENDIF
-
 
 bank 1;	org $6ACB	// 0x06ADB
 // Update an MMC1 write to use 4 KB mode.
@@ -134,6 +123,7 @@ bank 1;	org $6ACB	// 0x06ADB
 //----------------------------------------
 
 bank 2;	org $AF90	// 0x0AFA0
+//bank 5;	org $AF31	// 0x16F41
 Hijack_HandleAnimation:
 // We only animate on the overworld.
 	lda.b {current_level}
@@ -183,11 +173,6 @@ LoadFixedGraphicsAllBanks:
 	jsr WriteMmc1ChrBank1
 
 	rts
-
-    
-//.IF $ > $BF50
-//	.ERROR Exceeded region at 03:ABDB.
-//.ENDIF
 
 
 //----------------------------------------
@@ -239,16 +224,8 @@ CopyBufferToPpuBank3_LowPart:
 	fill $09,$00
 
 
-//.IF $ > $811B
-//	.ERROR Exceeded allocated region.
-//.ENDIF
-//.IF $ < $811B
-//	.DSB $811B - $, $00	// Force a crash if this is executed.
-//.ENDIF
-
-
 //bank 3;	org $ABDB	// 0x0EBEB
-bank 3;	org $AD90	// 0x0EDA0
+bank 3;	org $ADE0	// 0x0EDF0
 LoadAreaGraphicsWrapper:
 // Ensure the correct bank is loaded.
 	lda.b #$01
@@ -327,11 +304,6 @@ dAnimatedGraphicsBankListHigh:
 // 2nd Water	$1880
 
 dAnimatedGraphicsBank1:
-// Overworld secrets
-	db $15,$40
-	dw {dOW_Secrets}
-	dw {dOW_Secrets_End}-{dOW_Secrets}
-
 // 1st Half of Water graphics
 	db $17,$80
 	dw dOW_1st_Frame1
@@ -345,11 +317,6 @@ dAnimatedGraphicsBank1:
 
 
 dAnimatedGraphicsBank2:
-// Overworld secrets
-	db $15,$40
-	dw {dOW_Secrets}
-	dw {dOW_Secrets_End}-{dOW_Secrets}
-
 // 1st Half of Water graphics
 	db $17,$80
 	dw dOW_1st_Frame2
@@ -363,11 +330,6 @@ dAnimatedGraphicsBank2:
 
 
 dAnimatedGraphicsBank3:
-// Overworld secrets
-	db $15,$40
-	dw {dOW_Secrets}
-	dw {dOW_Secrets_End}-{dOW_Secrets}
-
 // 1st Half of Water graphics
 	db $17,$80
 	dw dOW_1st_Frame3
@@ -514,11 +476,6 @@ WriteMmc1ChrBank1:
 	rts
 
 
-//.IF $ > $FF98
-//	.ERROR Exceeded region at 07:FF6D.
-//.ENDIF
-
-
 //----------------------------------------
 //	Reset Vector
 //----------------------------------------
@@ -539,5 +496,6 @@ bank 5;	org $BFFC	// 0x1800C
 	dw {Reset}
 bank 6;	org $BFFC	// 0x1C00C
 	dw {Reset}
+
 
 

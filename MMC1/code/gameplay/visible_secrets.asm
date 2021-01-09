@@ -158,47 +158,105 @@ org $8051	// 0x0C061
 org $8064	// 0x0C074
 	jsr TileTransfer	// Hijack, originally JSR $8080
 
-//Free Space
+//Free Space, Previously at org $ABE0	// 0x0EBF0
 org $ABE0	// 0x0EBF0
 TileTransfer:
-	lda.b #$15    	// Set DestPPU $15 upper byte
-	sta.w $2006   
-	lda.b #$40	// Set DestPPU $40 lower byte base
-	sta.w $2006
-
-	ldy.b #$C0	// Dungeon/Overworld assets size
-	ldx.b #$00
+	lda.b #$04	// Keep track of banks to fill for CHR-RAM
+	pha
 
 MapCheck:
 	lda.b $10		// Check if in Overworld = 00, or Dungeon = 01
 	bne DungeonGFXLoad	// Load Dungeon Walls if in dungeon, else load dry tree
 
 OverworldGFXLoad:
+	ldy.b #$C0	// Dungeon/Overworld assets size
+	ldx.b #$00
+
+	lda.b #$15    // Set DestPPU $15 upper byte
+	sta.w $2006   
+	lda.b #$40	// Set DestPPU $40 lower byte base
+	sta.w $2006
+
+LoopOverworldGFX:
 	lda.w OverworldAssets,x
 	sta.w $2007
 	inx
 	dey		// Image size to transfer
+	bne LoopOverworldGFX
+
+	pla		// Change CHR bank
+	pha
+
+	sta.w $C000
+	lsr
+	sta.w $C000
+ 	lsr
+	sta.w $C000
+	lsr
+	sta.w $C000
+	lsr
+	sta.w $C000
+	
+	pla
+	sec
+	sbc.b #$01
+	pha
+	cmp.b #$00
 	bne OverworldGFXLoad
-    
+	
+	pla
+
 	jsr $8091	// Fix Hijack
 	rts
 
 DungeonGFXLoad:
+	ldy.b #$C0	// Dungeon/Overworld assets size
+	ldx.b #$00
+	
+	lda.b #$15    	// Set DestPPU $15 upper byte
+	sta.w $2006   
+	lda.b #$40	// Set DestPPU $40 lower byte base
+	sta.w $2006
+
+LoopDungeonGFX:	
 	lda.w DungeonAssets,x
 	sta.w $2007
 	inx		// Image offset
 	dey		// Image size to transfer
+	bne LoopDungeonGFX
+
+	pla		// Change CHR bank
+	pha
+	
+	sta.w $C000
+	lsr
+	sta.w $C000
+ 	lsr
+	sta.w $C000
+	lsr
+	sta.w $C000
+	lsr
+	sta.w $C000
+	
+	pla
+	sec
+	sbc.b #$01
+	pha
+	cmp.b #$00
 	bne DungeonGFXLoad
+	
+	pla
 
 	jsr $8080	// Fix Hijack
 	rts
 
-org $AC10	// 0x0EC20
+org $AC60	// 0x0EC70
 // Include the Burn Tree and Cracked Walls for Overworld data
 OverworldAssets:
 	incbin code/gfx/OverworldAssets.bin
 // Include the Cracked Up/Down Walls for Dungeons
 DungeonAssets:
 	incbin code/gfx/DungeonAssets.bin
+
 
 

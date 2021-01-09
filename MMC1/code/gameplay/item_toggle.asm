@@ -7,10 +7,10 @@
 // Pause check begins at 1EC46, compares if Select has been pressed and then does LDA $00E0, EOR #$01 and STA $00E0 to #$01 (RAM $00E0), which tells the game it is Paused. Bypassing the Pause can be done by NOP'ing the LDA/EOR/STA starting at 0x1EC4C ($EC3C).
 
 bank 7; org $EC3C  // 0x1EC4C
-	// Switch to bank 5
+// Switch to bank 5
 	lda.b #$05
 	jsr $FFAC
-	// Hijack PAD_SELECT pressed on the overworld
+// Hijack PAD_SELECT pressed on the overworld
 	jsr quick_select
 
 bank 5; org $BFC0  // 0x17FD0

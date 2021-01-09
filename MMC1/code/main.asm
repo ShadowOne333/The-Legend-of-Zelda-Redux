@@ -35,7 +35,7 @@ header			// rom has a header
 //****************************************
 
 // Animate tiles using the original CHR-RAM mapper for Zelda 1
-//incsrc code/animation/animate.asm	// Animated tiles for Zelda 1 MMC1
+incsrc code/animation/animate.asm	// Animated tiles for Zelda 1 MMC1
 
 
 //****************************************

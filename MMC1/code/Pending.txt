@@ -11,7 +11,14 @@
 //	FIXES
 //***********************************************************
 
-(NONE)
+*** Fix Automap (CHR-RAM version) to work properly with the MMC1 animation by Fiskbit:
+"The automap uses a part of the table that is normally never updated. Its code updates just the part you scroll into, or the whole thing when loading a file. These updates simply need to be duplicated into the 3 new banks so the automap still has its graphics when the bank is changed (so you'd do the writes for one bank, then switch to the next bank and do the writes, and so on, ideally updating the one tile in all 4 banks in a single vblank). This only needs to be done once, not constantly. The point of this change is that effectively no work has to be done for animation, just like with CHR-ROM games. Because it's RAM, instead, you get the benefit of being able to update on the fly, but the animation is just done by swapping banks, not writing to VRAM like if there were only one bank. If the automap is at tiles $40-5F in one bank, the exact same graphics must be at tiles $40-5F in all the other banks."
+
+*** Fix the Item Toggle hack to work properly with MMC1 animation:
+"The select patch causes this to crash because it changes the currently loaded bank from 2 to 5, while the call to Hijack_HandleAnimation at 07:EC7A expects bank 2 to be loaded. Hijack_HandleAnimation can be moved to bank 5, or alternatively bank 2 can be swapped back in. Moving it to bank 5 solves the problem with fewer cycles used, so it will contribute less to lag."
+
+*** Fix/Reimplement Bogaa's lake/pond fix from the MMC5 animation to the MMC1 animation code:
+"To make it stop animating in whatever your desired circumstances, update Hijack_HandleAnimation to simply skip the timer handling code in the cases you care about, just as it currently skips it if a dungeon is loaded."
 
 
 //***********************************************************
@@ -20,25 +27,6 @@
 
 // lda.b #$XX
 // jsr $FFAC
-
-
-//***********************************************************
-//	Animated tiles for Overworld
-//***********************************************************
-
-// (PENDING)
-Possibly, modify the tile loading so it replaces a certain tile for another one already loaded (water corners or edges)
-For the water tiles with no borders, mirror them horizontally (similar to the Fire sprite but slower)
-
-// CHR-ROM conversion
-Modify header to have $10 CHR banks ($08,$10)
-Then, at 0x20000, start copying the CHR data in the following order for the first bank:
-0x20010 (Title Screen, Intro Scroll & Menus):
-01A, 00A, 01B, 00B, 01C
-0x22010 (Overworld):
-01A, 00A (Portion, first 0x30 rows), 03A, 01B, 02B, 01C
-0x24010 (Dungeon Set 1):
-01A, 00A (Portion, first 0x30 rows), ???
 
 
 //***********************************************************
@@ -54,22 +42,6 @@ Then, at 0x20000, start copying the CHR data in the following order for the firs
 
 //bank 5; org $8B01	// $14B11
 //	and.b #$04		// Originally 29 20 - Changes the button input which moves the cursor in the Continue/Save/Retry screen
-
-
-//***********************************************************
-// 	Reworked Credits
-//***********************************************************
-
-$AC16
-28 29 2A 2B 20 21 22 23 28 29 2A 2B
-46 10 90 84 24 30 01 48 03 25 05 40
-28 A0, 28 C0 (EXEC, HIROSHI)
-29 60	(PRODUCER)
-2A 00	(DIRECTOR, TAKASHI)
-2B 00	(DESIGNER)
-
-50 59 6E 80 98 B0 C0 D8 F0 02 14 25
-31 4B 57 70 80 90 9F B4 C7 D0 E7
 
 
 //***********************************************************
