@@ -143,10 +143,26 @@ Hijack_HandleAnimation:
 	inc.b {animation_timer}
 
 Hijack_HandleAnimation_Done:
+// Animation Lake fix ported from  MMC5 animation (by Bogaa)
+// Lake Drain
+	lda.w $051A	// Lake Drain active on that screen.
+	beq SkipLake
+	cmp.b #$0C	// Lake Fully Drained = $0C
+	bne DrainSpeed
+	lda.b #$00	// Stop Animation
+	sta.b {animation_timer}
+DrainSpeed:
+	inc.b {animation_timer}
+	lda.b {animation_timer}
+	cmp.b #$04	// Check max frame. So it will animate every 4 frames
+	bne SkipLake
+	lda.b #$0F	// Set to trigger next frame
+	sta.b {animation_timer}
+SkipLake:
 // Perform the hijacked instruction.
 	lda.w {has_clock}
-
 	rts
+
 
 LoadFixedGraphicsAllBanks:
 	lda.b #$00

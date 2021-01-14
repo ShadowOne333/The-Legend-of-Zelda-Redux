@@ -372,8 +372,7 @@ org $ABB5	// 0x0ABC5
 
 // Save map data
 // ———————————————
-//bank 2; org $B000	// 0x0B010 - Free space
-bank 2; org $AFD0	// 0x0AFE0 - Free space
+bank 2; org $B000	// 0x0B010 - Free space
 SaveMapData:
 	jsr PrepLoadSaveIndexers	// Jump to PrepLoadSaveIndexers routine
 l_B003:		// B003:

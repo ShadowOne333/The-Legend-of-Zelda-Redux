@@ -118,7 +118,7 @@ org $ADFA	// Atribute table data for text color.
 	db $00,$00,$00,$00,$50,$00,$00
 	db $00,$AA,$00,$00
 
-org $B020	// 0x0B030 - Originally $AC60, 0x0AC70
+org $B050	// 0x0B060 - Originally $AC60, 0x0AC70
 // Length, X Position, "Text"
 // Hiroshi Yamauchi, Shigeru Miyamoto, Takashi Tezuka, Toshihiko Nakago, Yasunari Soejima, Tatsuo Nishiyama, Koji Kondo
 credits_00:
@@ -174,7 +174,7 @@ credits_22:
 //	Extra credits lines (by bogaa)
 //-----------------------------------------------------------
 
-org $B190	// 0x0B1A0
+org $B1C0	// 0x0B1D0
 ExtraCredits:
 	sty.w $050A  	// Hijack Fix
 	tya
