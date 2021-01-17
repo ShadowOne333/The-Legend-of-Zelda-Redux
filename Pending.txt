@@ -1,0 +1,55 @@
+//***********************************************************
+//		THE LEGEND OF ZELDA REDUX
+//***********************************************************
+
+// For Debugger:
+// For addresses between 0000 and 7FFF:
+// Substract 0x790? from the address to get the ROM address?
+
+
+//***********************************************************
+//	FIXES
+//***********************************************************
+
+*** Fix Automap (CHR-RAM version) to work properly with the MMC1 animation by Fiskbit:
+"The automap uses a part of the table that is normally never updated. Its code updates just the part you scroll into, or the whole thing when loading a file. These updates simply need to be duplicated into the 3 new banks so the automap still has its graphics when the bank is changed (so you'd do the writes for one bank, then switch to the next bank and do the writes, and so on, ideally updating the one tile in all 4 banks in a single vblank). This only needs to be done once, not constantly. The point of this change is that effectively no work has to be done for animation, just like with CHR-ROM games. Because it's RAM, instead, you get the benefit of being able to update on the fly, but the animation is just done by swapping banks, not writing to VRAM like if there were only one bank. If the automap is at tiles $40-5F in one bank, the exact same graphics must be at tiles $40-5F in all the other banks."
+
+
+//***********************************************************
+//	Bank switching
+//***********************************************************
+
+// lda.b #$XX
+// jsr $FFAC
+
+
+//***********************************************************
+// Reworked Save Selection screen, similar to Zelda 2 Redux
+//***********************************************************
+
+// (PENDING, LEAVING FOR LAST)
+//bank 2; org $A5A2	// $0A5B2 - File Select screen code
+//	and.b #$04		// Originally 29 20 - Changes the button input which moves the cursor in File Select screen
+
+// bank 2; org $A608
+	sta.w $0657,y	// This seems to be what sets the entirety of the save data into RAM, starting at $0657 and up to $067F maybe?
+
+//bank 5; org $8B01	// $14B11
+//	and.b #$04		// Originally 29 20 - Changes the button input which moves the cursor in the Continue/Save/Retry screen
+
+
+//***********************************************************
+// Save Hearts number if last session had 3+ hearts of health
+//***********************************************************
+
+// (PENDING)
+
+
+//***********************************************************
+//	Optional patches
+//***********************************************************
+
+Implement an "Original OW Columns" optional patch, so that users can select between the new extended columns, or the original NES columns (overworld screens)
+
+
+

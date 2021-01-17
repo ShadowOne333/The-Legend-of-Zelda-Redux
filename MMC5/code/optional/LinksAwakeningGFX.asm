@@ -2,35 +2,37 @@
 //	Link's Awakening DX Graphics
 //***********************************************************
 
-bank 1; org $8DB4	// 0x04DC4-0x06003
-// Title screen and Intro graphics
-	incbin code/optional/la_gfx/la_gfx00a.bin
-	incbin code/optional/la_gfx/la_gfx00b.bin
-bank 2; org $807F	// 0x0808F-0x0900F
-// Link, items, HUD and Font sprites 
-	incbin code/optional/la_gfx/la_gfx01a.bin
-	incbin code/optional/la_gfx/la_gfx01b.bin
-	incbin code/optional/la_gfx/la_gfx01c.bin
+// Automap tiles for Original MMC1 
+bank 2;
+org $8A7F
+	incbin code/gameplay/automap_tiles.bin
+
 bank 3; 
-// Dungeon and overworld tiles
-org $811B	// 0x0C12B-0x0D12A
-	incbin code/optional/la_gfx/la_gfx02a.bin
-	incbin code/optional/la_gfx/la_gfx02b.bin
-// NPC and enemy sprites
-org $915B	// 0x0D16B-0x0EBEF
-	incbin code/optional/la_gfx/la_gfx03a.bin
-	incbin code/optional/la_gfx/la_gfx03b.bin
-	incbin code/optional/la_gfx/la_gfx03c.bin
-	incbin code/optional/la_gfx/la_gfx03d.bin
-	incbin code/optional/la_gfx/la_gfx03e.bin
-	incbin code/optional/la_gfx/la_gfx03f.bin
-	incbin code/optional/la_gfx/la_gfx03g.bin
-	incbin code/optional/la_gfx/la_gfx03h.bin
 // Overworld Cracked Walls and Burnable Tree
 org $AC10	// 0x0EC20
 	incbin code/optional/la_gfx/OverworldAssets.bin
 // Dungeons Cracked Walls
 	incbin code/optional/la_gfx/DungeonAssets.bin
+
+// Link's Awakening GFX for MMC5
+bank 8; org $20000	// 0x20010
+	incbin code/optional/la_gfx/LACHR.bin
+// Automap tiles for MMC5
+org $22B00
+	incbin code/gameplay/automap_tiles.bin
+bank 10; org $29300
+	incbin code/gameplay/automap_tiles.bin
+org $2A300
+	incbin code/gameplay/automap_tiles.bin
+org $2B300
+	incbin code/gameplay/automap_tiles.bin
+bank 11; org $2C300
+	incbin code/gameplay/automap_tiles.bin
+
+
+//--------------------------------------------------------------
+//	Pallete changes
+//--------------------------------------------------------------
 
 bank 6; 
 // Change brown colour of Link to have more contrast

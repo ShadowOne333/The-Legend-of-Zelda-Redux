@@ -97,8 +97,8 @@ org $924D	// 0x1925D
 	db $03
 
 // GFX for Dungeon 3
-//bank 9; org $259E0	// 0x269F0
-//	incbin code/optional/rearranged_bosses/data_03c.bin
+bank 8; org $259D0	// 0x259E0
+	incbin code/optional/rearranged_bosses/originalGFX_03c.bin
 // GFX for Dungeon 7
-//bank 9; org $27C00	// 0x27C10
-//	incbin code/optional/rearranged_bosses/data_03h.bin
+	org $27BF0	// 0x27C00
+	incbin code/optional/rearranged_bosses/originalGFX_03h.bin

@@ -483,8 +483,245 @@ bank 6; org $BF7B	// 0x1BF8B
 //--------------------------------------------------------------
 bank 7; org $C000	// 0x1C010
 
+	org $E440	// 0x1E450
+	lda.b #$00
+
+	org $E446	// 0x1E456
+	jsr BankSwapPRG
+
+	org $E4BE	// 0x1E4CE
+	jsr BankSwapPRG
+
+	org $E4E4	// 0x1E4F4
+	jsr BankSwapPRG
+
+	org $E55E	// 0x1E56E
+	jsr BankSwapPRG
+
 	org $E621	// 0x1E631
 	jsr SetHorizontalScroll
+
+	org $E67F	// 0x1E68F
+	jsr BankSwapPRG
+
+	org $E699	// 0x1E6A9
+	jsr BankSwapPRG
+
+	org $E7AC	// 0x1E7BC
+	jsr BankSwapPRG
+
+	org $E7CF	// 0x1E7DF
+	jsr BankSwapPRG
+
+	org $E7E8	// 0x1E7F8
+	jsr BankSwapPRG
+
+	org $E8C4	// 0x1E8D4
+	jsr BankSwapPRG
+
+	org $E8D0	// 0x1E8E0
+	jsr BankSwapPRG
+
+	org $E8DA	// 0x1E8EA
+	jsr BankSwapPRG
+
+	org $E8FE	// 0x1E90E
+	jsr BankSwapPRG
+
+	org $E906	// 0x1E916
+	jsr BankSwapPRG
+
+	org $E91B	// 0x1E92B
+	jsr BankSwapPRG
+
+	org $E953	// 0x1E963
+	jsr BankSwapPRG
+
+	org $E961	// 0x1E971
+	jsr BankSwapPRG
+
+	org $E969	// 0x1E979
+	jsr BankSwapPRG
+
+	org $E971	// 0x1E981
+	jsr BankSwapPRG
+
+	org $E98B	// 0x1E99B
+	jsr BankSwapPRG
+
+	org $E993	// 0x1E9A3
+	jsr BankSwapPRG
+
+	org $E99B	// 0x1E9AB
+	jsr BankSwapPRG
+
+	org $E9A3	// 0x1E9B3
+	jsr BankSwapPRG
+
+	org $E9C5	// 0x1E9D5
+	jsr BankSwapPRG
+	
+	org $E9D2	// 0x1E9E2
+	jsr BankSwapPRG
+
+	org $E9DA	// 0x1E9EA
+	jsr BankSwapPRG
+
+	org $EA48	// 0x1EA58
+	jsr BankSwapPRG
+
+	org $EACD	// 0x1EADD
+	jsr BankSwapPRG
+
+	org $EADF	// 0x1EAEF
+	jsr BankSwapPRG
+
+	org $EB19	// 0x1EB29
+	jsr BankSwapPRG
+
+	org $EB24	// 0x1EB34
+	jsr BankSwapPRG
+
+	org $EB32	// 0x1EB42
+	jsr BankSwapPRG
+
+	org $EB64	// 0x1EB74
+	jsr BankSwapPRG
+	
+	org $EB78	// 0x1EB88
+	jsr BankSwapPRG
+
+	org $EB80	// 0x1EB90
+	jsr BankSwapPRG
+
+	org $EB88	// 0x1EB98
+	jsr BankSwapPRG
+
+	org $EB90	// 0x1EBA0
+	jsr BankSwapPRG
+
+	org $EB9B	// 0x1EBAB
+	jsr BankSwapPRG
+	
+	org $EC05	// 0x1EC15
+	jsr BankSwapPRG	
+
+	org $EC26	// 0x1EC36
+	jsr BankSwapPRG
+
+	org $EC4F	// 0x1EC5F
+	jsr BankSwapPRG
+
+	org $EC68	// 0x1EC78
+	jsr BankSwapPRG
+
+	org $ED2D	// 0x1ED3D
+	jsr BankSwapPRG
+
+	org $ED38	// 0x1ED48
+	jsr BankSwapPRG
+
+	org $ED46	// 0x1ED56
+	jsr BankSwapPRG
+
+	org $ED64	// 0x1ED74
+	jsr BankSwapPRG
+
+	org $ED8B	// 0x1ED9B
+	jsr BankSwapPRG
+
+	org $EDBC	// 0x1EDCC
+	jsr BankSwapPRG
+
+	org $EFBC	// 0x1EFCC
+	jsr BankSwapPRG
+
+	org $EFC4	// 0x1EFD4
+	jmp BankSwapPRG
+
+	org $F023	// 0x1F033
+	jsr BankSwapPRG
+
+	org $F04F	// 0x1F05F
+	jsr BankSwapPRG
+
+	org $F076	// 0x1F086
+	jsr BankSwapPRG
+
+	org $F087	// 0x1F097
+	jsr BankSwapPRG
+
+	org $F139	// 0x1F149
+	jsr BankSwapPRG
+
+	org $F218	// 0x1F228
+	jmp BankSwapPRG
+
+	org $F220	// 0x1F230
+	jmp BankSwapPRG
+
+	org $F22E	// 0x1F23E
+	jmp BankSwapPRG
+
+	org $F2F1	// 0x1F301
+	jsr BankSwapPRG
+
+	org $F8BD	// 0x1F8CD
+	jsr BankSwapPRG
+
+	org $F99C	// 0x1F9AC
+	jsr BankSwapPRG
+
+	org $FB77	// 0x1FB87
+	jsr BankSwapPRG
+
+	org $FBAB	// 0x1FBBB
+	jsr BankSwapPRG
+
+	org $FD0C	// 0x1FD1C
+	jsr BankSwapPRG
+
+	org $FD2F	// 0x1FD3F
+	jsr BankSwapPRG
+	
+	org $FD3E	// 0x1FD4E
+	jsr BankSwapPRG
+	
+	org $FD72	// 0x1FD82
+	jsr BankSwapPRG
+	
+	org $FE42	// 0x1FE52
+	jsr BankSwapPRG
+	
+	org $FE4A	// 0x1FE5A
+	jsr BankSwapPRG
+	
+	org $FE52	// 0x1FE62
+	jsr BankSwapPRG
+	
+	org $FE5A	// 0x1FE6A
+	jsr BankSwapPRG
+	
+	org $FE62	// 0x1FE72
+	jsr BankSwapPRG
+	
+	org $FE6A	// 0x1FE7A
+	jsr BankSwapPRG
+	
+	org $FE72	// 0x1FE82
+	jsr BankSwapPRG
+	
+	org $FE7A	// 0x1FE8A
+	jsr BankSwapPRG
+	
+	org $FE82	// 0x1FE92
+	jsr BankSwapPRG
+	
+	org $FE8A	// 0x1FE9A
+	jsr BankSwapPRG
+	
+	org $FE92	// 0x1FEA2
+	jsr BankSwapPRG
 	
 	org $FF7B	// This should be at $FF78, but the addictional PPU check for the initial setup seems not to hurt?
 //Some more space at one block thanks to that change
