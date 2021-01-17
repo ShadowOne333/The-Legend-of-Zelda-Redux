@@ -112,7 +112,7 @@ org $BEF0	// 0x1BF00
 overworld_attributes:
 	db $23,$C0,$10		// PPU Transfer $23C0
 	db $44,$55,$55,$00,$00,$C0,$FF,$70	// Attribute table for HUD
-	db $44,$55,$05,$00,$00,$E0,$AF,$3A	// Attribute table for HUD, db $44,$55,$05,$00,$00,$CC,$FF,$37 for brown map
+	db $44,$55,$05,$00,$00,$C0,$AF,$3A	// Attribute table for HUD, db $44,$55,$05,$00,$00,$CC,$FF,$37 for brown map
 // Move LIFE text to the left side of the HUD
 	db $20,$63,$12		// PPU Transfer to $206F
 	db "-LIFE-",$24,$24,$24,$24,$24,$24,$69,"B",$6B,$69,"A",$6B	// Tiles for item rectangles, B/A and -LIFE-

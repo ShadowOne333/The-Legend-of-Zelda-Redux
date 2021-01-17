@@ -463,6 +463,7 @@ bank 7;	org $EBB2	// 0x1EBC2
 
 
 bank 7;	org $EC7A	// 0x1EC8A
+//bank 7;	org $EF71	// 0x1EF81
 	jsr Hijack_HandleAnimation
 
 

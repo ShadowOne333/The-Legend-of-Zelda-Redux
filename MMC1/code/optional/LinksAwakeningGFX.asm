@@ -27,10 +27,19 @@ org $915B	// 0x0D16B-0x0EBEF
 	incbin code/optional/la_gfx/la_gfx03g.bin
 	incbin code/optional/la_gfx/la_gfx03h.bin
 // Overworld Cracked Walls and Burnable Tree
-org $AC10	// 0x0EC20
+org $AC60	// 0x0EC70
 	incbin code/optional/la_gfx/OverworldAssets.bin
 // Dungeons Cracked Walls
 	incbin code/optional/la_gfx/DungeonAssets.bin
+
+// MMC1 Animated tiles frames
+org $AE9B	// 0x0EEAB
+	incbin code/optional/la_gfx/ow_1st_frame1.chr
+	incbin code/optional/la_gfx/ow_2nd_frame1.chr
+	incbin code/optional/la_gfx/ow_1st_frame2.chr
+	incbin code/optional/la_gfx/ow_2nd_frame2.chr
+	incbin code/optional/la_gfx/ow_1st_frame3.chr
+	incbin code/optional/la_gfx/ow_2nd_frame3.chr
 
 bank 6; 
 // Change brown colour of Link to have more contrast

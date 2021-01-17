@@ -561,7 +561,7 @@ l_BC63:		// BC63:
 //	Draw whole map
 //************************************
 
-DrawWholeMap:
+DrawWholeMap:	// 0x17E5F
 // Prepare PPU to write map data
 	lda.w $2002		// AD 02 20 -> PPU_STATUS = #$30
 	lda.b #{VRAM_MapTiles}>>8	// Set PPU address #>VRAM_MapTiles (High byte)
@@ -603,7 +603,27 @@ l_BCA4:		// BCA4:
 	sta.w $2007	// Write to PPU -> PPU_DATA = #$90
 	inx
 	cpx.b #$10	// Compare with $10
+
+//	pla            // Change CHR bank
+//	pha
+
+//	sta.w $C000
+//	lsr
+//	sta.w $C000
+//	lsr
+//	sta.w $C000
+//	lsr
+//	sta.w $C000
+//	lsr
+//	sta.w $C000
+
+//	pla
+//	sec
+//	sbc.b #$01
+//	pha
+//	cmp.b #$00
 	bne l_BCA4	// D0 F5
+
 	rts
 
 
