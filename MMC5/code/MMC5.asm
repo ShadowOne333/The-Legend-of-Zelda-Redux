@@ -170,8 +170,16 @@ SetCHRStart:
 	rts
 
 CHRSwaping:	// Levels
+	ldx.b $16	// Selected Save Slot (0-2)
+	lda.w $062D,x	// 2nd Quest Flag (0 = 1st Quest, 1 = 2nd Quest)
+	bne SecondQuestSprites
 	ldy.b $10	// Current level
-	lda.w CHRBankTableSprite,y
+	lda.w CHR1stQuestSprites,y
+	jmp LoadSprites
+SecondQuestSprites:
+	ldy.b $10	// Current level
+	lda.w CHR2ndQuestSprites,y
+LoadSprites:
 	tay
 	// Link and the Items are permanent avalible. No need to swap $5120 and $5121
 	sty.w $5122	//Enemy1, Sprite 3/8
@@ -201,7 +209,9 @@ CHRSwaping:	// Levels
 	rts
 
 //LVL	00, 01, 02, 03, 04, 05, 06, 07, 08, 09	// 00 = Overworld
-CHRBankTableSprite:
+CHR1stQuestSprites:
+	db $08,$0E,$14,$16,$18,$1A,$1C,$1E,$20,$22
+CHR2ndQuestSprites:
 	db $08,$0E,$14,$16,$18,$1A,$1C,$1E,$20,$22
 CHRBankTableTiles:
 	db $0A,$10,$10,$10,$10,$10,$10,$10,$10,$10
@@ -301,7 +311,7 @@ bank 7; org $C000	// 0x1C010
 //--------------------------------------------------------------
 //	Bank 8, $20000
 //--------------------------------------------------------------
-bank 8; org $8000	// 0x20010
+bank 8; org $20000	// 0x20010
 	incbin code/gfx/NewCHR.bin
 
 //--------------------------------------------------------------

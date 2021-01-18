@@ -20,5 +20,8 @@
 // NOTE: This one CAN'T be combined with the LA DX Graphics
 //incsrc code/optional/OriginalGFX.asm
 
+// Rearranged Bosses
+//incsrc code/optional/RearrangedBosses.asm
+
 // Recoloured Dungeons
 //incsrc code/optional/RecolouredDungeons.asm

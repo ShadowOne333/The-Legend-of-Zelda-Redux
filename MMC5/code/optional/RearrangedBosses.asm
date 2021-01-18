@@ -3,7 +3,7 @@
 //***********************************************************
 
 // Changes bosses to:
-// 1st Quest - Level 4: Changes the Manhandla in the level to Red Lanmolas, keeps the two-headed Gleeok at the end
+// 1st Quest - Level 3 (4): Changes the Manhandla in the level to Red Lanmolas, keeps the two-headed Gleeok at the end
 // 1st Quest - Level 7: Changes the Aquamentus for a Patra with Oval attack cycle
 // 2nd Quest - Level 2: Changes the two-headed Gleeok to Blue Lanmolas (You can still fight a two-headed Gleeok in Level 6)
 // 2nd Quest - Level 8: Changes the 3 Dodongos to a Patra with Circle attack cycle
@@ -14,8 +14,8 @@ org $8006	// 0x0C016
 // Graphics pointer for Dungeon 3 (1st Quest)
 	dw $9A9B	// Dungeon 3 GFX, Originally $987B (D8 7B)
 org $8022	// 0x0C032
-// Graphics pointer for Dungeon 7 (2nd Quest)
-	dw $A7DB	// Dungeon 7 GFX, Originally $9FDB (DF DB)
+// Graphics pointer for Dungeon 8 (2nd Quest)
+	dw $A7DB	// Dungeon 8 GFX, Originally $9FDB (DF DB)
 
 // Tables for Dungeons 1-9 1st Quest
 bank 6;
@@ -96,9 +96,16 @@ org $91ED	// 0x191FD
 org $924D	// 0x1925D
 	db $03
 
-// GFX for Dungeon 3
-//bank 9; org $259E0	// 0x269F0
-//	incbin code/optional/rearranged_bosses/data_03c.bin
-// GFX for Dungeon 7
-//bank 9; org $27C00	// 0x27C10
-//	incbin code/optional/rearranged_bosses/data_03h.bin
+// LVL	00, 01, 02, 03, 04, 05, 06, 07, 08, 09 / 00 = Overworld
+org $1B0DA	// 0x1B0EA
+// CHR Table for Sprite tiles (1st Quest)
+// Changes GFX for Dungeon 3 & Dungeon 7 (1st Quest)
+	db $08,$0E,$14,$18,$18,$1A,$1C,$34,$20,$22
+	//		^^D3		^^D7
+// CHR Table for Sprite tiles (2nd Quest)
+// Changes GFX for Dungeon 7 (2nd Quest)
+	db $08,$0E,$14,$18,$18,$1A,$1C,$34,$20,$22
+	//	    	^^D2		^^D8
+
+
+
