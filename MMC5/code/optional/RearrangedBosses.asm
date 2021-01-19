@@ -96,16 +96,15 @@ org $91ED	// 0x191FD
 org $924D	// 0x1925D
 	db $03
 
+
+//org $1B0DA	// 0x1B0EA
+org $1B0CB	// 0x1B0DB
+// MMC5 CHR Table for Sprite tiles
+// Changes GFX for Dungeon 3 & 7 for 1st Quest and Dungeon 2 & 8 for 2nd Quest
 // LVL	00, 01, 02, 03, 04, 05, 06, 07, 08, 09 / 00 = Overworld
-org $1B0DA	// 0x1B0EA
-// CHR Table for Sprite tiles (1st Quest)
-// Changes GFX for Dungeon 3 & Dungeon 7 (1st Quest)
 	db $08,$0E,$14,$18,$18,$1A,$1C,$34,$20,$22
-	//		^^D3		^^D7
-// CHR Table for Sprite tiles (2nd Quest)
-// Changes GFX for Dungeon 7 (2nd Quest)
-	db $08,$0E,$14,$18,$18,$1A,$1C,$34,$20,$22
-	//	    	^^D2		^^D8
+	//		^^D3		^^D7	(1st Quest)
+	//	    	^^D2		^^D8	(2nd Quest)
 
 
 

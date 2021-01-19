@@ -89,19 +89,19 @@ CHRanimation:
 	cmp.b #$05
 	bne EndCHRAnimation
 
-	inc.w $0700
-	lda.w $0700
+	inc.w $0780
+	lda.w $0780
 	cmp.b #$10	// Set to run all 10 Frames
 	bne EndCHRAnimation
 	lda.b #$00	// Reset Counter of 10 Frames
-	sta.w $0700
+	sta.w $0780
 	
-	inc.w $0701
-	lda.w $0701
+	inc.w $0781
+	lda.w $0781
 	cmp.b #$04	// Check if max Bank Frame is reached. 
 	bne AnimationOverworld
 	lda.b #$00	// Reset Bank Frame
-	sta.w $0701
+	sta.w $0781
 
 AnimationOverworld:
 	tax
@@ -110,11 +110,11 @@ AnimationOverworld:
 	tay
 	
 	sty.w $5128	// Tiles 1/4
-	lda.w $0702
+	lda.w $0782
 	sta.w $5124	// Unused Sprite Page
 	iny
 	sty.w $5129	// Tiles 2/4
-	lda.w $0706
+	lda.w $0786
 	sta.w $5125	// Unused Sprite Page? Tree, Doors?
 	iny				
 	sty.w $512A	// Tiles 3/4			
@@ -128,13 +128,13 @@ EndCHRAnimation:
 	cmp.b #$0C	// Lake Fully Drained = $0C
 	bne DrainSpeed
 	lda.b #$00	// Stop Animation
-	sta.w $0700
+	sta.w $0780
 DrainSpeed:
-	lda.w $0700
+	lda.w $0780
 	cmp.b #$04	// Check max frame. So it will animate every 4 frames
 	bne SkipLake
 	lda.b #$0F	// Set to trigger next frame
-	sta.w $0700		
+	sta.w $0780		
 SkipLake:
 	jsr $A0F6	// Hijackfix
 	rts
@@ -170,18 +170,10 @@ SetCHRStart:
 	rts
 
 CHRSwaping:	// Levels
-	ldx.b $16	// Selected Save Slot (0-2)
-	lda.w $062D,x	// 2nd Quest Flag (0 = 1st Quest, 1 = 2nd Quest)
-	bne SecondQuestSprites
 	ldy.b $10	// Current level
-	lda.w CHR1stQuestSprites,y
-	jmp LoadSprites
-SecondQuestSprites:
-	ldy.b $10	// Current level
-	lda.w CHR2ndQuestSprites,y
-LoadSprites:
+	lda.w CHRBankTableSprites,y
 	tay
-	// Link and the Items are permanent avalible. No need to swap $5120 and $5121
+// Link and the Items are permanent avalible. No need to swap $5120 and $5121
 	sty.w $5122	//Enemy1, Sprite 3/8
 	iny
 	sty.w $5123	//Enemy2, Sprite 4/8
@@ -191,10 +183,10 @@ LoadSprites:
 	tay
 
 	sty.w $5128	// Tiles 1/4
-	sty.w $0702	// Init Frame to animate for Sprites
+	sty.w $0782	// Init Frame to animate for Sprites
 	iny
 	sty.w $5129	// Tiles 2/4
-	sty.w $0706	// Init Frame to animate for Sprites
+	sty.w $0786	// Init Frame to animate for Sprites
 	iny
 	sty.w $512A	// Tiles 3/4
 	sty.w $5126	// Sprite 7/8, Needed for movable block sprite in dungeons
@@ -209,9 +201,8 @@ LoadSprites:
 	rts
 
 //LVL	00, 01, 02, 03, 04, 05, 06, 07, 08, 09	// 00 = Overworld
-CHR1stQuestSprites:
-	db $08,$0E,$14,$16,$18,$1A,$1C,$1E,$20,$22
-CHR2ndQuestSprites:
+//CHR1stQuestSprites:
+CHRBankTableSprites:
 	db $08,$0E,$14,$16,$18,$1A,$1C,$1E,$20,$22
 CHRBankTableTiles:
 	db $0A,$10,$10,$10,$10,$10,$10,$10,$10,$10
