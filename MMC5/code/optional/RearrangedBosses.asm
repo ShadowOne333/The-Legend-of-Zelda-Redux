@@ -97,7 +97,6 @@ org $924D	// 0x1925D
 	db $03
 
 
-//org $1B0DA	// 0x1B0EA
 org $1B0CB	// 0x1B0DB
 // MMC5 CHR Table for Sprite tiles
 // Changes GFX for Dungeon 3 & 7 for 1st Quest and Dungeon 2 & 8 for 2nd Quest

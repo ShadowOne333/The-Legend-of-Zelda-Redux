@@ -201,7 +201,6 @@ CHRSwaping:	// Levels
 	rts
 
 //LVL	00, 01, 02, 03, 04, 05, 06, 07, 08, 09	// 00 = Overworld
-//CHR1stQuestSprites:
 CHRBankTableSprites:
 	db $08,$0E,$14,$16,$18,$1A,$1C,$1E,$20,$22
 CHRBankTableTiles:
