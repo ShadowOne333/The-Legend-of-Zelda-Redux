@@ -69,9 +69,20 @@ https://www.romhacking.net/forum/index.php?topic=29403.0
 
 ## Optional patches:
 
+* Blue-er Tunic based on Asaki's hack (Bluer Tunic.ips)
+* Change the Tunics back to Rings with new revamped sprite (Tunic 2 Ring.ips)
+* Change Tunics to the Original Ring GFX from the NES release (Tunic 2 NES Ring.ips)
+* Fill the amount of hearts you have upon starting a save file, so you don't always start with 3 hearts only (Full Health at Start.ips)
+* Famicom Disk System's version Font graphics
+* Hide back all the overworld and dungeon secrets (Original Hidden Secrets.ips)
 * Modify bomb upgrade amount to 05 per upgrade (Bomb Upgrades 5 instead of 10.ips)
 * Link's Awakening graphics patch (Link's Awakening GFX.ips)
 * Original NES graphics (Original NES GFX.ips)
+* Original (blocky) Overworld screen/column definitions (Original Overworld Columns.ips)
+* Remove the Low Health sound effect beeping (Remove Low Health Beep.ips)
+* Remove the newly added "THE HYRULE FANTASY" subtitle from the title screen (Remove Hyrule Fantasy Subtitle.ips)
+* Reworked Title Screen to match more recent Zelda title screens (Reworked Title Screen.ips)
+* Reworked Title Screen without "THE HYRULE FANTASY" subtitle (Remove Reworked TS Subtitle.ips)
 * Unique bosses in each Dungeon/Level (Rearranged Bosses.ips)
 * Make each dungeon have its own unique colour palette similar to Modern Classic Edition (Recoloured Dungeons.ips)
 
@@ -109,7 +120,7 @@ If you want to apply any of the optional patches, you can use each Optional patc
 ## Credits
 
 * **Trax** - For his amazing disassembly of Zelda 1, which helped with a ton of stuff, and also for a lot of feedback and help in the development of this hack.
-* **BogaaBogaa** - For his incredible help with the Arrows and 999 rupees code, flipping the Heart/Map positions in the HUD, reworked credits, MMC5 bank swaping and its animation and the extra dialogue for the cave warp screens.
+* **BogaaBogaa** - For his incredible help with the Arrows and 999 rupees code, flipping the Heart/Map positions in the HUD, reworked credits, MMC5 bank swapping and its animation and the extra dialogue for the cave warp screens.
 * **Fiskbit** - For the MMC1 Animation, which uses a special NES 2.0 header.
 * **DarkSamus993** - For his ASM help towards some hacks (like the Select button Item switch).
 * **Stratoform** - For his help and code towards the Pols Voice flute code, fixing both the remaining stuff from porting the PRG1 Game Over screen's flashing and the cracked overworld walls collision, the flip hearts code and the max arrow limits.

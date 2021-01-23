@@ -594,7 +594,30 @@ l_BC7D:		// BC7D
 	lda.w {mapLoop_Y}	// Load value of mapLoop_Y
 	cmp.b #$04		// Compare with $04
 	bne l_BC78		// BNE $D7
-	rts
+
+// Send Automap tiles to the other 3 banks for MMC1 animation (by Bogaa)
+//	lda.w $7FF0		// Change CHR bank
+//	bne SkipSpriteBank	// Skip bank 00 since that one is for sprites
+//	lda.b #$01
+//SkipSpriteBank:
+//	sta.w $C000
+//	lsr
+//	sta.w $C000
+//	lsr
+//	sta.w $C000
+//	lsr
+//	sta.w $C000
+//	lsr
+//	sta.w $C000
+
+//	inc.w $7FF0
+//	lda.w $7FF0
+//	cmp.b #$06
+//	bne DrawWholeMap
+//	lda.b #$00
+//	sta.w $7FF0
+
+//	rts
 
 SendTileToPPU:	// $BCA2, 0x17CB2
 	ldx.b #$00	// A2 00
@@ -907,3 +930,68 @@ l_B214:		// 0x17224
 	rts
 
 
+//************************************
+//   PPU transfers for mini tiles?
+//************************************
+bank 6;	org $A0A2	// 0x1A0B2
+l_A0A2:
+	pha
+	sta.w $2006
+	iny
+	lda.b ($00),y
+	sta.w $2006
+	iny
+	lda.b ($00),y
+	asl
+	pha
+	lda.b $FF
+	ora.b #$04
+	bcs l_A0B9
+	and.b #$FB
+l_A0B9:
+	sta.w {PpuControl1}      
+	sta.b $FF
+	pla
+	asl
+	php
+	bcc l_A0C6
+	ora.b #$02
+	iny
+l_A0C6:
+	plp
+	clc
+	bne l_A0CB
+	sec
+l_A0CB:
+	ror
+	lsr
+	tax
+l_A0CE:
+	bcs l_A0D1
+	iny
+l_A0D1:
+	lda.b ($00),y
+	sta.w {PpuData}
+	dex
+	bne l_A0CE
+	pla
+	cmp.b #$3F
+	bne l_A0EA
+	sta.w {PpuAddress}
+	stx.w {PpuAddress}
+	stx.w {PpuAddress}
+	stx.w {PpuAddress}
+l_A0EA:        
+	sec
+	tya
+	adc.b $00
+	sta.b $00
+	lda.b #$00
+	adc.b $01
+	sta.b $01
+//	--------sub start--------
+	lda.w {PpuStatus}
+	ldy.b #$00
+	lda.b ($00),y
+	bpl l_A0A2
+	rts

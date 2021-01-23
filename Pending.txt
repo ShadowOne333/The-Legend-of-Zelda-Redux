@@ -49,7 +49,6 @@
 //	Optional patches
 //***********************************************************
 
-Implement an "Original OW Columns" optional patch, so that users can select between the new extended columns, or the original NES columns (overworld screens)
-
+(NONE)
 
 
