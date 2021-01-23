@@ -1,5 +1,5 @@
 //***********************************************************
-//   Change the new Ring graphics for the original NES one
+//    Change the Tunics to original NES Rings for MMC5
 //***********************************************************
 
 // Change TUNIC text back to RING
