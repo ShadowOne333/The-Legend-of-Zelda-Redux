@@ -91,7 +91,7 @@ https://www.romhacking.net/forum/index.php?topic=29403.0
 ## Help needed for these points:
 
 * Save the amount of hearts you last had if the game was saved manually, so when you load, you start with the same amount of life (this I'm not sure if it will be implemented in the end hack)
-* Implement water animation. MMC5 animation is already working, only one pending is MMC1 (partially working, just need to fix Automap, Visible Secrets and Item Toggle for a full release).
+* Implement water animation for MMC1 based on Fiskbit's "animate.asm" code. MMC5 animation is already working, the only one pending is MMC1 (it is partially working, just need to fix Snarfblam's Automap to work with it for a full release).
 
 
 -------------------
