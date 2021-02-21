@@ -54,7 +54,7 @@ define	VRAM_MapTiles	$1300
 
 // Our variables
 // ———————————————
-define	tileFlag	$6C30	// Used to indicate that there is a pending PPU macro for the map. Changed from $6C00 -> $6C1F to fix a bug of Dungeon palettes being overwritten with $00. $6C1B, $6C1B, $6C23, $6C24, $6C27, $6C28, $6C2C, $6C2D, $6C30 and $6C31 could all be theoretically used as well. 
+define	tileFlag	$6C30	// Used to indicate that there is a pending PPU macro for the map. Changed from $6C00 -> $6C30 to fix a bug of Dungeon palettes being overwritten with $00. $6C1B, $6C1F, $6C23, $6C24, $6C27, $6C28, $6C2C, $6C2D, $6C30 and $6C31 could all be theoretically used as well. 
 define	mapVar		{tileFlag}+1	// Temporary storage variable
 define	mapVar_X	{tileFlag}+2
 define	mapVar_Y	{tileFlag}+3
