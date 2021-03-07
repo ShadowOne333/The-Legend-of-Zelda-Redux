@@ -20,7 +20,7 @@ table code/text/text.tbl,ltr
 //	1 0 0 0		0 0 0 0 First Tile Bottom  	$80
 //	0 1 0 0		0 0 0 0 Second Tile Bottom 	$40 and $10 is the last one.
 
-// This map File will be copied to SRAM $7f50 and drawn fully at lunch. After there will be checks for current screen.
+// This map File will be copied to SRAM $7F50 and drawn fully at lunch. After there will be checks for current screen.
 
 // $7F00 Current Column map
 // $7F01 Current Row map
@@ -85,7 +85,7 @@ MapFlags:
 	bne EndMapFlags
 	inc.w $7F02	// SetFlag to draw map
 	lda.b #$00	// Used for waterfall.asm. It needs a buffer before it can run in play mode since automap is bussy doing things
-	sta.w $0704
+	sta.w $062C	//$0704
 EndMapFlags:	
 	jsr $EBA1	// HijackFix
 	rts
