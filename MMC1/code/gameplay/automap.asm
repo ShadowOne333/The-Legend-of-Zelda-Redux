@@ -116,11 +116,11 @@ BlipUpdate:
 
 // Exit if in a dungeon
 	lda.b {LevelNumber}	// Level Number
-	bne exitHijack	// Exit Hijack
+	bne exitHijack		// Exit Hijack
 
 // Grab the current blip position if it is on-screen
 	lda.w {OAM_MapBlipY}	// OAM Map Blip Y
-	cmp.b #$FF	// Compare with $FF
+	cmp.b #$FF		// Compare with $FF
 	beq OW_BlipUpdate	// BEQ $03, Branch to OW Blip Update
 	sta.w {MapBlipY}	// Map Blip Y
 
@@ -138,17 +138,17 @@ OW_BlipUpdate:	// 0x17C1F
 // Show blip
 	lda.w {MapBlipY}	// Map Blip Y
 	sta.w {OAM_MapBlipY}	// OAM Map Blip Y
-	bne exitHijack	// Exit Hijack
+	bne exitHijack		// Exit Hijack
 
 l_BC20:		// 0x17E20
 // Hide blip
-	lda #$FF	// Load value $FF into A register
+	lda #$FF		// Load value $FF into A register
 	sta.w {OAM_MapBlipY}	// OAM Map Blip Y
 
 exitHijack:	// 0x17E25
 // Exit Hijack
 	pla
-	jmp $77E7	// Jump to $77E7 (0x07067)
+	jmp $77E7		// Jump to $77E7 (0x07067)
 
 
 // Hijack
@@ -157,7 +157,7 @@ exitHijack:	// 0x17E25
 
 bank 7; org $F322	// 0x1F332, Per-frame update hijack
 // Safe Blip Update
-	jsr $FFD6	// Jump to subroutine at $FFD6 ($1FFE6 in PC) - Originally 20 E7 77 (JSR $77E7)
+	jsr SafeBlipUpdate	// Jump to subroutine at $FFD6 ($1FFE6 in PC) - Originally 20 E7 77 (JSR $77E7)
  
 // SafeBlipUpdate
 // ———————————————
@@ -512,7 +512,7 @@ UpdateMapTile:
 // X – Tile X
 // Y – Tile Y
 
-l_BC30:
+l_BE19:		// 0x17E29
 	stx.w {mapVar_X}	// Store mapVar_X
 	sty.w {mapVar_Y}	// Store mapVar_Y
 
@@ -544,15 +544,15 @@ ProcessMapByte:	 // 0x17E43
 // Return via A
 //	A = A >> (Y * 2) | 3
 
-l_BC5A:		// BC5A:
+l_BE43:		// 0x17E53
 	cpy.b #$00	// While Y != 0
-	beq l_BC63	// BEQ $05
-l_BC5E:		// BC5E:
+	beq l_BE4C	// BEQ $05
+l_BE47:		// 0x17E57
 	lsr		// A >> 2
 	lsr
 	dey		// Y-
-	bne l_BC5E	// BNE $FB
-l_BC63:		// BC63:
+	bne l_BE47	// BNE $FB
+l_BE4C:		// 0x17E5C
 	and.b #$03	// A
 	rts
 
@@ -562,6 +562,8 @@ l_BC63:		// BC63:
 //************************************
 
 DrawWholeMap:	// 0x17E5F
+	jmp DrawMapAllBanks  // Head over to a subroutine to loop through each bank
+DoDrawWholeMap: 
 // Prepare PPU to write map data
 	lda.w $2002		// AD 02 20 -> PPU_STATUS = #$30
 	lda.b #{VRAM_MapTiles}>>8	// Set PPU address #>VRAM_MapTiles (High byte)
@@ -595,28 +597,6 @@ l_BC7D:		// BC7D
 	cmp.b #$04		// Compare with $04
 	bne l_BC78		// BNE $D7
 
-// Send Automap tiles to the other 3 banks for MMC1 animation (by Bogaa)
-//	lda.w $7FF0		// Change CHR bank
-//	bne SkipSpriteBank	// Skip bank 00 since that one is for sprites
-//	lda.b #$01
-//SkipSpriteBank:
-//	sta.w $C000
-//	lsr
-//	sta.w $C000
-//	lsr
-//	sta.w $C000
-//	lsr
-//	sta.w $C000
-//	lsr
-//	sta.w $C000
-
-//	inc.w $7FF0
-//	lda.w $7FF0
-//	cmp.b #$06
-//	bne DrawWholeMap
-//	lda.b #$00
-//	sta.w $7FF0
-
 	rts
 
 SendTileToPPU:	// $BCA2, 0x17CB2
@@ -626,25 +606,6 @@ l_BCA4:		// BCA4:
 	sta.w $2007	// Write to PPU -> PPU_DATA = #$90
 	inx
 	cpx.b #$10	// Compare with $10
-
-//	pla            // Change CHR bank
-//	pha
-
-//	sta.w $C000
-//	lsr
-//	sta.w $C000
-//	lsr
-//	sta.w $C000
-//	lsr
-//	sta.w $C000
-//	lsr
-//	sta.w $C000
-
-//	pla
-//	sec
-//	sbc.b #$01
-//	pha
-//	cmp.b #$00
 	bne l_BCA4	// D0 F5
 
 	rts
@@ -786,7 +747,7 @@ l_BD29:		// BD29:
 //************************************
 // Modified by ShadowOne333 to allow 1/4 hearts decrements instead of the original 1/8
 
-PartialHeartRoutine:	// 0x17D52, $BD42
+PartialHeartRoutine:	// 0x17F3E, $BF2E
 // 1/4 Hearts subroutine
 	lda.w $0670	// Originally LDA $0F (A5 0F) - Can be changed for AD 70 06 for direct access to the heart damage in RAM
 	lsr
@@ -799,6 +760,39 @@ PartialHeartRoutine:	// 0x17D52, $BD42
 	adc.b #$50	// 69 50
 	jmp $6ED7	// Jump to $6ED7, or $06757 in PC address. Return to the original code for hearts
 
+
+//******************************************
+// Draw Map on all banks for MMC1 Animation (by frantik)
+//******************************************
+org $BFC0	// 0x17FD0, $BFC0
+// This draws the map on all the banks
+DrawMapAllBanks:
+	lda.b #$00
+	sta.w $7FF0
+DrawMapLoop:  
+	jsr SetChrBank
+
+	jsr DoDrawWholeMap
+
+	inc.w $7FF0
+	lda.w $7FF0
+	cmp #$05
+	bcc DrawMapLoop
+
+	rts
+
+SetChrBank:  
+	sta.w $C000
+	lsr
+	sta.w $C000
+        lsr
+        sta.w $C000
+        lsr
+        sta.w $C000
+        lsr
+        sta.w $C000
+
+	rts 
 
 // Hijack
 // ———————————————
@@ -886,19 +880,41 @@ bank 6; org $9D70	// 0x19D80
 // This bis is from the old automap (without an actual image of overworld)
 	ldx.w {tileFlag}	// Load tile flag
 	beq rtn			// Return, BEQ $10
+	txa
+
+        // Use the tile flag to keep track of which CHR bank we are on. Increment each time we visit this function.
+	// This will allow us to update each bank, one time per frame. (by frantik)	
+        jsr SetChrBank_6 
 	lda.b #{MapTileMacro}	// Load Map tile macro low byte
 	sta.b $00		// Store $00
 	lda.b #{MapTileMacro}>>8	// Load Map tile macro high byte
 	sta.b $01		// Store $01
 	jsr {SendPpuMacro}	// Jump to Send PPU Macro routine
 
-ClearAndReturn:	// $9D87, 0x19D97
+ClearAndReturn:	// $9D87, 0x19D97 <-- this may have changed now
+        inc {tileFlag}
+        ldx {tileFlag}
+	cpx #$05          // Are we done with bank 4?  If so then reset the flag, otherwise exit and do it again next frame
+        bcc rtn 
 	lda.b #$00		// Clear tile flag
 // NOP to fix palettes in dungeons not being properly restored after exiting stairs (by gzip)
 	sta.w {tileFlag}	// Store in Tile Flag $6C00
 
 rtn:		// $9D8C, 0x19D9C
 	rts
+
+SetChrBank_6:  
+	sta.w $C000
+        lsr
+        sta.w $C000
+ 	lsr
+        sta.w $C000
+        lsr
+        sta.w $C000
+        lsr
+        sta.w $C000
+
+ 	rts 
 
 
 //************************************
