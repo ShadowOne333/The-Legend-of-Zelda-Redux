@@ -857,7 +857,7 @@ l_17C69:	// $E0-$EF
 	db $DB,$5B,$1B,$34,$4E,$32		// $E7
 	db $DB,$4E,$4E,$4E,$0E,$33,$1B		// $E8
 
-	fillto $BDF0,$FF
+	fillto $BDE0,$FF	// Must change back to $BDF0!
 
 // Change address of the whole $F0-$FF entries to get the extra space required for the last new columns
 org $AF80	// 0x16F90

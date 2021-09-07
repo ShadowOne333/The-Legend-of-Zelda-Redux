@@ -302,8 +302,8 @@ bank 7; org $C000	// 0x1C010
 //--------------------------------------------------------------
 //	Bank 8, $20000
 //--------------------------------------------------------------
-bank 8; org $20000	// 0x20010
-	incbin code/gfx/NewCHR.bin
+//bank 8; org $20000	// 0x20010
+//	incbin code/gfx/NewCHR.bin
 
 //--------------------------------------------------------------
 // Notes
@@ -500,5 +500,4 @@ bank 7; org $C000	// 0x1C010
 		jmp $E440	// Bankswaping Detour? Grab value $00 store it at $F4, then swap to bank 5 and continues with routines
 	//Clear out old routines
 		fillto $FFAC,$FF
-
 

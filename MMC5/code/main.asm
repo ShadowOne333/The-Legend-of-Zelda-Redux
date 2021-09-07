@@ -43,12 +43,20 @@ incsrc code/MMC5.asm		// Convert Zelda 1 from MMC1 to MMC3
 //****************************************
 //	Visual changes
 //****************************************
-//incsrc code/gfx/graphics.asm		// Sprite/graphic changes, REPLACED WITH NEWGFX INSIDE MMC5.ASM !!!
+incsrc code/gfx/graphics.asm		// Sprite/graphic changes
 incsrc code/gfx/palettes.asm		// Several palette changes
 incsrc code/gfx/title_screen.asm	// Title screen visual changes
 incsrc code/menus/caution_screen.asm	// Implement the CAUTION screen from the PRG1 version
 incsrc code/menus/file_select.asm	// Modifications to the File Select menus
 incsrc code/menus/hud_and_subscreen.asm	// Changes to both the HUD and the Subscreen
+
+
+//****************************************
+//	Bugfixes
+//****************************************
+incsrc code/bugfixes/overworld_hud_blink.asm	// Stops HUD from disappearing when entering or leaving caves during overworld map
+incsrc code/bugfixes/overworld_scroll_timing.asm	// Fix for Y-scroll timing glitch
+incsrc code/bugfixes/overworld_leave_cave.asm	// Fix wrong player sprite position on entering overworld from caves
 
 
 //****************************************
@@ -58,6 +66,7 @@ incsrc code/text/script.asm		// Relocalization of the game's script
 incsrc code/text/story.asm		// Rewrite of the game's story and intro texts
 incsrc code/text/credits.asm		// Rewrite of the game's credits sequences
 incsrc code/text/text_speed.asm		// Modify text parsing speed
+
 
 //****************************************
 //	Gameplay changes

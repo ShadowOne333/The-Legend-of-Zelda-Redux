@@ -50,12 +50,21 @@ incsrc code/menus/hud_and_subscreen.asm	// Changes to both the HUD and the Subsc
 
 
 //****************************************
+//	Bugfixes
+//****************************************
+incsrc code/bugfixes/overworld_hud_blink.asm	// Stops HUD from disappearing when entering or leaving caves during overworld map
+incsrc code/bugfixes/overworld_scroll_timing.asm	// Fix for Y-scroll timing glitch
+incsrc code/bugfixes/overworld_leave_cave.asm	// Fix wrong player sprite position on entering overworld from caves
+
+
+//****************************************
 //	Text changes
 //****************************************
 incsrc code/text/script.asm		// Relocalization of the game's script
 incsrc code/text/story.asm		// Rewrite of the game's story and intro texts
 incsrc code/text/credits.asm		// Rewrite of the game's credits sequences
 incsrc code/text/text_speed.asm		// Modify text parsing speed
+
 
 //****************************************
 //	Gameplay changes
@@ -82,6 +91,5 @@ incsrc code/gameplay/move_maps.asm	// Change Hearts and Map positions in HUD (IN
 // Include optional patches
 // Uncomment desired patches inside "optional.asm" for them to compile
 incsrc code/optional.asm
-
 
 

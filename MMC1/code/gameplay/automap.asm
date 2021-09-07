@@ -27,20 +27,21 @@ bank 5; org $AD00	// 0x16D10-0x16F0C
 // HUD Icons
 // ———————————————
 define	INFINITY	$64
-define	RUPEE	$F7
+define	RUPEE		$F7
 //define	ARROW	$65
-define	KEY	$F9
-define	BOMB	$61
+define	KEY		$F9
+define	BOMB		$61
 //define	LOW_X	$62
 
 // Game variables
 // ———————————————
-define	LevelNumber	$10
-define	SaveSlot	$16
+define	LevelNumber		$10
+define	RoutineIndex		$13
 define	PendingPpuMacro		$14
+define	SaveSlot		$16
 define	CurrentMapLocation	$EB
-define	NewMapLocation	$EC
-define	OAM_MapBlipY	$0254
+define	NewMapLocation		$EC
+define	OAM_MapBlipY		$0254
 
 // Game routines
 // ———————————————
@@ -54,12 +55,12 @@ define	VRAM_MapTiles	$1300
 
 // Our variables
 // ———————————————
-define	tileFlag	$6C30	// Used to indicate that there is a pending PPU macro for the map. Changed from $6C00 -> $6C30 to fix a bug of Dungeon palettes being overwritten with $00. $6C1B, $6C1F, $6C23, $6C24, $6C27, $6C28, $6C2C, $6C2D, $6C30 and $6C31 could all be theoretically used as well. 
+define	tileFlag	$0628	// Used to indicate that there is a pending PPU macro for the map. Changed from $6C00 -> $0628 to fix a bug of Dungeon palettes being overwritten with $00. ($6C30, $6CB4)
 define	mapVar		{tileFlag}+1	// Temporary storage variable
 define	mapVar_X	{tileFlag}+2
 define	mapVar_Y	{tileFlag}+3
 define	mapLoop_X	{tileFlag}+4
-define	mapLoop_Y	{tileFlag}+5
+define	mapLoop_Y	$0673	// {tileFlag}+5
 
 define	SecondPpuStringIndex	$7F10
 define	MapBits_Left	{SecondPpuStringIndex}+1	// Stores flags for whether the two screens in the left/right side
@@ -296,7 +297,7 @@ NewHudMacroSelector:
 	sta.b {PendingPpuMacro}	// Store at PendingPpuMacro RAM address
 
 l_AF2E:		// 0x16F3E
-	inc.b $13	// Increment value at RAM $13
+	inc.b {RoutineIndex}	// Increment value at RAM $13
 	rts
 
 
@@ -767,7 +768,7 @@ PartialHeartRoutine:	// 0x17F3E, $BF2E
 org $BFC0	// 0x17FD0, $BFC0
 // This draws the map on all the banks
 DrawMapAllBanks:
-	lda.b #$00
+	lda.b #$01	// Make the drawing being in bank 1 instead of bank 0 for sprites (by minucce)
 	sta.w $7FF0
 DrawMapLoop:  
 	jsr SetChrBank
@@ -1011,3 +1012,4 @@ l_A0EA:
 	lda.b ($00),y
 	bpl l_A0A2
 	rts
+

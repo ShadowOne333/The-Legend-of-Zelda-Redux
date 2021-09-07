@@ -39,10 +39,10 @@ define	MMC1_CONTROL	$8000
 define	MMC1_CHR_BANK_0	$A000
 define	MMC1_CHR_BANK_1	$C000
 
-define	kMmc1ControlMirroringV	%0000010
-define	kMmc1ControlMirroringH	%0000011
+define	kMmc1ControlMirroringV		%0000010
+define	kMmc1ControlMirroringH		%0000011
 define	kMmc1ControlPrgC000Fixed	%0001100
-define	kMmc1Control4KbChr	%0010000
+define	kMmc1Control4KbChr		%0010000
 
 // This should be a power of 2. Additional banks will have to be added to the dAnimatedGraphicsBank tables.
 define kNumAnimationBanks	4

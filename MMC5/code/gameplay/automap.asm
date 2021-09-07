@@ -8,49 +8,84 @@
 
 table code/text/text.tbl,ltr
 
+
+//****************************************
+//	Variable declarations
+//****************************************
+
 // SRAM Map SaveFormat:
-//	File1 $7F60
-//	File2 $7F70
-//	File3 $7F80
+// ———————————————
+define	File1	$7F60
+define	File2	$7F70
+define	File3	$7F80
+// This map File will be copied to SRAM $7F50 and drawn fully at launch. Afterwards, there will be checks for current screen.
+define	MapRam	$7F50
+
+// Game variables
+// ———————————————
+define	LevelNumber		$10
+define	RoutineIndex		$13
+define	PendingPpuMacro		$14
+define	SaveSlot		$16
+define	CurrentMapLocation	$EB
+define	NewMapLocation		$EC
+define	OAM_MapBlipY		$0254
+
+// Our variables:
+// ———————————————
 
 // The Full map is 16 byte wide. Every byte represents a Column.
 // Byte Column Encoding
 // Bottom Half 	Top Half
-//	1 1 1 1   	1 1 1 1 Show Full Column	$ff
+//	1 1 1 1   	1 1 1 1 Show Full Column	$FF
 //	1 0 0 0		0 0 0 0 First Tile Bottom  	$80
 //	0 1 0 0		0 0 0 0 Second Tile Bottom 	$40 and $10 is the last one.
 
-// This map File will be copied to SRAM $7F50 and drawn fully at lunch. After there will be checks for current screen.
+define	ColumnMap	$7F00
+define	RowMap		$7F01
+define	DrawFullMap	$7F02
+define	YposLinkMarker	$7F03	// Used while flashing and blanked out.
 
-// $7F00 Current Column map
-// $7F01 Current Row map
-// $7F02 Flag to Draw Full Map
-// $7F03 Ypos Link Marker on map. Used while flashing and blanked out.
-
-// $6CB4 Flag Used when start Scrolling. LinkMarker Update?
+define	tileFlag	$758C		// Flag Used when start Scrolling. LinkMarker Update?. Changed from $6C00 -> $6CB4 to fix a bug of Dungeon palettes being overwritten with $00
 // The HudMap does consist of 32 tiles. 4 Rows and 8 Columns.
-// $6CB6 00=Column1, 01=Column2, 02=Column3, 03=Column4, 04=Column5, 05=Column6, 06=Column7, 07=Column5 
-// $6CB7	00=MapRow1, 01=MapRow2, 02=MapRow3, 03=MapRow4 
+define	mapVar		{tileFlag}+1	// $6CB5, Temporary storage variable
+define	mapVar_X	{tileFlag}+2	// $6CB6, 00=Column1, 01=Column2, 02=Column3, 03=Column4, 04=Column5, 05=Column6, 06=Column7, 07=Column5 
+define	mapVar_Y	{tileFlag}+3	// $6CB7,	00=MapRow1, 01=MapRow2, 02=MapRow3, 03=MapRow4 
+define	mapLoop_X	{tileFlag}+4
+define	mapLoop_Y	{tileFlag}+5
 
+define	BankSplice	$7F90	// Check if bank 5 and go to SRAM or Bank 5 location accordingly
+
+// Registers
+// ———————————————
+define	PpuControl1	$2000
+define	PpuControl2	$2001
+define	PpuStatus	$2002
+define	OamAddress	$2003
+define	OamData		$2004
+define	PpuScroll	$2005
+define	PpuAddress	$2006
+define	PpuData		$2007
+
+//-------------------------------------------------------------
 
 bank 1;		// PRG 4000
-org $A450
+org $A450	// $4460
 CopyToSRAM:
 	ldy.b #$00	// Copy code block to SRAM. Run on startup
 CopyToSRAMLoop:
 	lda.w CodeBlock,y
-	sta.w $7F90,y
+	sta.w {BankSplice},y
 	iny
 	cpy.b #$6F    	// Size of block - Max size. This can be used to copy other code as well.
 	// Probably would be good to define SRAM locations/Routines to make code more readable.
-	// Define $7f90=BankSplice // Check if bank 5 and go to SRAM or Bank 5 location accordingly
 	bne CopyToSRAMLoop
 
 //************************************************************
 //			MMC5 Feature 
 //************************************************************
 
-//MMC5 For Additional SRAM. Only used with MMC5, so I copy the same code to not break anything when used on a different mapper.
+// MMC5 For Additional SRAM. Only used with MMC5, so I copy the same code to not break anything when used on a different mapper.
 	lda.b #$01	// Switch SRAM Page
 	sta.w $5113
 
@@ -58,7 +93,7 @@ CopyToSRAM2:
 	ldy.b #$00       // Copy code block to SRAM. Run on startup
 CopyToSRAMLoop2:
 	lda.w CodeBlock,y
-	sta.w $7F90,y
+	sta.w {BankSplice},y
 	iny
 	cpy.b #$6F
 	bne CopyToSRAMLoop2
@@ -83,7 +118,7 @@ MapFlags:
 	lda.b $12
 	cmp.b #$04	// Check if it will turn to 5 soon. Overworld check
 	bne EndMapFlags
-	inc.w $7F02	// SetFlag to draw map
+	inc.w {DrawFullMap}	// SetFlag to draw map
 	lda.b #$00	// Used for waterfall.asm. It needs a buffer before it can run in play mode since automap is bussy doing things
 	sta.w $062C	//$0704
 EndMapFlags:	
@@ -128,18 +163,18 @@ org $ABB5
 org $B000	// Will bring the save map to the right location in SRAM. When you register/save  
 	jsr ChooseMap
 LoadMapLoop1:	
-	lda.w $7F50,x
-	sta.w $7F60,y
+	lda.w {MapRam},x	// $7F50,x
+	sta.w {File1},y		// $7F60,y
 	dey
 	dex
 	bpl LoadMapLoop1
-	jmp $9D2A	// FixHijack?             
+	jmp $9D2A	// Fix Hijack?             
 
 LoadMap:
 	jsr ChooseMap
 LoadMapLoop2:	
-	lda.w $7F60,y	// Will bring the save2 map to the right location in SRAM. When you load game        
-	sta.w $7F50,x
+	lda.w {File1},y		// $7F60,y - Will bring the save2 map to the right location in SRAM. When you load game        
+	sta.w {MapRam},x	// $7F50,x
 	dey
 	dex
 	bpl LoadMapLoop2
@@ -149,41 +184,41 @@ DeleteMapFromSave:	// Delete map from save file
 	jsr Delete
 	jmp $A764	// Fix Hijack?
 	jsr Delete
-	jmp $AF5A	// FixH ijack?
+	jmp $AF5A	// Fix Hijack?
 
 Delete:	
 	ldx.b #$0F
 	lda.b #$00
 LoopDelete:
-	sta.w $7F50,x
+	sta.w {MapRam},x	// $7F50,x
 	dex
 	bpl LoopDelete
 	rts                      
 
 ChooseMap:
-	ldy.b #$0F	// Choose Save Map 1
-	ldx.b $16	// Load Current Save Slot
+	ldy.b #$0F		// Choose Save Map 1
+	ldx.b {SaveSlot}	// Load Current Save Slot
 	beq EndLoad
-	ldy.b #$1F	// Choose Save Map 2
+	ldy.b #$1F		// Choose Save Map 2
 	dex
 	beq EndLoad
-	ldy.b #$2F	// Choose Save Map 3
+	ldy.b #$2F		// Choose Save Map 3
 EndLoad:	
-	ldx.b #$0F	// LoadMapSize
+	ldx.b #$0F		// Load Map Size
 	rts
 
 
 bank 5;		// PRG 14000
 org $85A0	// Free Space for new Code ----------------------------------------------
 VisitedMapFlags:	// !!	
-	lda.b $EB	// Get Map Xpos and Ypos
-	and.b #$0F	// Take Xpos and move to X register
+	lda.b {CurrentMapLocation}	// Get Map Xpos and Ypos
+	and.b #$0F			// Take Xpos and move to X register
 	tax
 	lsr
-	sta.w $7F00
+	sta.w {ColumnMap}
 	pha
 	
-	lda.b $EB	// Take Ypos shift to lower nibble (halfbyte) move to Y register.             
+	lda.b {CurrentMapLocation}	// Take Ypos shift to lower nibble (halfbyte) move to Y register.             
 	lsr
 	lsr
 	lsr
@@ -191,7 +226,7 @@ VisitedMapFlags:	// !!
 	tay
 	
 	lsr		// Devide since marker moves half a tile. Push Ypos/Row Map   
-	sta.w $7F01
+	sta.w {RowMap}
 	pha
 
 	lda.b #$01	// Check for top Row?
@@ -204,8 +239,8 @@ CheckNext:
 	bne CheckNext
 
 StoreVisitFlag:	
-	ora.w $7F50,x
-	sta.w $7F50,x
+	ora.w {MapRam},x	// $7F50,x
+	sta.w {MapRam},x	// $7F50,x
 	pla		// Pull YposMap/Row
 	tay
 	pla		// Pull XposMap/Column
@@ -218,7 +253,7 @@ SetCaveFlag:
 	lda.b $5B
 	cmp.b #$0B
 	bne EndSetCaveFlag
-	dec.w $7F02	// SetFlag to clear map
+	dec.w {DrawFullMap}	// SetFlag to clear map
 EndSetCaveFlag:	
 	sta.b $12
 	rts
@@ -237,15 +272,15 @@ org $A8DE	// May be the initial thing should not be used?
 
 org $AF20
 CheckCurrentLevel:	
-	lda.b $10	// Load Current Level		
-	beq EndLvLCheck	// Branch if Overworld            
-	lda.b $14	// Load PPU Index                 
-	cmp.b #$0E	// Check?     
+	lda.b {LevelNumber}	// Load Current Level		
+	beq EndLvLCheck		// Branch if Overworld            
+	lda.b {PendingPpuMacro}	// Load PPU Index                 
+	cmp.b #$0E		// Check?     
 	bne EndLvLCheck                
 	lda.b #$7E                 
-	sta.b $14	// Update PPU Index              
+	sta.b {PendingPpuMacro}	// Update PPU Index              
 EndLvLCheck:	
-	inc.b $13	// Increase Routine Index   
+	inc.b {RoutineIndex}	// Increase Routine Index   
 	rts                      
 
 org $B01A
@@ -266,46 +301,46 @@ HeartFill:
 org $BDF0	//Position of Link's Marker on Map
 LinkMarker:	
 	pha
-	lda.b $10		// Load Current Level           
+	lda.b {LevelNumber}	// Load Current Level           
 	bne EndOverworldSet	// Branch Not overworld     
-	lda.w $0254		// Ypos of Link marker on Map    
+	lda.w {OAM_MapBlipY}	// Ypos of Link marker on Map    
 	cmp.b #$FF
 	beq WhenBlankedOut
-	sta.w $7F03		// Store Current Ypos on Map here while blanked out.              
+	sta.w {YposLinkMarker}	// Store Current Y-pos on Map here while blanked out.              
 
 WhenBlankedOut:	
-	lda.b $15	// Load Frame Counter           
-	lsr		// Get 5 Nibble to branch every 10 frames?
+	lda.b $15		// Load Frame Counter           
+	lsr			// Get 5 Nibble to branch every 10 frames?
 	lsr
 	lsr
 	lsr
 	lsr
 	bcc BlankMarker
-	lda.w $7F03	// Load Ypos on Map after blank is over
-	sta.w $0254	// Links Marker Ypos on Map               
+	lda.w {YposLinkMarker}	// Load Y-pos on Map after blank is over
+	sta.w {OAM_MapBlipY}	// Links Marker Ypos on Map               
 	bne EndOverworldSet
 BlankMarker:	
-	lda.b #$FF	// Will make the marker blink. Here the possition is outside of screen
-	sta.w $0254	// Links Marker Ypos on Map
+	lda.b #$FF		// Will make the marker blink. Here the possition is outside of screen
+	sta.w {OAM_MapBlipY}	// Links Marker Ypos on Map
 EndOverworldSet:	
 	pla
 	jmp $77E7
 
 	
 GetDiscoverData:	
-	stx.w $6CB6	// CurrentColumn xPos         
-	sty.w $6CB7	// CurrentRow. Takes value in $EB LSR 5 times
+	stx.w {mapVar_X}	// Current Column X-Pos         
+	sty.w {mapVar_Y}	// Current Row. Takes value in $EB LSR 5 times
 	txa
 	asl
 	tax
-	lda.w $7F50,x	// Get Map Column         
+	lda.w {MapRam},x	// $7F50,x - Get Map Column         
 	jsr ColumnData
-	sta.w $6CB5
-	ldy.w $6CB7
+	sta.w {mapVar}
+	ldy.w {mapVar_Y}
 	lda.w $7F51,x
 	jsr ColumnData
-	lda.b #$01	// Flag for?                
-	sta.w $6CB4
+	lda.b #$01		// Flag for?                
+	sta.w {tileFlag}
 	jsr DrawPartialMap
 	rts
 
@@ -324,8 +359,8 @@ EndColumn:
 org $BE4F
 DrawPartialMap: 	//New for MMC5	
 	lda.b #$00
-	ldx.w $7F00	// Load xPos and Ypos of map
-	ldy.w $7F01
+	ldx.w {ColumnMap}	// Load X-pos and Y-pos of map
+	ldy.w {RowMap}
 	beq LoadTile	// Branch if first row
 
 LoopPointerCalc:
@@ -337,7 +372,7 @@ LoopPointerCalc:
 
 LoadTile:	
 	clc
-	adc.w $7F00	// Add row offset
+	adc.w {ColumnMap}	// Add row offset
 	tax
 	lda.w MapNameTaRW1,x
 	sta.w $7F08	// Tile
@@ -347,7 +382,7 @@ LoadTile:
 	lda.b #$20
 	sta.w $7F06	//Pointer Highbyte
 
-	lda.w $7F01
+	lda.w {RowMap}
 	asl
 	asl
 	asl
@@ -355,7 +390,7 @@ LoadTile:
 	asl
 	clc
 	adc.b #$76
-	adc.w $7F00	// Offset Row
+	adc.w {ColumnMap}	// Offset Row
 	sta.w $7F05	// Pointer Lowbyte
 	lda.b #$FF
 	sta.w $7F09
@@ -372,13 +407,13 @@ MapNameTaRW4:
 
 
 FullMapDrawFlag:
-	lda.b $10		// Check Current Level
+	lda.b {LevelNumber}	// Check Current Level
 	bne Underworld
 
-	lda.b #$01	// Flag to draw map while the screen opens
-	sta.w $7F02
+	lda.b #$01		// Flag to draw map while the screen opens
+	sta.w {DrawFullMap}
 Underworld:
-	lda.b #$1A	// HijackFix Initial screen hijack
+	lda.b #$1A		// Hijack Fix Initial screen hijack
 	sta.b $00
 
 	rts
@@ -386,7 +421,7 @@ Underworld:
 
 	
 HealthRefill:
-	lda.w $0670 	// Load Partial Health               
+	lda.w $0670 		// Load Partial Health               
 	lsr
 	lsr
 	lsr
@@ -432,29 +467,29 @@ org $934F	// This org is not needed but the above data might be edited by other 
 org $9D70
 UpdatePartialMapTile:	
 	jsr $A080	// Check stuff and goes into PPU routines?
-	lda.b $10		// Check for overworld? 
+	lda.b {LevelNumber}	// Check for overworld
 	bne NotOverworld
 	
-	lda.w $7F02	// FlagFullMapUpdate
+	lda.w {DrawFullMap}	// Flag Full Map Update
 	beq UpdateTile
 	bmi EraseMap
 	jsr DrawFullMap
 UpdateTile:	
-	ldx.w $6CB4	// Checks if Scrolling/Transition? 00=Normal 01=?
+	ldx.w {tileFlag}	// $6CB4, Checks if Scrolling/Transition? 00=Normal 01=?
 	beq EndCheckStuff
 
-	lda.w $2002	// Read PPU status to reset the high/low latch
+	lda.w {PpuStatus}	// Read PPU status to reset the high/low latch
 	lda.w $7F06
-	sta.w $2006	// Write the high byte 
+	sta.w {PpuAddress}	// Write the high byte 
 	lda.w $7F05
-	sta.w $2006	// Write the low byte 
+	sta.w {PpuAddress}	// Write the low byte 
 
-	lda.w $7F08	// Load Tile to update
-	sta.w $2007	// Write to PPU
+	lda.w $7F08		// Load Tile to update
+	sta.w {PpuData}		// Write to PPU
 	
 NotOverworld:	
 	lda.b #$00
-	sta.w $6CB4
+	sta.w {tileFlag}	// $6CB4
 EndCheckStuff:
 	rts
 EraseMap:
@@ -465,7 +500,7 @@ EraseMap:
 	
 	jsr EraseMapNametable
 	
-	pla		// Backup from stuck
+	pla			// Backup from stuck
 	tay
 	pla
 	tax
@@ -479,110 +514,80 @@ EraseMap:
 //	1 1 1 1   	1 1 1 1 Show Full Column	$FF
 //	1 0 0 0		0 0 0 0 First Tile Bottom  	$80
 //	0 1 0 0		0 0 0 0 Second Tile Bottom 	$40 and $10 is the last one.
-//  This map File will be copied to SRAM $7f50 and drawn fully at lunch.
+//  This map File will be copied to SRAM $7F50 and drawn fully at lunch.
 // $00 PPU Offset
 // $01 Row
 
 DrawFullMap:
-	lda.b $00		// Backup to stuck
-	pha
-	txa
-	pha
-	tya
-	pha
+	lda.b $FF		// PPU Ctrl
+	ora.b #$04		// Row write
+	sta.w {PpuControl1}
 	
-	ldx.w $7F0A	// CopyMapNameTa
-	ldy.w $7F04	// Column counter
+	lda.w {PpuStatus}	// Reset latch
 	
-	lda.b #$76
+	lda.b #$20               
+	sta.w {PpuAddress}	// HighByte PPU 
+	
+	ldy.w $7F04		// Column counter  [00-0F]
+	
+	tya		// We like to skip every second column to be drawn. Since one tile is two columns of discovery data.
+	lsr
+	tax		// Offset with x data table and PPU pointer  [00-07, $7F0A]
+	
 	clc
-	adc.w $7F0A	// Offset with x data table and PPU pointer
-	sta.b $00		// Holds LowByte PPU
-
-NextColumnSave:		
-	lda.b #$03	// Check 4 rows
-	sta.b $01
-
+	adc.b #$76		// Table  [76, 76, 77, 77, 78, 78 , .. , 7D, 7D]
+	sta.w {PpuAddress}	// LowByte PPU
+	
 MapColumnLoop:
-	clc
 	lda.w $7F50,y
-
+	
 BitCheckLoop:
 	lsr		// Every two bit is a tile to check
-	bcs StoreTile
+	bcs StoreTile2
 	lsr
 	bcs StoreTile
 	
-	pha		// KeepBitCheckValue
+NoTile:
+	tay			// KeepBitCheckValue
 	
-//	LDA $2002		//StoreEmptyTile This is not needed but helpful for debugging	       
-//	LDA #$20               
-//	STA $2006		//PpuAddr_2006         
-//	LDA $00 	             
-//	STA $2006		//PpuAddr_2006
-//	lda #$24
-//	sta $2007
+	// lda #$24		// Empty Tile (debugging)
+	lda.w {PpuData}		// Bump Vram
+	bcc SetNextBit
+	
+StoreTile2:
+	lsr			// Same Tile
+	
+StoreTile:
+	tay			// KeepBitCheckValue
+	
+	lda.w CopyMapNameTa,x
+	sta.w {PpuData}
+		
 SetNextBit:	
-	lda.b $00	// RowSwitch
-	clc
-	adc.b #$20
-	sta.b $00
-	
-	txa		// Next Row CopyMapNameTa
+	txa			// Next Row CopyMapNameTa
 	clc
 	adc.b #$08
 	tax
 	
-	pla		// KeepBitCheckValue
+	tya			// KeepBitCheckValue
+	bne BitCheckLoop	// Next Row
 	
-	dec.b $01	// Next Row
-	bmi NextColumn
-	jmp BitCheckLoop
-
-StoreTile:
-	pha		// KeepBitCheckValue
-	
-	lda.w $2002	       
-	lda.b #$20               
-	sta.w $2006	// PpuAddr_2006         
-	lda.b $00 	             
-	sta.w $2006	// PpuAddr_2006
-	lda.w CopyMapNameTa,x
-	sta.w $2007
-
-	jmp SetNextBit
-	
-NextColumn:		
-	txa		// Set CopyMapNameTa x to first row next tile
-	sec
-	sbc.b #$1F
-	tax
-	
-	lda.b $00		// Update PPU Pointer to next Row
-	sec
-	sbc.b #$7F
-	sta.b $00
-	
-	iny
-	cpy.b #$10	// Check if finished
+NextColumn:
+	lda.w $7F04		// Next column
+	// clc			// No carry from above math
+	adc.b #$01
+	cmp.b #$10		// Check if finished
 	bne StoreColumnOffset
-
-	lda.b #$00	// SetFlagDrawn	
+	
+	lda.b #$00		// SetFlagDrawn	
 	sta.w $7F02
-	ldy.b #$00
+	
 StoreColumnOffset:
-	sty.w $7F04	// Current Column
-	tya
-	lsr
-	sta.w $7F0A	// We like to skip every second column to be drawn. Since one tile is two columns of discovery data.
-
-	pla		// Backup from stuck
-	tay
-	pla
-	tax
-	pla
-	sta.b $00
-
+	sta.w $7F04		// Current Column
+	
+	lda.b $FF		// Restore PPU Ctrl
+	sta.w {PpuControl1}
+	
 	rts
 
 CopyMapNameTa:
@@ -598,14 +603,14 @@ EraseMapNametable:
 
 	ldy.b #$76
 ClearMap:	
-	lda.w $2002
+	lda.w {PpuStatus}
 	lda.b #$20
-	sta.w $2006	// PpuAddr_2006
-	sty.w $2006	// PpuAddr_2006
+	sta.w {PpuAddress}	// PpuAddr_2006
+	sty.w {PpuAddress}	// PpuAddr_2006
 	ldx.b #$08	// A Row
 	lda.b #$24	// EmptyTiles
 LoopClear:	
-	sta.w $2007
+	sta.w {PpuData}
 	dex
 	bne LoopClear
 
@@ -619,7 +624,7 @@ LoopClear:
 		
 EndClearMap:	
 	lda.b #$00
-	sta.w $7F02
+	sta.w {DrawFullMap}
 	
 	pla
 	rts
@@ -649,7 +654,7 @@ org $EBF2	// Set Flags to draw map or clear it.
 	jsr $7FA0
 	
 org $F322
-	jsr $7F90
+	jsr {BankSplice}
 
 
 // This is needed for Original MMC1 
@@ -678,6 +683,4 @@ bank 11; org $2C300
 // Further depends so the world will not come with messed up columns with wrong pattern arrangment/fuctioning caves..
 // "visible_secrets.asm"
 // "overworld_screens.asm" does debenp on visible secrets
-
-
 
