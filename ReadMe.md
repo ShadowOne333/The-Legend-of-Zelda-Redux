@@ -127,7 +127,7 @@ If you want to apply any of the optional patches, you can use each Optional patc
 * **Stratoform** - For his help and code towards the Pols Voice flute code, fixing both the remaining stuff from porting the PRG1 Game Over screen's flashing and the cracked overworld walls collision, the flip hearts code and the max arrow limits.
 * **snarfblam** - For the Automap hack, which was disassembled and modified to work with 1/4 hearts instead of 1/8 exclusively for this project
 * **gzip** - For his Select button fix and the title screen slow waterfall animation.
-* **minucce** - For his patch that stops the HUD from disappearing when entering, leaving caves during overworld map.
+* **minucce** - For his fixes for HUD Blink on cave enter/leave, scrolling timing and Link's sprite when leaving caves.
 * **lexluthermeister** - For his help on creating the Optional patch for the new bosses.
 * All other users that gave their feedback on possible ways to improve the game over at the [RomHacking.net](https://www.romhacking.net/forum/index.php?topic=29403.0) thread, and those that gave insightful ideas and mockups!
 

@@ -54,9 +54,11 @@ incsrc code/menus/hud_and_subscreen.asm	// Changes to both the HUD and the Subsc
 //****************************************
 //	Bugfixes
 //****************************************
+incsrc code/bugfixes/cave_room_timer.asm	// Reduces random wait times when entering caves
+incsrc code/bugfixes/dungeon_front_room.asm	// Fix Q1-D1 door opening on its own if you enter-leave the dungeon
+incsrc code/bugfixes/overworld_leave_cave.asm	// Fix wrong player sprite position on entering overworld from caves
 incsrc code/bugfixes/overworld_hud_blink.asm	// Stops HUD from disappearing when entering or leaving caves during overworld map
 incsrc code/bugfixes/overworld_scroll_timing.asm	// Fix for Y-scroll timing glitch
-incsrc code/bugfixes/overworld_leave_cave.asm	// Fix wrong player sprite position on entering overworld from caves
 
 
 //****************************************

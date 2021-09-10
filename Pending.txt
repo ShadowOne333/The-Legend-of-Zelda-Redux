@@ -8,15 +8,23 @@
 
 
 //***********************************************************
-//	FIXES
+//	FEATURES
 //***********************************************************
 
-*** Fix Automap (CHR-RAM version) to work properly with the MMC1 animation by Fiskbit:
-"The automap uses a part of the table that is normally never updated. Its code updates just the part you scroll into, or the whole thing when loading a file. These updates simply need to be duplicated into the 3 new banks so the automap still has its graphics when the bank is changed (so you'd do the writes for one bank, then switch to the next bank and do the writes, and so on, ideally updating the one tile in all 4 banks in a single vblank). This only needs to be done once, not constantly. The point of this change is that effectively no work has to be done for animation, just like with CHR-ROM games. Because it's RAM, instead, you get the benefit of being able to update on the fly, but the animation is just done by swapping banks, not writing to VRAM like if there were only one bank. If the automap is at tiles $40-5F in one bank, the exact same graphics must be at tiles $40-5F in all the other banks."
+*** Diagonal swing
 
-*** Fix Dungeon 6 (2nd Quest) data not being saved on the 3rd Save Slot:
-It seems like the data for Dungeon 6 for the 2nd Quest is stored around RAM addresses $0720 up to around $770, (only the first 5 byte columns of each row, meaning $0720-$0725, $0730-$0735, $0740-$0745, etc.). For some reason, some of the data is wiped when starting the 3rd slot file. The original games seems to do a write in these locations too, but for some reason with Redux some data within that range is overwritten with 00s at the moment of starting the file again (even if saving after completing Dungeon 6-2nd Quest).
-It is confirmed that the Automap hack is the cause of this bug, even the original Automap by Snarfblam causes this glitch. No other hack in the game triggers it.
+	Check for A button press is located at 05:$B2A8 (0x172B8).
+	It's a comparison which checks RAM $F8 (input address) against value #$80 (A button value).
+	If it checks, then jumps to 05:$8E00 (0x14E10)
+	(Check the "Zelda Hit Detection" video by DisplacedGamers for possible ideas)
+
+	LoL:
+	Repeats:
+	$C175 -> Used for Spin Attack
+	0xA0185, 0xEC185, 0xFC185
+	0xA0D78, 0xECD78, 0xFCD78
+	0xA57FB 
+	0xF4620
 
 
 //***********************************************************
@@ -47,23 +55,6 @@ It is confirmed that the Automap hack is the cause of this bug, even the origina
 //***********************************************************
 
 // (PENDING)
-
-
-//***********************************************************
-//	Diagonal swing
-//***********************************************************
-
-Check for A button press is located at 05:$B2A8 (0x172B8).
-It's a comparison which checks RAM $F8 (input address) against value #$80 (A button value).
-If it checks, then jumps to 05:$8E00 (0x14E10)
-
-LoL:
-Repeats:
-$C175 -> Used for Spin Attack
-0xA0185, 0xEC185, 0xFC185
-0xA0D78, 0xECD78, 0xFCD78
-0xA57FB 
-0xF4620
 
 
 //***********************************************************
