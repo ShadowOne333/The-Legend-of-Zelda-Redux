@@ -33,6 +33,7 @@ org $BFC0	// 0x0BFD0
     beq RegisterName	// Branch if Save Slot 1 exists
     inc.b $13
     rts
+
 // Changes mode to name registration
 RegisterName:	// 0x0BFDA
     lda.b #$0E		// Load "Register Name" ($0E) into accumulator
@@ -40,6 +41,7 @@ RegisterName:	// 0x0BFDA
     lda.b #$00		// Load $00 into accumulator
     sta.b $11
     rts
+
 // Adds an extra check to invalidate pressing select in register mode.
 checkForElimMode:	// 0x0BFE3
     lda.b $12		// Load Game Mode address

@@ -28,10 +28,10 @@ bank 5; org $AD00	// 0x16D10-0x16F0C
 // ———————————————
 define	INFINITY	$64
 define	RUPEE		$F7
-//define	ARROW	$65
+define	ARROW		$65
 define	KEY		$F9
 define	BOMB		$61
-//define	LOW_X	$62
+define	LOW_X		$62
 
 // Game variables
 // ———————————————
@@ -320,7 +320,7 @@ OverworldAttributeData:
 // New data to change map colors
 	db $23,$C0,$10		// PPU Transfer $23C0
 	db $C0,$FF,$70,$00,$00,$44,$55,$55	// Attribute table for HUD
-	db $FF,$FF,$37,$00,$00,$44,$55,$55	// Attribute table for HUD
+	db $C0,$AF,$36,$00,$00,$44,$55,$55	// Attribute table for HUD, originally db $FF,$FF,$37,$00,$00,$44,$55,$55 for brown map
 
 // This is additional macros from the original data. It needs to be part of the same PPU macro string.
 	db $20,$6F,$0E		// PPU Transfer to $206F
@@ -331,7 +331,7 @@ OverworldAttributeData:
 	db $20,$91,$C2,$6C	// PPU Transfer for side lines of HUD rectangles
 	db $20,$92,$C2,$6C	// PPU Transfer for side lines of HUD rectangles
 	db $20,$94,$C2,$6C	// PPU Transfer for side lines of HUD rectangles
-	db $20,$6B,$84,{RUPEE},$24,{KEY},{BOMB},$FF	// PPU Transfer for Rupee, (Empty), Key and Bomb icons in HUD (Jumps 0x20 in PPU per icon)
+	db $20,$6B,$84,{RUPEE},{KEY},{ARROW},{BOMB},$FF	// PPU Transfer for Rupee, (Empty), Key and Bomb icons in HUD (Jumps 0x20 in PPU per icon)
 	db $29,$84,$09		// PPU Transfer to $2984
 	db "INVENTORY"		// Tiles for "INVENTORY"
 
@@ -812,7 +812,7 @@ SetChrBank:
 bank 1;	// This code is run from RAM
 // Changes the break point for when to change the heart sprite when losing health, to take into account the new 1/4 hearts drop
 org $A738	// 0x06748
-	cmp.b #$C0	// Originally C9 80 (CMP #$80) - (CMP #$F8 in Automap) 
+	cmp.b #$C0	// Originally C9 80 (CMP #$80) - (CMP #$F8 in original Automap) 
 
 org $A741	// 0x06751
 // Jump to PartialHeartRoutine at $BD42 ($17D52 in PC address) - Originally A9 65 D0 02 (LDA #$65, BNE $A747 or $6757 in PC)

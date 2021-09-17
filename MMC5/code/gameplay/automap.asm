@@ -13,6 +13,15 @@ table code/text/text.tbl,ltr
 //	Variable declarations
 //****************************************
 
+// HUD Icons
+// ———————————————
+define	INFINITY	$64
+define	RUPEE		$F7
+define	ARROW		$65
+define	KEY		$F9
+define	BOMB		$61
+define	LOW_X		$62
+
 // SRAM Map SaveFormat:
 // ———————————————
 define	File1	$7F60
@@ -119,12 +128,11 @@ MapFlags:
 	cmp.b #$04	// Check if it will turn to 5 soon. Overworld check
 	bne EndMapFlags
 	inc.w {DrawFullMap}	// SetFlag to draw map
-	lda.b #$00	// Used for waterfall.asm. It needs a buffer before it can run in play mode since automap is bussy doing things
+	lda.b #$00	// It needs a buffer before it can run in play mode since automap is busy doing things
 	sta.w $062C	//$0704
 EndMapFlags:	
 	jsr $EBA1	// HijackFix
 	rts
-	
 	
 	// ASCII for signing people in the debugger where to put code :P
 	// Goes into SRAM. A good place to organize bank transitions system! This is just a note to see in the debugger.
@@ -389,7 +397,7 @@ LoadTile:
 	asl
 	asl
 	clc
-	adc.b #$76
+	adc.b #$62
 	adc.w {ColumnMap}	// Offset Row
 	sta.w $7F05	// Pointer Lowbyte
 	lda.b #$FF
@@ -401,9 +409,9 @@ MapNameTaRW1:
 MapNameTaRW2:
 	db $38,$39,$3A,$3B,$3C,$3D,$3E,$3F	// DestPPU $2096
 MapNameTaRW3:
-	db $40,$41,$42,$43,$44,$45,$46,$47	// DestPPU $20b6
+	db $40,$41,$42,$43,$44,$45,$46,$47	// DestPPU $20B6
 MapNameTaRW4:
-	db $48,$49,$4A,$4B,$4C,$4D,$4E,$4F,$FF	// DestPPU $20d6 
+	db $48,$49,$4A,$4B,$4C,$4D,$4E,$4F,$FF	// DestPPU $20D6 
 
 
 FullMapDrawFlag:
@@ -460,9 +468,9 @@ org $934F	// This org is not needed but the above data might be edited by other 
 	db $20,$82,$08
 	db $24,$24,$24,$24,$24,$24,$24,$24	//DestPPU $2096
 	db $20,$A2,$08
-	db $24,$24,$24,$24,$24,$24,$24,$24	//DestPPU $20b6
+	db $24,$24,$24,$24,$24,$24,$24,$24	//DestPPU $20B6
 	db $20,$C2,$08
-	db $24,$24,$24,$24,$24,$24,$24,$24,$FF	//DestPPU $20d6
+	db $24,$24,$24,$24,$24,$24,$24,$24,$FF	//DestPPU $20D6
 
 org $9D70
 UpdatePartialMapTile:	
@@ -535,7 +543,7 @@ DrawFullMap:
 	tax		// Offset with x data table and PPU pointer  [00-07, $7F0A]
 	
 	clc
-	adc.b #$76		// Table  [76, 76, 77, 77, 78, 78 , .. , 7D, 7D]
+	adc.b #$62		// Table  [76, 76, 77, 77, 78, 78 , .. , 7D, 7D]
 	sta.w {PpuAddress}	// LowByte PPU
 	
 MapColumnLoop:
@@ -599,9 +607,9 @@ CopyMapNameTa:
 //---------------------------------------------------------------
 //---------------------------------------------------------------
 EraseMapNametable:
-	pha		// Backup A Not sure if needed.. X Y I did check
+	pha		// Backup A Not sure if needed. X Y I did check
 
-	ldy.b #$76
+	ldy.b #$62
 ClearMap:	
 	lda.w {PpuStatus}
 	lda.b #$20
@@ -617,7 +625,7 @@ LoopClear:
 	tya		// Offset PPU pointer till done
 	clc
 	adc.b #$20
-	cmp.b #$F6
+	cmp.b #$E2
 	beq EndClearMap
 	tay
 	jmp ClearMap
@@ -631,15 +639,37 @@ EndClearMap:
 
 
 org $A00E	// This is just a small part of the pointer table here. Would be cool to have the full table and content.
-	dw HudArrangment	// PRG $1BEF0
-org $A07E
-	dw $A2D3	// Bug? Patch overwrites?
+	dw overworld_attributes	// PRG $1BEF0
+org $A07E	// 0x1A08E
+// Repoint attribute and tilemaps for Dungeon maps
+	dw $A2D3	// db $D3,$A2 - For original Automap tilemap
+
+//------------------------------------
 
 org $BEF0	// HUD Arrangement Hearts,Rupee.. (This is covered in what patch?)
-	HudArrangment:
-	// MODIFIED IN MOVE_MAPS.ASM
-	//org $BF00				
-	//	db $CC,$AA,$A6	//Part of the map nametable attribute. To make wood green
+// Overworld tiles Attributes, HUD attribute table
+overworld_attributes:
+	db $23,$C0,$10		// PPU Transfer $23C0
+	db $C0,$FF,$70,$00,$00,$44,$55,$55	// Attribute table for HUD
+	db $C0,$AF,$36,$00,$00,$44,$55,$55	// Attribute table for HUD, originally db $FF,$FF,$37,$00,$00,$44,$55,$55 for brown map
+
+// This is additional macros from the original data. It needs to be part of the same PPU macro string.
+	db $20,$6F,$0E		// PPU Transfer to $206F
+	db $69,"B",$6B,$69,"A",$6B,$24,$24,$2F,"LIFE",$2F	// Tiles for item rectangles, B/A and -LIFE-
+	db $20,$CF,$06		// PPU Transfer to $20CF
+	db $6E,$6A,$6D,$6E,$6A,$6D	// Tiles for the bottom of the HUD rectangles
+	db $20,$8F,$C2,$6C	// PPU Transfer for side lines of HUD rectangles
+	db $20,$91,$C2,$6C	// PPU Transfer for side lines of HUD rectangles
+	db $20,$92,$C2,$6C	// PPU Transfer for side lines of HUD rectangles
+	db $20,$94,$C2,$6C	// PPU Transfer for side lines of HUD rectangles
+	db $20,$6B,$84,{RUPEE},{KEY},{ARROW},{BOMB},$FF	// PPU Transfer for Rupee, (Empty), Key and Bomb icons in HUD (Jumps 0x20 in PPU per icon)
+	db $29,$84,$09		// PPU Transfer to $2984
+	db "INVENTORY"		// Tiles for "INVENTORY"
+
+// Terminator
+	db $FF
+
+//------------------------------------
 
 bank 7;		// PRG 1C000
 base $C000	// Set offset of last bank
@@ -682,5 +712,6 @@ bank 11; org $2C300
 
 // Further depends so the world will not come with messed up columns with wrong pattern arrangment/fuctioning caves..
 // "visible_secrets.asm"
-// "overworld_screens.asm" does debenp on visible secrets
+// "overworld_screens.asm" does debend on visible secrets
+
 

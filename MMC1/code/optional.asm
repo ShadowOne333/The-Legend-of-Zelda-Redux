@@ -22,6 +22,12 @@
 // Fill out all available hearts when starting or loading a game
 //incsrc code/optional/FullHealthAtStart.asm
 
+// Hide the unique Automap tiles and print out grey tiles instead
+// Comment out if you're using normal Redux
+//incsrc code/optional/GreyAutomap.asm
+// Comment out if you want Original HUD + Grey Automap
+//incsrc code/optional/GreyAutomap(OriginalHUD).asm
+
 // Hide back all of the secrets like in vanilla Zelda
 // This means no cracked walls nor discernible burnable trees
 //incsrc code/optional/OriginalHiddenSecrets.asm
@@ -52,6 +58,5 @@
 
 // Implement original NES Ring
 //incsrc code/optional/Tunic2NESRing.asm
-
 
 

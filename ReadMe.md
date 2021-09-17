@@ -41,7 +41,12 @@ https://www.romhacking.net/forum/index.php?topic=29403.0
 * **[DONE]** Reworked heart HUD to match Zelda 2 Redux
 * **[DONE]** Relocalization of the  game's script to better match the Japanese release, or have better hints altogether. Based on the Legends of Localization book/webpage (Except the two iconic "Take this" and "It's a secret" lines)
 * **[DONE]** Make the Blue tunic more vibrant
-* **[DONE]** Stop the HUD from disappearing when entering or leaving caves during overworld map.
+* **[DONE]** Stop the HUD from disappearing when entering or leaving caves during overworld map
+* **[DONE]** Proper player sprite position when leaving overworld from caves
+* **[DONE]** Reduces random wait times when entering caves
+* **[DONE]** Fix Y-scroll timing glitch when changing screens
+* **[DONE]** Fix Q1-D1 door opening on its own if you enter-leave the dungeon
+* **[DONE]** Fix alignment of the sword beam in multiple directions
 * **[DONE]** Increment the initial bomb max. amount to 10 instead of 8
 * **[DONE]** Increment the bomb upgrades by 10 instead of the original 4. First upgrade should give you 20 bombs, second will be 30.
 * **[DONE]** Faster text printing
@@ -65,6 +70,8 @@ https://www.romhacking.net/forum/index.php?topic=29403.0
 * **[DONE]** New column definitions to make the overworld look more polished, adding corners, rounded edges and other slight stuff so the overworld doesn't look as blocky.
 * **[DONE]** Make recently bombed overworld walls have a new arched cave entrance tile, without the tile losing its properties from the previous tile $24 (new tiles are $54-$57): https://www.romhacking.net/forum/index.php?topic=29403.msg404505#msg404505
 * **[DONE]** Rework the Credits for the game to have full names show up for each developer (like in Zelda 2 Redux): https://www.romhacking.net/forum/index.php?topic=29403.msg403636#msg403636
+* **[DONE]** Diagonal Sword swing in Zelda 1, implemented by minucce. Inspired on initial work based on Displaced Gamer's [url=https://www.youtube.com/watch?v=FBk-QkzMeIk]"Zelda Hit Detection - Behind the Code"[/url] video
+
 
 -------------------
 
@@ -73,11 +80,14 @@ https://www.romhacking.net/forum/index.php?topic=29403.0
 * Blue-er Tunic based on Asaki's hack (Bluer Tunic.ips)
 * Change the Tunics back to Rings with new revamped sprite (Tunic 2 Ring.ips)
 * Change Tunics to the Original Ring GFX from the NES release (Tunic 2 NES Ring.ips)
+* Hide the unique Automap tiles and print out the grey tiles from the original (Grey Automap.ips)
+* Disable Diagonal Sword Swing for those that want the original Zelda 1 stab instead (Disable Diagonal Sword.ips)
 * Fill the amount of hearts you have upon starting a save file, so you don't always start with 3 hearts only (Full Health at Start.ips)
-* Famicom Disk System's version Font graphics
+* Famicom Disk System's version Font graphics (FDS Font.ips)
 * Hide back all the overworld and dungeon secrets (Original Hidden Secrets.ips)
 * Modify bomb upgrade amount to 05 per upgrade (Bomb Upgrades 5 instead of 10.ips)
 * Link's Awakening graphics patch (Link's Awakening GFX.ips)
+* Original HUD to be the same as the original Zelda 1, with the map on the left and health on the right (Original HUD.ips). If you want Grey Automap with this, use "Grey Automap (for Original HUD).ips"
 * Original NES graphics (Original NES GFX.ips)
 * Original (blocky) Overworld screen/column definitions (Original Overworld Columns.ips)
 * Remove the Low Health sound effect beeping (Remove Low Health Beep.ips)
@@ -92,15 +102,8 @@ https://www.romhacking.net/forum/index.php?topic=29403.0
 ## Help needed for these points:
 
 * Save the amount of hearts you last had if the game was saved manually, so when you load, you start with the same amount of life (this I'm not sure if it will be implemented in the end hack)
-* Implement water animation for MMC1 based on Fiskbit's "animate.asm" code. MMC5 animation is already working, the only one pending is MMC1 (it is partially working, just need to fix Snarfblam's Automap to work with it for a full release).
 
-
--------------------
-
-## Dropped features (sadly):
-
-* **Diagonal sword swing.** Currently, Infidelity has been the only person to implement a Diagonal Sword swing into Zelda 1, and sadly, without someone willing to help on this feature, it's quite out of my reach.
-* Implementation of a Copy/Erase file system like in subsequent Zeldas, where D-Pad Up and Down control the cursor in the File Selection and pressing A brings up the Name screen (Example: ALttP). Could possibly be done, but it's also a missing/dropped feature from Zelda 2 Redux.
+* Implementation of a Copy/Erase file system like in subsequent Zeldas, where can Copy a certain file to another, D-Pad Up and Down control the cursor in the File Selection and pressing A in a blank file brings up the Name screen (Example: ALttP). Could possibly be done, but it's also a missing (and desired) feature from Zelda 2 Redux.
 
 -------------------
 
@@ -127,7 +130,7 @@ If you want to apply any of the optional patches, you can use each Optional patc
 * **Stratoform** - For his help and code towards the Pols Voice flute code, fixing both the remaining stuff from porting the PRG1 Game Over screen's flashing and the cracked overworld walls collision, the flip hearts code and the max arrow limits.
 * **snarfblam** - For the Automap hack, which was disassembled and modified to work with 1/4 hearts instead of 1/8 exclusively for this project
 * **gzip** - For his Select button fix and the title screen slow waterfall animation.
-* **minucce** - For his fixes for HUD Blink on cave enter/leave, scrolling timing and Link's sprite when leaving caves.
+* **minucce** - For his fixes for HUD Blink on cave enter/leave, scrolling timing, Link's sprite when leaving caves, Dungeon 1 Q1 door fix, random wait times when entering caves, magic beam alignment and the Diagonal Sword Swing.
 * **lexluthermeister** - For his help on creating the Optional patch for the new bosses.
 * All other users that gave their feedback on possible ways to improve the game over at the [RomHacking.net](https://www.romhacking.net/forum/index.php?topic=29403.0) thread, and those that gave insightful ideas and mockups!
 

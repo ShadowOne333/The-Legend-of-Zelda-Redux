@@ -37,6 +37,18 @@ define	LOW_X	$62
 //		HUD changes
 //***********************************************************
 
+// Modify PPU addresses for Automap code by bogaa
+bank 5; org $BE7F	// 0x17E8F
+	adc.b #$76	// Starting PPU low byte
+bank 6;
+org $9DC5	// 0x19DD5
+	adc.b #$76	// Starting PPU low byte
+org $9E22	// 0x19E32
+	ldy.b #$76	// Starting PPU low byte
+org $9E3D	// 0x19E4D
+	cmp.b #$F6	// Finishing PPU low byte
+
+
 //------------------------------------
 //	Life meter changes
 //------------------------------------

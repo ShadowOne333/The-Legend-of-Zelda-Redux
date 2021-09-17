@@ -37,8 +37,6 @@ header			// rom has a header
 // Convert mapper from MMC1 to MMC5
 incsrc code/MMC5.asm		// Convert Zelda 1 from MMC1 to MMC3
 
-// This will make it possible to have animations in the game, and make a lot of free space for custom graphics and (maybe) diagonal swing graphics
-
 
 //****************************************
 //	Visual changes
@@ -52,10 +50,11 @@ incsrc code/menus/hud_and_subscreen.asm	// Changes to both the HUD and the Subsc
 
 
 //****************************************
-//	Bugfixes
+//	Bugfixes (by minucce)
 //****************************************
 incsrc code/bugfixes/cave_room_timer.asm	// Reduces random wait times when entering caves
 incsrc code/bugfixes/dungeon_front_room.asm	// Fix Q1-D1 door opening on its own if you enter-leave the dungeon
+incsrc code/bugfixes/magic_beam_align.asm	// Fix alignment of the sword beam in multiple directions
 incsrc code/bugfixes/overworld_leave_cave.asm	// Fix wrong player sprite position on entering overworld from caves
 incsrc code/bugfixes/overworld_hud_blink.asm	// Stops HUD from disappearing when entering or leaving caves during overworld map
 incsrc code/bugfixes/overworld_scroll_timing.asm	// Fix for Y-scroll timing glitch
@@ -82,8 +81,10 @@ incsrc code/gameplay/misc.asm		// Miscellaneous hacks
 incsrc code/gameplay/pols_voice.asm	// Kill Pols Voices by using Flute or Arrows
 incsrc code/gameplay/rupee.asm		// 999 Rupee counter code by BogaaBogaa
 incsrc code/gameplay/overworld_screens.asm	// Changes some columns for certain screens in the Overworld to not look as blocky
+incsrc code/gameplay/sword_draw.asm	// Diagonal sword or rod draw, Comment line if you want to apply the "Disable Diagonal Sword" optional patch
+incsrc code/gameplay/sword_swing.asm	// Diagonal sword detect hitbox orientation, Comment line if you want to apply the "Disable Diagonal Sword" optional patch
 incsrc code/gameplay/visible_secrets.asm	// Discernible secrets for bombable (cracked) walls in both Overworld and Dungeons, and burnable trees in the Overworld
-incsrc code/gameplay/move_maps.asm	// Change Hearts and Map positions in HUD (INCLUDE AFTER HUD, ARROWS, RUPEE AND AUTOMAP CODE!)
+incsrc code/gameplay/move_maps.asm	// Change Hearts and Map positions in HUD (INCLUDE AFTER HUD, ARROWS, RUPEE AND AUTOMAP CODE!), Comment line if you want to apply the "Original HUD" optional patch
 
 
 //****************************************

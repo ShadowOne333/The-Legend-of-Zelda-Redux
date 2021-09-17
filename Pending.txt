@@ -8,34 +8,6 @@
 
 
 //***********************************************************
-//	FEATURES
-//***********************************************************
-
-*** Diagonal swing
-
-	Check for A button press is located at 05:$B2A8 (0x172B8).
-	It's a comparison which checks RAM $F8 (input address) against value #$80 (A button value).
-	If it checks, then jumps to 05:$8E00 (0x14E10)
-	(Check the "Zelda Hit Detection" video by DisplacedGamers for possible ideas)
-
-	LoL:
-	Repeats:
-	$C175 -> Used for Spin Attack
-	0xA0185, 0xEC185, 0xFC185
-	0xA0D78, 0xECD78, 0xFCD78
-	0xA57FB 
-	0xF4620
-
-
-//***********************************************************
-//	Bank switching
-//***********************************************************
-
-// lda.b #$XX
-// jsr $FFAC
-
-
-//***********************************************************
 // Reworked Save Selection screen, similar to Zelda 2 Redux
 //***********************************************************
 
@@ -57,10 +29,23 @@
 // (PENDING)
 
 
+
 //***********************************************************
-//	Optional patches
+//	FEATURES
 //***********************************************************
 
-(NONE)
+*** Diagonal swing
+
+	LoL:
+	Repeats:
+	$C175 -> Used for Spin Attack
+
+
+//***********************************************************
+//	Bank switching
+//***********************************************************
+
+// lda.b #$XX
+// jsr $FFAC
 
 

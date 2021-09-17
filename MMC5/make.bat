@@ -26,7 +26,7 @@ for /f "skip=1 delims=:" %%a in ('certutil -hashfile "%clean_rom%" SHA1') do (
 set "sha1=%sha1: =%
 
 IF "%sha1%"=="%checksum%" (
-	echo Base ROM SHA-1 checksum verified. Patching...
+	echo Base ROM SHA-1 checksum verified. Patching MMC5 version...
 )	ELSE (
 	set errormessage=Base ROM checksum is incorrect. Use a Zelda 1 PRG0 ROM with the proper SHA-1 checksum for patching.&goto error
 )

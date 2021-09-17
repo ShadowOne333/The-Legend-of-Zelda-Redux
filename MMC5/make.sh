@@ -36,7 +36,7 @@ if [ -f "$clean_rom" ]; then
 export	sha1=$(sha1sum "$clean_rom" | awk '{ print $1 }')
 
 if [ "$sha1" == "$checksum" ]; then
-	echo "Base ROM SHA-1 checksum verified. Patching..."; else
+	echo "Base ROM SHA-1 checksum verified. Patching MMC5 version..."; else
 	export error="Base ROM checksum is incorrect. Use a Zelda 1 ROM with the proper SHA-1 checksum for patching." && jumpto ERROR; fi
 
 
