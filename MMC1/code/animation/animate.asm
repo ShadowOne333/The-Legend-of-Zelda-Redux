@@ -8,36 +8,35 @@
 
 // Intended for use with PRG0. PRG1 will likely require tweaking some of the addresses.
 
-define 	current_level	$10
-define	animation_timer	$4F
-
-define	graphics_chunk_index	$051D
-
-define	has_clock	$066C
+define 	current_level			$10
+define	animation_timer			$4F
+define	graphics_chunk_index		$051D
+define	has_clock			$066C
+define	disable_animation		$07FF
 
 // Bank 2
-define	LoadFixedGraphics	$8012
+define	LoadFixedGraphics		$8012
 
 // Bank 3
-define	LoadAreaGraphics	$8044
+define	LoadAreaGraphics		$8044
 define	GetOverworldGraphicsChunk	$8091
-define	CopyBufferToPpuBank3	$80DC
+define	CopyBufferToPpuBank3		$80DC
 
-define	Setup	$E440
-define	Reset	$FF50
+define	Setup				$E440
+define	Reset				$FF50
 define	WriteMmc1ControlRegister	$FF98
-define	SwitchBank	$FFAC
+define	SwitchBank			$FFAC
 
-define	PPU_CONTROL	$2000
-define	PPU_MASK	$2001
-define	PPU_STATUS	$2002
-define	PPU_SCROLL	$2005
-define	PPU_ADDRESS	$2006
-define	PPU_DATA	$2007
+define	PPU_CONTROL			$2000
+define	PPU_MASK			$2001
+define	PPU_STATUS			$2002
+define	PPU_SCROLL			$2005
+define	PPU_ADDRESS			$2006
+define	PPU_DATA			$2007
 
-define	MMC1_CONTROL	$8000
-define	MMC1_CHR_BANK_0	$A000
-define	MMC1_CHR_BANK_1	$C000
+define	MMC1_CONTROL			$8000
+define	MMC1_CHR_BANK_0			$A000
+define	MMC1_CHR_BANK_1			$C000
 
 define	kMmc1ControlMirroringV		%0000010
 define	kMmc1ControlMirroringH		%0000011
@@ -45,7 +44,7 @@ define	kMmc1ControlPrgC000Fixed	%0001100
 define	kMmc1Control4KbChr		%0010000
 
 // This should be a power of 2. Additional banks will have to be added to the dAnimatedGraphicsBank tables.
-define kNumAnimationBanks	4
+define kNumAnimationBanks		4
 
 
 //****************************************
@@ -63,7 +62,7 @@ define kNumAnimationBanks	4
 	db %00001000		// RomType: NES 2.0
 	db $00,$00		// iNES Tail
 	db %01110000		// PRG-RAM size: 70 << 7 (3800)
-	db %00001001		// CHR-RAM size: 09 << 7 (C800)
+	db %00001001		// CHR-RAM size: 64 << 9 (C800)
 	db $00,$00,$00,$00	// iNES Tail
 
 
@@ -127,6 +126,7 @@ bank 2;	org $AF90	// 0x0AFA0
 Hijack_HandleAnimation:
 // We only animate on the overworld.
 	lda.b {current_level}
+	ora.w {disable_animation}
 	bne Hijack_HandleAnimation_Done
 
 // We use our own timer to avoid jumps in the animation when entering the overworld or pausing.
@@ -166,7 +166,8 @@ SkipLake:
 
 LoadFixedGraphicsAllBanks:
 	lda.b #$00
--;	clc
+-	
+	clc
 	adc.b #$01
 	pha
 	jsr WriteMmc1ChrBank1
@@ -178,9 +179,14 @@ LoadFixedGraphicsAllBanks:
 	sta.w {graphics_chunk_index}
 
 	pla
+
+	ldy.w {disable_animation}
+	bne LoadFixedGraphicsAllBanks_Done
+
 	cmp.b #{kNumAnimationBanks}
 	bcc -
 
+LoadFixedGraphicsAllBanks_Done:
 	lda.b #$00
 	sta.w {graphics_chunk_index}
 
@@ -255,12 +261,16 @@ LoadAnimatedGraphicsBanks:
 	sta.w {PPU_CONTROL}
 	bit.w {PPU_STATUS}
 
+	jsr TestChr
+	bne LoadAnimatedGraphicsBanks_Done
+
 // Set the starting bank. This is one less than the target bank.
 	lda.b #$01
 	sta.b $04
 
 // Advance to the next bank.
--;	inc.b $04
+-
+	inc.b $04
 
 // Make sure we're doing overworld background graphics.
 	lda.b #$00
@@ -284,6 +294,7 @@ LoadAnimatedGraphicsBanks:
 	cmp.b #{kNumAnimationBanks}
 	bcc -
 
+LoadAnimatedGraphicsBanks_Done:
 	lda.b #$00
 	sta.w {graphics_chunk_index}
 
@@ -370,7 +381,8 @@ CopyAnimatedTiles:
 
 	ldy.b #$FF
 // Write the PPU address. If this is negative, we're done.
--;	iny
+-
+	iny
 	lda.b ($05),y
 	bmi CopyAnimatedTiles_Done
 
@@ -438,12 +450,54 @@ dOW_2nd_Frame3:
 	incbin code/animation/ow_2nd_frame3.chr
 dOW_2nd_Frame3_End:
 
+//----------------------------------------
+
+// CHR-RAM test for flashcarts and non-iNES 2.0 compatible emulators
+TestChr:
+	ldx.b #$10
+	ldy.b #$07
+-
+	tya
+	jsr WriteMmc1ChrBank1
+	stx.w {PPU_ADDRESS}
+	stx.w {PPU_ADDRESS}
+	lda.w dChrTestTable,y
+	sta.w {PPU_DATA}
+	dey
+	bpl -
+
+	ldy.b #$07
+-
+	tya
+	jsr WriteMmc1ChrBank1
+	stx.w {PPU_ADDRESS}
+	stx.w {PPU_ADDRESS}
+	lda.w {PPU_DATA}
+	lda.w {PPU_DATA}
+	cmp.w dChrTestTable,y
+	bne TestChr_Failure
+	dey
+	bpl -
+
+	iny
+	sty.w {disable_animation}
+	rts
+
+TestChr_Failure:
+	ldy.b #$01
+	sty.w {disable_animation}
+	rts
+
+dChrTestTable:
+	db $00,$FF,$5A,$A5,$F0,$0F,$55,$AA
+
+
 
 //----------------------------------------
 //	Bank 3; $08000-$0C000
 //----------------------------------------
 
-bank 7;	org $E956	// 0x1E969
+bank 7;	org $E956	// 0x1E966
 	jmp LoadFixedGraphicsAllBanks
 
 bank 7;	org $E98E	// 0x1E99E
@@ -491,6 +545,8 @@ WriteMmc1ChrBank1:
 	lsr
 	sta.w {MMC1_CHR_BANK_1}
 	rts
+
+	//fill $07,$EA
 
 
 //----------------------------------------

@@ -62,13 +62,15 @@ define	mapVar_Y	{tileFlag}+3
 define	mapLoop_X	{tileFlag}+4
 define	mapLoop_Y	$0673	// {tileFlag}+5
 
+define	disable_animation	$07FF
+
 define	SecondPpuStringIndex	$7F10
 define	MapBits_Left	{SecondPpuStringIndex}+1	// Stores flags for whether the two screens in the left/right side
 define	MapBits_Right	{SecondPpuStringIndex}+2	// of the current map tile have been visited, in lower 2 bits
 define	MapFilter_Top	{SecondPpuStringIndex}+3	// Stores a value to be ANDed with the bytes of a map tile to black out unvisited screens
 define	MapFilter_Bottom	{SecondPpuStringIndex}+4
 define	MapTileMacro	{SecondPpuStringIndex}+5	// 10 bytes of tile data, 2 byte pointer, 1 byte len specifier, 1 byte FF terminator
-//    TempAddress:	dw 1
+// TempAddress:	dw 1
 define	MapBlipY	$7F29	// SecondPpuStringIndex+19, Stores the y-coordinate of the map blip
 
 define	MapRam		$7F50
@@ -105,7 +107,7 @@ bank 1; org $A5A1	// 0x065B1
 
 
 // Corrects positioning of map blip
-//   :71F7:     LDA #$11       ; A = left edge of map
+//	:71F7:	LDA #$11	; A = left edge of map
  
 // Blip update routine
 // ——————
@@ -163,7 +165,7 @@ bank 7; org $F322	// 0x1F332, Per-frame update hijack
 // SafeBlipUpdate
 // ———————————————
 // This routine was placed after DoWholeMapHijack (under "Draw whole map -HIJACK-") below because these two functions must be placed in the fixed bank, together in the small available space.
-// This code really  belongs under the "Map blip blinking" section, but is placed with DoWholeMapHijack, because
+// This code really belongs under the "Map blip blinking" section, but is placed with DoWholeMapHijack, because
 // they need to be placed together in the tiny bit of free space in the fixed bank.
 
 
@@ -252,23 +254,23 @@ bank 6; org $934F	// 0x1935F
 
 
 //************************************
-//   New Map Attribute
+//	New Map Attribute
 //************************************
 // Used to apply the proper palette for the overworld map.
  
 // This is the original routine that queues the PPU macro that sets HUD palettes
-//05:B005:A9 18     LDA #$18
-//05:B007:D0 0F     BNE $B018
-//05:B009:A9 D0     LDA #$D0
-//05:B00B:A0 17     LDY #$17
-//05:B00D:4C 01 85  JMP $8501
-//05:B010:A9 E8     LDA #$E8
-//05:B012:A0 2F     LDY #$2F
-//05:B014:D0 F7     BNE $B00D
-//05:B016:A9 0E     LDA #$0E
-//05:B018:85 14     STA $0014 = #$00
-//05:B01A:E6 13     INC $0013 = #$05
-//05:B01C:60        RTS
+//05:B005:A9 18		LDA #$18
+//05:B007:D0 0F		BNE $B018
+//05:B009:A9 D0		LDA #$D0
+//05:B00B:A0 17		LDY #$17
+//05:B00D:4C 01 85	JMP $8501
+//05:B010:A9 E8		LDA #$E8
+//05:B012:A0 2F		LDY #$2F
+//05:B014:D0 F7		BNE $B00D
+//05:B016:A9 0E		LDA #$0E
+//05:B018:85 14		STA $0014 = #$00
+//05:B01A:E6 13		INC $0013 = #$05
+//05:B01C:60		RTS
 
 define	OriginalHudAttributeMacro	$A2D3
 
@@ -340,7 +342,7 @@ OverworldAttributeData:
 
 
 //************************************
-//    Save/Load/Delete hijacks
+//	Save/Load/Delete hijacks
 //************************************
 
 bank 2;
@@ -368,7 +370,7 @@ org $ABB5	// 0x0ABC5
 
 
 //************************************
-//    Save/Load/Delete routines
+//	Save/Load/Delete routines
 //************************************
 
 // Save map data
@@ -534,7 +536,7 @@ l_BE19:		// 0x17E29
 
 // Set flag to update single tile on screen
 	lda.b #$01		// Load $01
-	sta.w {tileFlag}	// Store at tileFlag address $6C00
+	sta.w {tileFlag}	// Store at tileFlag address $0628
 	jsr RenderMapTile	// Jump to RenderMapTile routine
 	rts
 
@@ -563,7 +565,7 @@ l_BE4C:		// 0x17E5C
 //************************************
 
 DrawWholeMap:	// 0x17E5F
-	jmp DrawMapAllBanks  // Head over to a subroutine to loop through each bank
+	jmp DrawMapAllBanks	// Head over to a subroutine to loop through each bank
 DoDrawWholeMap: 
 // Prepare PPU to write map data
 	lda.w $2002		// AD 02 20 -> PPU_STATUS = #$30
@@ -618,10 +620,10 @@ l_BCA4:		// BCA4:
 
 RenderMapTile:
 // Parameters
-//	– mapVar_X :     Tile X
-//	– mapVar_Y :     Tile Y
-//	– mapBits_Left:  Bit-0 = TL screen discovered, Bit-1 = BL screen discovered
-//	– mapBits_Right: Bit-0 = TR screen discovered, Bit-1 = BR  screen discovered
+//	– mapVar_X :		Tile X
+//	– mapVar_Y :		Tile Y
+//	– mapBits_Left:		Bit-0 = TL screen discovered, Bit-1 = BL screen discovered
+//	– mapBits_Right:	Bit-0 = TR screen discovered, Bit-1 = BR screen discovered
 
 
 // Preserve zp variables
@@ -768,30 +770,34 @@ PartialHeartRoutine:	// 0x17F3E, $BF2E
 org $BFC0	// 0x17FD0, $BFC0
 // This draws the map on all the banks
 DrawMapAllBanks:
-	lda.b #$01	// Make the drawing being in bank 1 instead of bank 0 for sprites (by minucce)
+// Update all 4 banks if animation is enabled and only 1 bank otherwise
+	lda.b #$04
+	ldy.w {disable_animation}
+	beq +
+	lda.b #01
++
 	sta.w $7FF0
-DrawMapLoop:  
+
+DrawMapLoop:
+	lda.w $7FF0
 	jsr SetChrBank
 
 	jsr DoDrawWholeMap
 
-	inc.w $7FF0
-	lda.w $7FF0
-	cmp #$05
-	bcc DrawMapLoop
-
+	dec.w $7FF0
+	bne DrawMapLoop
 	rts
 
-SetChrBank:  
+SetChrBank:
 	sta.w $C000
 	lsr
 	sta.w $C000
-        lsr
-        sta.w $C000
-        lsr
-        sta.w $C000
-        lsr
-        sta.w $C000
+	lsr
+	sta.w $C000
+	lsr
+	sta.w $C000
+	lsr
+	sta.w $C000
 
 	rts 
 
@@ -799,12 +805,12 @@ SetChrBank:
 // ———————————————
  
 // Original code
-//	(1):6EC8:C9 80     CMP #$80          ; If partial-heart-value >= #$80, load full-heart-tile
-//	:6ECA:B0 F4     BCS $6EC0        
-//	:6ECC:A9 00     LDA #$00          ; ??????????????
-//	:6ECE:8D 29 05  STA $0529    
-//	(2):6ED1:A9 65     LDA #$65          ; Load half-full heart tile
-//	:6ED3:D0 02     BNE $6ED7         ; Branch always  
+//	(1):6EC8:C9 80	CMP #$80	; If partial-heart-value >= #$80, load full-heart-tile
+//	:6ECA:B0 F4	BCS $6EC0
+//	:6ECC:A9 00	LDA #$00	; ??????????????
+//	:6ECE:8D 29 05	STA $0529
+//	(2):6ED1:A9 65	LDA #$65	; Load half-full heart tile
+//	:6ED3:D0 02	BNE $6ED7	; Branch always
 
 //	(1) – Update value of CMP #$80 to run our partial heart routine for smaller increments
 //	(2) – Hijack goes here
@@ -883,9 +889,9 @@ bank 6; org $9D70	// 0x19D80
 	beq rtn			// Return, BEQ $10
 	txa
 
-        // Use the tile flag to keep track of which CHR bank we are on. Increment each time we visit this function.
+	// Use the tile flag to keep track of which CHR bank we are on. Increment each time we visit this function.
 	// This will allow us to update each bank, one time per frame. (by frantik)	
-        jsr SetChrBank_6 
+	jsr SetChrBank_6 
 	lda.b #{MapTileMacro}	// Load Map tile macro low byte
 	sta.b $00		// Store $00
 	lda.b #{MapTileMacro}>>8	// Load Map tile macro high byte
@@ -893,27 +899,30 @@ bank 6; org $9D70	// 0x19D80
 	jsr {SendPpuMacro}	// Jump to Send PPU Macro routine
 
 ClearAndReturn:	// $9D87, 0x19D97 <-- this may have changed now
-        inc {tileFlag}
-        ldx {tileFlag}
-	cpx #$05          // Are we done with bank 4?  If so then reset the flag, otherwise exit and do it again next frame
-        bcc rtn 
+	lda.w {disable_animation}
+	bne +
+	inc.w {tileFlag}
+	ldx.w {tileFlag}
+	cpx.b #$05		// Are we done with bank 4? If so, then reset the flag, otherwise exit and do it again next frame
+	bcc rtn
++
 	lda.b #$00		// Clear tile flag
 // NOP to fix palettes in dungeons not being properly restored after exiting stairs (by gzip)
-	sta.w {tileFlag}	// Store in Tile Flag $6C00
+	sta.w {tileFlag}	// Store in Tile Flag $0628
 
 rtn:		// $9D8C, 0x19D9C
 	rts
 
-SetChrBank_6:  
+SetChrBank_6:
 	sta.w $C000
-        lsr
-        sta.w $C000
+	lsr
+	sta.w $C000
  	lsr
-        sta.w $C000
-        lsr
-        sta.w $C000
-        lsr
-        sta.w $C000
+	sta.w $C000
+	lsr
+	sta.w $C000
+	lsr
+	sta.w $C000
 
  	rts 
 
@@ -948,7 +957,7 @@ l_B214:		// 0x17224
 
 
 //************************************
-//   PPU transfers for mini tiles?
+//	PPU transfers for mini tiles?
 //************************************
 bank 6;	org $A0A2	// 0x1A0B2
 l_A0A2:
@@ -966,7 +975,7 @@ l_A0A2:
 	bcs l_A0B9
 	and.b #$FB
 l_A0B9:
-	sta.w {PpuControl1}      
+	sta.w {PpuControl1}
 	sta.b $FF
 	pla
 	asl
@@ -998,7 +1007,7 @@ l_A0D1:
 	stx.w {PpuAddress}
 	stx.w {PpuAddress}
 	stx.w {PpuAddress}
-l_A0EA:        
+l_A0EA:
 	sec
 	tya
 	adc.b $00

@@ -1,6 +1,6 @@
 //****************************************************************
 //	Main assembly file for Zelda 1 Redux
-// All of the assembly files get linked together and compiled here.
+// All the assembly files get linked together and compiled here
 //****************************************************************
 
 // !!!WARNING!!!

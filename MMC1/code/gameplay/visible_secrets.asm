@@ -2,8 +2,9 @@
 //	Cracked Walls & Burnable Trees Tilemaps 
 //***********************************************************
 
-// New tilemaps for bombable walls in Dungeons:
+define	disable_animation	$07FF
 
+// New tilemaps for bombable walls in Dungeons:
 bank 5;
 // Dungeon Right Walls:
 org $A012	// 0x16022
@@ -162,13 +163,13 @@ org $8064	// 0x0C074
 org $ABE0	// 0x0EBF0
 TileTransfer:
 	lda.b #$04	// Keep track of banks to fill for CHR-RAM
+	ldy.w {disable_animation}
+	beq +
+	lda.b #$01
++
 	pha
 
-MapCheck:
-	lda.b $10		// Check if in Overworld = 00, or Dungeon = 01
-	bne DungeonGFXLoad	// Load Dungeon Walls if in dungeon, else load dry tree
-
-OverworldGFXLoad:
+GFXLoad:
 	ldy.b #$C0	// Dungeon/Overworld assets size
 	ldx.b #$00
 
@@ -177,12 +178,19 @@ OverworldGFXLoad:
 	lda.b #$40	// Set DestPPU $40 lower byte base
 	sta.w $2006
 
+MapCheck:
+	lda.b $10		// Check if in Overworld = 00, or Dungeon = 01
+	bne LoopDungeonGFX	// Load Dungeon Walls if in dungeon, else load dry tree
+
 LoopOverworldGFX:
 	lda.w OverworldAssets,x
 	sta.w $2007
 	inx
 	dey		// Image size to transfer
 	bne LoopOverworldGFX
+
+	lda.w {disable_animation}
+	bne +
 
 	pla		// Change CHR bank
 	pha
@@ -202,21 +210,12 @@ LoopOverworldGFX:
 	sbc.b #$01
 	pha
 	cmp.b #$00
-	bne OverworldGFXLoad
-	
+	bne GFXLoad
++
 	pla
 
 	jsr $8091	// Fix Hijack
 	rts
-
-DungeonGFXLoad:
-	ldy.b #$C0	// Dungeon/Overworld assets size
-	ldx.b #$00
-	
-	lda.b #$15    	// Set DestPPU $15 upper byte
-	sta.w $2006   
-	lda.b #$40	// Set DestPPU $40 lower byte base
-	sta.w $2006
 
 LoopDungeonGFX:	
 	lda.w DungeonAssets,x
@@ -225,6 +224,9 @@ LoopDungeonGFX:
 	dey		// Image size to transfer
 	bne LoopDungeonGFX
 
+	lda.w {disable_animation}
+	bne +
+
 	pla		// Change CHR bank
 	pha
 	
@@ -243,8 +245,8 @@ LoopDungeonGFX:
 	sbc.b #$01
 	pha
 	cmp.b #$00
-	bne DungeonGFXLoad
-	
+	bne GFXLoad
++
 	pla
 
 	jsr $8080	// Fix Hijack
