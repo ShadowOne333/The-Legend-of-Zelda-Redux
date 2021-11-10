@@ -8,37 +8,10 @@
 
 
 //***********************************************************
-// Reworked Save Selection screen, similar to Zelda 2 Redux
-//***********************************************************
-
-// (PENDING, LEAVING FOR LAST)
-//bank 2; org $A5A2	// $0A5B2 - File Select screen code
-//	and.b #$04		// Originally 29 20 - Changes the button input which moves the cursor in File Select screen
-
-// bank 2; org $A608
-	sta.w $0657,y	// This seems to be what sets the entirety of the save data into RAM, starting at $0657 and up to $067F maybe?
-
-//bank 5; org $8B01	// $14B11
-//	and.b #$04		// Originally 29 20 - Changes the button input which moves the cursor in the Continue/Save/Retry screen
-
-
-//***********************************************************
 // Save Hearts number if last session had 3+ hearts of health
 //***********************************************************
 
 // (PENDING)
-
-
-
-//***********************************************************
-//	FEATURES
-//***********************************************************
-
-*** Diagonal swing
-
-	LoL:
-	Repeats:
-	$C175 -> Used for Spin Attack
 
 
 //***********************************************************
