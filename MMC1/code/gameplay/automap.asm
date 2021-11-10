@@ -576,10 +576,10 @@ DoDrawWholeMap:
 
 	lda.b #$00		// Loop over Y
 	sta.w {mapLoop_Y}	// Store at mapLoop_Y address
-l_BC78:		// BC78
+l_BE64:		// $BE64, 0x17E74
 	lda.b #$00		// Loop over X
 	sta.w {mapLoop_X}	// Store at mapLoop_X address
-l_BC7D:		// BC7D
+l_BE69:		// $BE69, 0x17E79
 	ldx.w {mapLoop_X}	// Render one map tile (mapLoop_X)
 	ldy.w {mapLoop_Y}	// Render one map tile (mapLoop_Y)
 	jsr UpdateMapTile	// Jump to Update Map Tile routine ($BC30)
@@ -593,23 +593,23 @@ l_BC7D:		// BC7D
 	inc.w {mapLoop_X}	// Increase value of mapLoop_X
 	lda.w {mapLoop_X}	// Load value of mapLoop_X
 	cmp.b #$08		// Compare with $08
-	bne l_BC7D		// BNE $E6
+	bne l_BE69		// BNE $E6
 
 	inc.w {mapLoop_Y}	// Increase value of mapLoop_Y
 	lda.w {mapLoop_Y}	// Load value of mapLoop_Y
 	cmp.b #$04		// Compare with $04
-	bne l_BC78		// BNE $D7
+	bne l_BE64		// BNE $D7
 
 	rts
 
-SendTileToPPU:	// $BCA2, 0x17CB2
+SendTileToPPU:	// $BE8E, 0x17E9E
 	ldx.b #$00	// A2 00
-l_BCA4:		// BCA4:
+l_BE90:		// $BE90, 0x17EA0:
 	lda.w {MapTileMacro}+3,x	// Load tile data byte of MapTileMacro+3,X
 	sta.w $2007	// Write to PPU -> PPU_DATA = #$90
 	inx
 	cpx.b #$10	// Compare with $10
-	bne l_BCA4	// D0 F5
+	bne l_BE90	// D0 F5
 
 	rts
 
@@ -641,10 +641,10 @@ RenderMapTile:
 	lda.w {mapVar_Y}	// Add mapVar_Y
 	lsr
 	tay
-	bcc l_BCC1	// If carry was set (Y was odd), add 80 to low byte of pointers
+	bcc l_BEAD	// If carry was set (Y was odd), add 80 to low byte of pointers
 
 	ldx.b #$80	// Load value $80 into X register
-l_BCC1:		// BCC1:
+l_BEAD:		// $BEAD, 0x17EBD:
 	stx.b $00	// Write low byte of pointer
 	lda.w {mapVar_X}	// Add mapVar_X * #$10 to $00
 	asl
@@ -676,17 +676,17 @@ l_BCC1:		// BCC1:
 // Run this code twice to create two bit filters (to be ANDed) for tile data, one for top half, one for bottom
 // This "blacks out" map areas that have not been visited.
 	ldy.b #$00	// A0 00	
-MapBitLoop:	// BCE4:
+MapBitLoop:	// $BED0, 0x17EE0:
 	lda.b #$FF	// Load value $FF
 	lsr.w {MapBits_Left}	// Grab low bit (for top-left or bottom-left)
- 	bcs l_BCED	// BCS $02
+ 	bcs l_BED9	// BCS $02
 	and.b #$0F	// If clear, AND out high nibble
 
-l_BCED:		// BCED:
+l_BED9:		// $BED9, 0x17EE9:
 	lsr.w {MapBits_Right}	// Grab low bit (for top-right or bottom-right)
-	bcs l_BCF4	// BCS $02
+	bcs l_BEE0	// BCS $02
 	and.b #$F0	// If clear, AND out low nibble
-l_BCF4:		// BCF4:
+l_BEE0:		// $BEE0, 0x17EF0:
 	sta.w {MapFilter_Top},y	// Store at MapFilter_Top address
 	iny		// Increment Y register
 	cpy.b #$02	// Compare to $02
@@ -699,39 +699,39 @@ l_BCF4:		// BCF4:
 //	-Top half, second plane
 //	-Bottom half, second plane
 	ldy.b #$03	// Load value $03 into Y register
-l_BCFE:		// BCFE:
+l_BEEA:		// $BEEA, 0x17EFA:
 	lda.b ($00),y	// Load RAM $00,Y
 	and.w {MapFilter_Top}	// Compare with MapFilter_Top address
 	sta.w {MapTileMacro}+3,y	// Store at Map tile macro address + 3,Y
 	dey
-	bpl l_BCFE	// BPL $F5
+	bpl l_BEEA	// BPL $F5
 
 	ldy.b #$07	// Load value $07 into Y register
-l_BD0B:		// BD0B:
+l_BEF7:		// $BEF7, 0x17F07:
 	lda.b ($00),y	// Load RAM $00,Y
 	and.w {MapFilter_Bottom}	// Compare with MapFilter_Bottom address
 	sta.w {MapTileMacro}+3,y	// Store at Map tile macro address + 3,Y
 	dey
  	cpy.b #$03	// Compare with $03 on Y register
-	bne l_BD0B	// BNE $F3
+	bne l_BEF7	// BNE $F3
 
 	ldy.b #$0B	// Load value $0B into Y register
-l_BD1A:		// BD1A:
+l_BF06:		// $BF06, 0x17F16:
 	lda.b ($00),y	// Load RAM $00,Y
 	and.w {MapFilter_Top}	// Compare with MapFilter_Top address
 	sta.w {MapTileMacro}+3,y	// Store at Map tile macro address + 3,Y
 	dey
 	cpy.b #$07	// Compare with $07 on Y register
-	bne l_BD1A	// BNE $F3
+	bne l_BF06	// BNE $F3
 
 	ldy.b #$0F	// Load value $0F into Y register
-l_BD29:		// BD29:
+l_BF15:		// $BF15, 0x17F25:
 	lda.b ($00),y	// Load RAM $00,Y
 	and.w {MapFilter_Bottom}	// Compare with MapFilter_Bottom address
 	sta.w {MapTileMacro}+3,y	// Store at MapTileMacro address + 3,Y
 	dey
 	cpy.b #$0B	// Compare with $0B on Y register
-	bne l_BD29	// BNE $F3
+	bne l_BF15	// BNE $F3
 
 // Write terminator to end of macro
 	lda.b #$FF	// Load value $FF into A register

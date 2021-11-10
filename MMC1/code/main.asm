@@ -47,6 +47,7 @@ incsrc code/gfx/title_screen.asm	// Title screen visual changes
 incsrc code/menus/caution_screen.asm	// Implement the CAUTION screen from the PRG1 version
 incsrc code/menus/file_select.asm	// Modifications to the File Select menus
 incsrc code/menus/hud_and_subscreen.asm	// Changes to both the HUD and the Subscreen
+incsrc code/menus/menu_tweaks.asm	// File Select & Copy-Erase system changes
 
 
 //****************************************
@@ -72,7 +73,6 @@ incsrc code/text/text_speed.asm		// Modify text parsing speed
 //****************************************
 //	Gameplay changes
 //****************************************
-//incsrc code/file_tweaks.asm		// File Select changes
 incsrc code/gameplay/arrows.asm		// Arrow counter code by BogaaBogaa
 incsrc code/gameplay/automap.asm	// Disassembly of the Automap Plus hack by snarfblam
 incsrc code/gameplay/bombs.asm		// Increase initial max bombs and upgrades to 10
