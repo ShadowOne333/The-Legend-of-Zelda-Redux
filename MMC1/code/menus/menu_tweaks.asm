@@ -23,12 +23,13 @@ org $A4A6	// 0x0A4B6
 org $A573	// 0x0A583
 
 main_menu_init_done:
-	lda.b $54
-	cmp.b #$03
-	bcc .write
+// We will default the position to always be Slot 1 instead
+// Previously checked against RAM $54 to know slot position
+	//lda.b $54
+	//cmp.b #$03
+	//bcc .write
 
 	lda.b #$00	// Default save slot 0
-
 .write:
 	sta.b $16
 
@@ -1521,7 +1522,7 @@ org $8AFF	// 0x14B0F
 // /////////////////////////////////////////////////////////
 
 org $93E0	// 0x153F0
-// Moved from $BF20 (0x17F30) for compatibility with MMC1 Automap
+// Moved from $BF20 (0x17F30) for compatibility with Automap
 
 game_over_menu_input:
 	lda.b $F8		// Up cursor

@@ -9,8 +9,7 @@
 bank 7; org $EC3C  // 0x1EC4C
 // Hijack PAD_SELECT pressed on the overworld
 	jsr quick_select
-
-	fill $0A,$EA	// Put 0x0A NOPs
+	nop #10
 
 // This is the routine called to switch items as a database
 // Moved to Bank 2 for compatibility with the MMC1 animation code by Bogaa

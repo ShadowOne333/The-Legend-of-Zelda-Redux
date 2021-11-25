@@ -47,7 +47,8 @@ incsrc code/gfx/title_screen.asm	// Title screen visual changes
 incsrc code/menus/caution_screen.asm	// Implement the CAUTION screen from the PRG1 version
 incsrc code/menus/file_select.asm	// Modifications to the File Select menus
 incsrc code/menus/hud_and_subscreen.asm	// Changes to both the HUD and the Subscreen
-incsrc code/menus/menu_tweaks.asm	// File Select & Copy-Erase system changes
+incsrc code/menus/menu_tweaks.asm	// File Select & Copy-Erase system change
+incsrc code/menus/save_hearts.asm	// Keep the hearts you saved with on File load, or default to 3 hearts if you had lesss
 
 
 //****************************************

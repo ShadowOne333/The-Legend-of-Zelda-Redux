@@ -37,40 +37,42 @@ https://www.romhacking.net/forum/index.php?topic=29403.0
 
 ## Changelog
 
-* **[DONE]** Save manually with Up+A when in the Items Subscreen
-* **[DONE]** Reworked heart HUD to match Zelda 2 Redux
-* **[DONE]** Relocalization of the  game's script to better match the Japanese release, or have better hints altogether. Based on the Legends of Localization book/webpage (Except the two iconic "Take this" and "It's a secret" lines)
-* **[DONE]** Make the Blue tunic more vibrant
-* **[DONE]** Stop the HUD from disappearing when entering or leaving caves during overworld map
-* **[DONE]** Proper player sprite position when leaving overworld from caves
-* **[DONE]** Reduces random wait times when entering caves
-* **[DONE]** Fix Y-scroll timing glitch when changing screens
-* **[DONE]** Fix Q1-D1 door opening on its own if you enter-leave the dungeon
-* **[DONE]** Fix alignment of the sword beam in multiple directions
-* **[DONE]** Increment the initial bomb max. amount to 10 instead of 8
-* **[DONE]** Increment the bomb upgrades by 10 instead of the original 4. First upgrade should give you 20 bombs, second will be 30.
-* **[DONE]** Faster text printing
-* **[DONE]** Modify the Sword beam to only be active when at full health/heart, and stop shooting when the life gets to 3/4 of a heart
-* **[DONE]** Modify certain item names to better match subsequent official names in the franchise (Rupee, Fairy, Heart Container, etc.)
-* **[DONE]** Change the Red and Blue rings to Red and Blue tunics
-* **[DONE]** Introduction text rewrite
-* **[DONE]** Reimplementation of the warning screen from version PRG1 upon Game Over / Saving
-* **[DONE]** Slight modifications to the title screen to give the "ZELDA" title a red colour (modified fading palettes to match this change too)
-* **[DONE]** Possibly also add a breakable tile hint for overworld tiles
-* **[DONE]** Automap Plus, but modify it to have 1/4 heart decrements instead of 1/8 (this is needed in order to make space in sprite PPU for the next point (#3)
-* **[DONE]** Visible hint for breakable walls in Dungeons (already implemented, just need sprite space for the left walls)
-* **[DONE]** Remove the 1 Rupee flashing, and make it green if possible
-* **[DONE]** Press the Select button to toggle the item selected for the B Button (to avoid pausing the game to select an item everytime)
-* **[DONE]** Change the duplicate bosses in Level 4 and 7 (Gleeok and Aquamentus) to Lanmola and Patra respectively.
-* **[DONE]** Have 999 rupees as the maximum amount, instead of 255. The rupee amount also needs to be saved in SRAM for when the game loads, so it starts with whatever amount you had last time (thanks to Bogaa for this feature!)
-* **[DONE]** Add a proper arrow enemy-drop item and an arrow counter (shops give 30 arrows when purchased), with the max arrow limit being 30 for normal Arrows, and 60 once you get the silver Arrows (thanks to Bogaa for the Arrow drop/counter code, and stratoform for the Max arrows limits!)
-* **[DONE]** Slight graphic changes to make certain sprites match their official artwork (Link now has his yellow hat line, some shield slight change, etc.). This won't be a graphic update of the game, as I still want to retain the original game's overall art design and aesthetic, but with sprites that better depict their official artwork designs.
-* **[DONE]** Be able to kill the Pols Voice by playing the flute, and also with arrows to retain the original way of killing them (Thanks to stratoform for this!)
-* **[DONE]** Flip the heart rows in the File Select Screen (Thanks again stratoform!)
-* **[DONE]** New column definitions to make the overworld look more polished, adding corners, rounded edges and other slight stuff so the overworld doesn't look as blocky.
-* **[DONE]** Make recently bombed overworld walls have a new arched cave entrance tile, without the tile losing its properties from the previous tile $24 (new tiles are $54-$57): https://www.romhacking.net/forum/index.php?topic=29403.msg404505#msg404505
-* **[DONE]** Rework the Credits for the game to have full names show up for each developer (like in Zelda 2 Redux): https://www.romhacking.net/forum/index.php?topic=29403.msg403636#msg403636
-* **[DONE]** Diagonal Sword swing in Zelda 1, implemented by minucce. Inspired on initial work based on Displaced Gamer's [url=https://www.youtube.com/watch?v=FBk-QkzMeIk]"Zelda Hit Detection - Behind the Code"[/url] video
+* Save manually with Up+A when in the Items Subscreen
+* Reworked heart HUD to match Zelda 2 Redux
+* Copy/Erase Save Feature: Now Zelda 1 has a newly implemented feature, similar to subsequent releases of the franchise, where you can Copy and/or Erase a save file to another Save Slot (Thanks to minucce!)
+* The amount of hearts you last had if the game was saved manually is now saved. So when you load, you start with the same amount of life the user had when the save was done. If the number of hearts when the game was saved was 3, or lower than 3, the game will start Link with 3 hearts instead (like in subsequent Zeldas)
+* Relocalization of the  game's script to better match the Japanese release, or have better hints altogether. Based on the Legends of Localization book/webpage (Except the two iconic "Take this" and "It's a secret" lines)
+* Make the Blue tunic more vibrant
+* Stop the HUD from disappearing when entering or leaving caves during overworld map
+* Proper player sprite position when leaving overworld from caves
+* Reduces random wait times when entering caves
+* Fix Y-scroll timing glitch when changing screens
+* Fix Q1-D1 door opening on its own if you enter-leave the dungeon
+* Fix alignment of the sword beam in multiple directions
+* Increment the initial bomb max. amount to 10 instead of 8
+* Increment the bomb upgrades by 10 instead of the original 4. First upgrade should give you 20 bombs, second will be 30.
+* Faster text printing
+* Modify the Sword beam to only be active when at full health/heart, and stop shooting when the life gets to 3/4 of a heart
+* Modify certain item names to better match subsequent official names in the franchise (Rupee, Fairy, Heart Container, etc.)
+* Change the Red and Blue rings to Red and Blue tunics
+* Introduction text rewrite
+* Reimplementation of the warning screen from version PRG1 upon Game Over / Saving
+* Slight modifications to the title screen to give the "ZELDA" title a red colour (modified fading palettes to match this change too)
+* Possibly also add a breakable tile hint for overworld tiles
+* Automap Plus, but modify it to have 1/4 heart decrements instead of 1/8 (this is needed in order to make space in sprite PPU for the next point (#3)
+* Visible hint for breakable walls in Dungeons (already implemented, just need sprite space for the left walls)
+* Remove the 1 Rupee flashing, and make it green if possible
+* Press the Select button to toggle the item selected for the B Button (to avoid pausing the game to select an item everytime)
+* Change the duplicate bosses in Level 4 and 7 (Gleeok and Aquamentus) to Lanmola and Patra respectively.
+* Have 999 rupees as the maximum amount, instead of 255. The rupee amount also needs to be saved in SRAM for when the game loads, so it starts with whatever amount you had last time (thanks to Bogaa for this feature!)
+* Add a proper arrow enemy-drop item and an arrow counter (shops give 30 arrows when purchased), with the max arrow limit being 30 for normal Arrows, and 60 once you get the silver Arrows (thanks to Bogaa for the Arrow drop/counter code, and stratoform for the Max arrows limits!)
+* Slight graphic changes to make certain sprites match their official artwork (Link now has his yellow hat line, some shield slight change, etc.). This won't be a graphic update of the game, as I still want to retain the original game's overall art design and aesthetic, but with sprites that better depict their official artwork designs.
+* Be able to kill the Pols Voice by playing the flute, and also with arrows to retain the original way of killing them (Thanks to stratoform for this!)
+* Flip the heart rows in the File Select Screen (Thanks again stratoform!)
+* New column definitions to make the overworld look more polished, adding corners, rounded edges and other slight stuff so the overworld doesn't look as blocky.
+* Make recently bombed overworld walls have a new arched cave entrance tile, without the tile losing its properties from the previous tile $24 (new tiles are $54-$57): https://www.romhacking.net/forum/index.php?topic=29403.msg404505#msg404505
+* Rework the Credits for the game to have full names show up for each developer (like in Zelda 2 Redux): https://www.romhacking.net/forum/index.php?topic=29403.msg403636#msg403636
+* Diagonal Sword swing in Zelda 1, implemented by minucce. Inspired on initial work based on Displaced Gamer's [url=https://www.youtube.com/watch?v=FBk-QkzMeIk]"Zelda Hit Detection - Behind the Code"[/url] video
 
 
 -------------------
@@ -97,13 +99,6 @@ https://www.romhacking.net/forum/index.php?topic=29403.0
 * Unique bosses in each Dungeon/Level (Rearranged Bosses.ips)
 * Make each dungeon have its own unique colour palette similar to Modern Classic Edition (Recoloured Dungeons.ips)
 
--------------------
-
-## Help needed for these points:
-
-* Save the amount of hearts you last had if the game was saved manually, so when you load, you start with the same amount of life (this I'm not sure if it will be implemented in the end hack)
-
-* Implementation of a Copy/Erase file system like in subsequent Zeldas, where can Copy a certain file to another, D-Pad Up and Down control the cursor in the File Selection and pressing A in a blank file brings up the Name screen (Example: ALttP). Could possibly be done, but it's also a missing (and desired) feature from Zelda 2 Redux.
 
 -------------------
 
@@ -130,7 +125,7 @@ If you want to apply any of the optional patches, you can use each Optional patc
 * **Stratoform** - For his help and code towards the Pols Voice flute code, fixing both the remaining stuff from porting the PRG1 Game Over screen's flashing and the cracked overworld walls collision, the flip hearts code and the max arrow limits.
 * **snarfblam** - For the Automap hack, which was disassembled and modified to work with 1/4 hearts instead of 1/8 exclusively for this project
 * **gzip** - For his Select button fix and the title screen slow waterfall animation.
-* **minucce** - For his fixes for HUD Blink on cave enter/leave, scrolling timing, Link's sprite when leaving caves, Dungeon 1 Q1 door fix, random wait times when entering caves, magic beam alignment and the Diagonal Sword Swing.
+* **minucce** - For his fixes for HUD Blink on cave enter/leave, scrolling timing, Link's sprite when leaving caves, Dungeon 1 Q1 door fix, random wait times when entering caves, magic beam alignment, the Diagonal Sword Swing code and the Copy/Erase save file system
 * **lexluthermeister** - For his help on creating the Optional patch for the new bosses.
 * All other users that gave their feedback on possible ways to improve the game over at the [RomHacking.net](https://www.romhacking.net/forum/index.php?topic=29403.0) thread, and those that gave insightful ideas and mockups!
 

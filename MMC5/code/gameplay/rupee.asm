@@ -114,7 +114,7 @@ EndFrameCheck:
 
 	fillto $A570,$FF	// Until org $A570, PRG $6570
 l_6570:	// $6570, 0x06580, $6D00 in SRAM
-	fill $05,$EA	// Fill 5 bytes with NOP
+	nop #05
 
 	jsr $9397	// jsr GenerateHexValue, PRG $15397
 	jsr $B8A0	// UpdateRupee
