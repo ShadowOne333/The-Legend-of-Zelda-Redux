@@ -41,13 +41,13 @@ org $95FB	// 0x1960B
 org $9607	// 0x19617
 	db $0F,$29,$27,$17	// Originally 0F 29 37 17 - Change Link's color for Dungeon 3 to not be pale
 org $96F7	// 0x19707
-	db $0F,$16,$27,$30	// Originally 0F 16 27 36
+	db $0F,$16,$28,$30	// Originally 0F 16 27 36 - Change Link's color for Dungeon 4 (Dungeon 5 in 2nd Quest) to not be pale
 org $97F3	// 0x19803
 	db $0F,$16,$27,$30	// Originally 0F 16 27 36
 org $98EF	// 0x198FF
 	db $0F,$16,$27,$30	// Originally 0F 16 27 36
 org $99EB	// 0x199FB
-	db $0F,$16,$27,$30	// Originally 0F 16 27 36
+	db $0F,$16,$28,$30	// Originally 0F 16 27 36 - Change Link's color for Dungeon 7 to not be pale
 org $9AE7	// 0x19AF7
 	db $0F,$16,$27,$30	// Originally 0F 16 27 36
 org $9BE3	// 0x19BF3

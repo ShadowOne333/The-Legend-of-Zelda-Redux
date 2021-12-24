@@ -16,8 +16,13 @@ bank 2; org $A287	// 0xA297
 //	Modify Ganon's palette to match artwork
 //***********************************************************
 
-bank 6;
-org $A205
+// If Ganon is left idle during his Arrow-vulnerable state, if he goes back to his moving state, he reverts to the original palette.
+// This forces the palette to be the same.
+bank 4; org $AF67	// 0x12F77
+	db $06,$22,$30		// Originally 16 2C 3C
+
+// Normal palette when first encountering Ganon.
+bank 6; org $A205	// 0x1A215
 	db $0F,$06,$22,$30	// Originally 0F 16 2C 3C
 
 //***********************************************************
@@ -27,3 +32,4 @@ org $A205
 //bank 6;
 //org $A291	// 0x1A29E
 //	db $0F,$13,$16,$35
+

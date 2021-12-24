@@ -56,7 +56,7 @@ org $B5D4	// 0x075E4, SRAM Routine $7D5B
 //***********************************************************
 
 bank 7;	org $ED18
-//Beep when having low health
+// Beep when having low health
 	lda.w $066F	// Check health          
 	and.b #$0F
 	bne NoBeeping

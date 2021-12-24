@@ -85,6 +85,13 @@ GiveArrowDrop:
 	lda.b $AC,x		// Check if the item is an arrow before it deletes.
 	cmp.b #$55
 	bne BackDeleting
+	lda.w $0659
+	beq GiveArrows
+	bcs NotZero
+GiveArrows:
+	lda.b #$01
+	sta.w $0659
+NotZero:
 	txa
 	pha
 	lda.w $0677		// Get arrow count
@@ -115,6 +122,13 @@ GiveArrowDrop:
 	lda $AC,x		// Check if the item is a arrow before it deletes.
 	cmp.b #$55
 	bne BackDeleting
+	lda.w $0659
+	beq GiveArrows
+	bcs NotZero
+GiveArrows:
+	lda.b #$01
+	sta.w $0659
+NotZero:
 	txa
 	pha
 	lda.w $0677		// Get arrow count

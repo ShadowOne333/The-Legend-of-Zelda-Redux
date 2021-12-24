@@ -43,7 +43,7 @@ ArrowDrop:
 	beq GiveWood
 	ldy.b #$02		// Put Item ID store
 	jmp.w $7399
-GiveWood:	
+GiveWood:
 	ldy #$02
 	lda #$01		// Put Item ID store
 	jmp $7399
@@ -67,11 +67,11 @@ EndArrowShop:
 	sta.b $29 
 	rts
 ArrowShopMax:
-	db $0,$1E,$3C		// 0,30,60
+	db $00,$1E,$3C		// 0,30,60
 
 
 org $ABD1	// CPU $7361, 0x06BE1
-// GiveArrowDrop Hijack before it gets rid of the iteam
+// GiveArrowDrop Hijack before it gets rid of the item
 	jsr $BFC0		// jsr GiveArrowDrop
 	nop
 	nop
@@ -85,6 +85,13 @@ GiveArrowDrop:
 	lda.b $AC,x		// Check if the item is an arrow before it deletes.
 	cmp.b #$55
 	bne BackDeleting
+	lda.w $0659
+	beq GiveArrows
+	bcs NotZero
+GiveArrows:
+	lda.b #$01
+	sta.w $0659
+NotZero:
 	txa
 	pha
 	lda.w $0677		// Get arrow count
@@ -112,9 +119,16 @@ ArrowDropMax:
 bank 1;
 org $BFC0	// 0x07FD0
 GiveArrowDrop:
-	lda $AC,x		// Check if the item is a arrow before it deletes.
+	lda.b $AC,x		// Check if the item is a arrow before it deletes.
 	cmp.b #$55
 	bne BackDeleting
+	lda.w $0659
+	beq GiveArrows
+	bcs NotZero
+GiveArrows:
+	lda.b #$01
+	sta.w $0659
+NotZero:
 	txa
 	pha
 	lda.w $0677		// Get arrow count
