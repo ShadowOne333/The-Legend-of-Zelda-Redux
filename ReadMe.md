@@ -87,7 +87,7 @@ https://www.romhacking.net/forum/index.php?topic=29403.0
 * Fill the amount of hearts you have upon starting a save file, so you don't always start with 3 hearts only (Full Health at Start.ips)
 * Famicom Disk System's version Font graphics (FDS Font.ips)
 * Hide back all the overworld and dungeon secrets (Original Hidden Secrets.ips)
-* Modify bomb upgrade amount to 05 per upgrade (Bomb Upgrades 5 instead of 10.ips)
+* Original bomb drops of 04 instead of 05 and upgrades amounts of 04 instead of 10 (Original Bomb Amounts.ips)
 * Link's Awakening graphics patch (Link's Awakening GFX.ips)
 * Original HUD to be the same as the original Zelda 1, with the map on the left and health on the right (Original HUD.ips). If you want Grey Automap with this, use "Grey Automap (for Original HUD).ips"
 * Original NES graphics (Original NES GFX.ips)
