@@ -76,12 +76,12 @@ incsrc code/text/text_speed.asm		// Modify text parsing speed
 //****************************************
 incsrc code/gameplay/arrows.asm		// Arrow counter code by BogaaBogaa
 incsrc code/gameplay/automap.asm	// Disassembly of the Automap Plus hack by snarfblam
-incsrc code/gameplay/bombs.asm		// Increase initial max bombs and upgrades to 10
 incsrc code/gameplay/item_toggle.asm	// Pressing Select toggles the selected B Button item from the inventory
 incsrc code/gameplay/manual_save.asm	// Save manually by pressing Pause and then Up+A (Button combo can be modified)
 incsrc code/gameplay/misc.asm		// Miscellaneous hacks
 incsrc code/gameplay/pols_voice.asm	// Kill Pols Voices by using Flute or Arrows
 incsrc code/gameplay/rupee.asm		// 999 Rupee counter code by BogaaBogaa
+incsrc code/gameplay/bombs.asm		// Increase initial max bombs and upgrades to 10
 incsrc code/gameplay/overworld_screens.asm	// Changes some columns for certain screens in the Overworld to not look as blocky
 incsrc code/gameplay/sword_draw.asm	// Diagonal sword or rod draw, Comment line if you want to apply the "Disable Diagonal Sword" optional patch
 incsrc code/gameplay/sword_swing.asm	// Diagonal sword detect hitbox orientation, Comment line if you want to apply the "Disable Diagonal Sword" optional patch

@@ -17,4 +17,19 @@ bank 1; org $8B8A	// 0x04B9A
 // Increase obtained bombs from drops to 5
 //****************************************
 org $6C51	// 0x06C61
-	lda.b #$05	// Originally LDA $0A, loads RAM $0A
+	jmp $6CEE	// BombCheck-0X656E-PRG $6CEE ($655E+790)
+	nop #05
+
+org $655E	// 0x0656E
+BombCheck:
+	lda.b $0A
+	cmp.b #$04
+	bne keys
+	lda.b #$05
+keys:
+	clc
+	adc.w $0657,y
+	bcc back
+	jmp $73E9	// 6C59
+back:
+	jmp $73EB	// 6C5B
