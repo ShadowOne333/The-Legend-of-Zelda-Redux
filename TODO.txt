@@ -1,3 +1,0 @@
-Check:
-	- Starting 2nd Quest with "ZELDA" name makes the default bombs 08 and the upgrades 08 instead of 10 both.
-	- First Arrow drop only gives the item, but no amount of arrows. Second drop does add to the counter
