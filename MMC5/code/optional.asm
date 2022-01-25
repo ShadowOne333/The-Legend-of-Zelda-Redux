@@ -33,7 +33,7 @@
 //incsrc code/optional/OriginalHiddenSecrets.asm
 
 // Original NES HUD (Hearts on the right, map on the left)
-incsrc code/optional/OriginalHUD.asm
+//incsrc code/optional/OriginalHUD.asm
 
 // Original Overworld column definitions
 //incsrc code/optional/OriginalOWColumns.asm
