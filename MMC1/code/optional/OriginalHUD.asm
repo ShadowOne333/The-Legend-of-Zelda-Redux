@@ -167,7 +167,7 @@ org $932E	// 0x1933E
 // CPU $71F3 Y offset for map sprite	PRG $6A63
 // CPU $6BAC X offset for map sprite 	PRG $1942A (00 > A0)
 org $942A	// 0x1943A
-	db $A0
+	db $00
 // Lvl 2 PRG $19526 B0 > 50
 org $9526	// 0x19536
 	db $B0
