@@ -22,6 +22,9 @@
 // Fill out all available hearts when starting or loading a game
 //incsrc code/optional/FullHealthAtStart.asm
 
+// Fill out all available hearts after a death or Game Over
+//incsrc code/optional/FullHealthAfterDeath.asm
+
 // Hide the unique Automap tiles and print out grey tiles instead
 // Comment out if you're using normal Redux
 //incsrc code/optional/GreyAutomap.asm
@@ -61,5 +64,8 @@
 
 // Implement original NES Ring
 //incsrc code/optional/Tunic2NESRing.asm
+
+// ZELDA name doesn't trigger 2nd Quest on file creation
+//incsrc code/optional/ZELDANameDoesntTrigger2ndQuest.asm
 
 

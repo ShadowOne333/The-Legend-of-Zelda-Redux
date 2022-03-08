@@ -79,25 +79,27 @@ https://www.romhacking.net/forum/index.php?topic=29403.0
 
 ## Optional patches:
 
-* Blue-er Tunic based on Asaki's hack (Bluer Tunic.ips)
-* Change the Tunics back to Rings with new revamped sprite (Tunic 2 Ring.ips)
-* Change Tunics to the Original Ring GFX from the NES release (Tunic 2 NES Ring.ips)
-* Hide the unique Automap tiles and print out the grey tiles from the original (Grey Automap.ips)
-* Disable Diagonal Sword Swing for those that want the original Zelda 1 stab instead (Disable Diagonal Sword.ips)
-* Fill the amount of hearts you have upon starting a save file, so you don't always start with 3 hearts only (Full Health at Start.ips)
-* Famicom Disk System's version Font graphics (FDS Font.ips)
-* Hide back all the overworld and dungeon secrets (Original Hidden Secrets.ips)
-* Original bomb drops of 04 instead of 05 and upgrades amounts of 04 instead of 10 (Original Bomb Amounts.ips)
-* Link's Awakening graphics patch (Link's Awakening GFX.ips)
-* Original HUD to be the same as the original Zelda 1, with the map on the left and health on the right (Original HUD.ips). If you want Grey Automap with this, use "Grey Automap (for Original HUD).ips"
-* Original NES graphics (Original NES GFX.ips)
-* Original (blocky) Overworld screen/column definitions (Original Overworld Columns.ips)
-* Remove the Low Health sound effect beeping (Remove Low Health Beep.ips)
-* Remove the newly added "THE HYRULE FANTASY" subtitle from the title screen (Remove Hyrule Fantasy Subtitle.ips)
-* Reworked Title Screen to match more recent Zelda title screens (Reworked Title Screen.ips)
-* Reworked Title Screen without "THE HYRULE FANTASY" subtitle (Remove Reworked TS Subtitle.ips)
-* Unique bosses in each Dungeon/Level (Rearranged Bosses.ips)
-* Make each dungeon have its own unique colour palette similar to Modern Classic Edition (Recoloured Dungeons.ips)
+* **Bluer Tunic.ips**		- Blue-er Tunic based on Asaki's hack
+* **Tunic 2 Ring.ips**		- Change the Tunics back to Rings that use a new revamped sprite
+* **Tunic 2 NES Ring.ips**		- Change Tunics to the Original Ring GFX from the NES release
+* **Grey Automap.ips**		- Hide the unique Automap tiles and print out the grey tiles from the original
+* **Disable Diagonal Sword.ips**	- Disable Diagonal Sword Swing for those that want the original Zelda 1 stab instead
+* **Full Health at Start.ips**	- Fill the amount of hearts you have upon starting a save file, so you don't always start with 3 hearts only
+* **Full Health After Death.ips**	- Fill the amount of hearts you have after a death or a Game Over
+* **FDS Font.ips**			- Famicom Disk System's version Font graphics
+* **Original Hidden Secrets.ips**	- Hide back all the overworld and dungeon secrets
+* **Original Bomb Amounts.ips**	- Original bomb drops of 04 instead of 05 and upgrades amounts of 04 instead of 10
+* **Link's Awakening GFX.ips**	- Link's Awakening graphics patch
+* **Original HUD.ips**		- Original HUD to be the same as the original Zelda 1, with the map on the left and health on the right. If you want a Grey Automap with the Original HUD, use "Grey Automap (for Original HUD).ips"
+* **Original NES GFX.ips**		- Original NES graphics
+* **Original Overworld Columns.ips**	- Original (blocky) Overworld screen/column definitions
+* **Remove Low Health Beep.ips**	- Remove the Low Health sound effect beeping
+* **Remove Hyrule Fantasy Subtitle.ips**	- Remove the newly added "THE HYRULE FANTASY" subtitle from the title screen
+* **Reworked Title Screen.ips**	- Reworked Title Screen to match more recent Zelda title screens
+* **Remove Reworked TS Subtitle.ips**	- Reworked Title Screen without "THE HYRULE FANTASY" subtitle
+* **Rearranged Bosses.ips**		- Unique bosses in each Dungeon/Level
+* **Recoloured Dungeons.ips**	- Make each dungeon have its own unique colour palette similar to Modern Classic Edition
+* **ZELDANameDoesntTrigger2ndQuest.ips**	- (Quite a mouthful, huh?) As the name implies, using this patch will make it so that if you start a save file with the name "ZELDA", it should start on a 1st Quest (like a normal file) instead of starting the file at 2nd Quest automatically.
 
 
 -------------------
@@ -126,6 +128,7 @@ If you want to apply any of the optional patches, you can use each Optional patc
 * **snarfblam** - For the Automap hack, which was disassembled and modified to work with 1/4 hearts instead of 1/8 exclusively for this project
 * **gzip** - For his Select button fix and the title screen slow waterfall animation.
 * **minucce** - For his fixes for HUD Blink on cave enter/leave, scrolling timing, Link's sprite when leaving caves, Dungeon 1 Q1 door fix, random wait times when entering caves, magic beam alignment, the Diagonal Sword Swing code and the Copy/Erase save file system
+* **kalita-kin** - For contributing with the "ZELDA name" and "Full Hearts after death" optional patches.
 * **lexluthermeister** - For his help on creating the Optional patch for the new bosses.
 * All other users that gave their feedback on possible ways to improve the game over at the [RomHacking.net](https://www.romhacking.net/forum/index.php?topic=29403.0) thread, and those that gave insightful ideas and mockups!
 

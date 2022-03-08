@@ -17,7 +17,7 @@ db $22,$22,$23,$0F,$22,$23,$22,$55,$22,$18	// H H F R H F H H H R    H60-R20-F20
 //21 = Clock
 //22 = Heart
 //23 = Fairy
-//55 = Arrow     
+//55 = Arrow
 
 
 bank 1;
