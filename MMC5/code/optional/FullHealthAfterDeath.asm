@@ -3,7 +3,7 @@
 //***********************************************************
 
 bank 5;		
-org $85D0	// 0x145E0
+org $85E0	// 0x145F0
 	lda.w $066F	// Load heart container value
 	and.b #$F0	// Mask higher byte, Originally AND #$0F
 	sta.w $066F	// Store masked value for heart container
