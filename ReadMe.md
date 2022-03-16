@@ -10,8 +10,6 @@
 
 * [**Optional Patches**](#optional-patches)
 
-* [**Help needed for these points**](#help-needed-for-these-points)
-
 * [**Patching and Usage Instructions**](#instructions)
 
 * [**Credits**](#credits)
