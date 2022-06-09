@@ -53,6 +53,9 @@
 // Remove the low health beeping
 //incsrc code/optional/RemoveLowHealthBeep.asm
 
+// Restore the Dungeon 1 Door Glitch (Enter/Exit to open it)
+//incsrc code/optional/RestoreDoorGlitch.asm
+
 // Reworked Title Screen to match more recent Zelda title screens
 //incsrc code/optional/ReworkedTitleScreen.asm
 
