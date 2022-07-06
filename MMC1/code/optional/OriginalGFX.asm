@@ -33,7 +33,7 @@ org $AC60	// 0x0EC70
 	incbin code/optional/original_gfx/DungeonAssets.bin
 
 // MMC1 Animated tiles frames
-org $AE9B	// 0x0EEAB
+org $AEA0	// 0x0EEB0
 	incbin code/optional/original_gfx/ow_1st_frame1.chr
 	incbin code/optional/original_gfx/ow_2nd_frame1.chr
 	incbin code/optional/original_gfx/ow_1st_frame2.chr
@@ -41,9 +41,10 @@ org $AE9B	// 0x0EEAB
 	incbin code/optional/original_gfx/ow_1st_frame3.chr
 	incbin code/optional/original_gfx/ow_2nd_frame3.chr
 
+// Restore Ganon's original palette after he recovers from vulnerable state
+bank 4; org $AF67	// 0x12F77
+	db $16,$2C,$3C
+
 // Restore Ganon's original palette
-bank 6;
-org $A205	// 0x1A215
+bank 6; org $A205	// 0x1A215
 	db $0F,$16,$2C,$3C
-
-

@@ -86,7 +86,7 @@ org $9DC5	// 0x19DD5
 org $9E22	// 0x19E32
 	ldy.b #$62	// Starting PPU low byte
 org $9E3D	// 0x19E4D
-	cmp.b #$F6	// Finishing PPU low byte
+	cmp.b #$E2	// Finishing PPU low byte
 
 //------------------------------------
 

@@ -33,7 +33,7 @@ org $AC60	// 0x0EC70
 	incbin code/optional/la_gfx/DungeonAssets.bin
 
 // MMC1 Animated tiles frames
-org $AE9B	// 0x0EEAB
+org $AEA0	// 0x0EEB0
 	incbin code/optional/la_gfx/ow_1st_frame1.chr
 	incbin code/optional/la_gfx/ow_2nd_frame1.chr
 	incbin code/optional/la_gfx/ow_1st_frame2.chr
