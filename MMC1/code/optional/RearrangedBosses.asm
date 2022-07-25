@@ -3,7 +3,7 @@
 //***********************************************************
 
 // Changes bosses to:
-// 1st Quest - Level 4: Changes the Manhandla in the level to Red Lanmolas, keeps the two-headed Gleeok at the end
+// 1st Quest - Level 3/4: Changes the Manhandla in the level to Red Lanmolas, keeps the two-headed Gleeok at the end
 // 1st Quest - Level 7: Changes the Aquamentus for a Patra with Oval attack cycle
 // 2nd Quest - Level 2: Changes the two-headed Gleeok to Blue Lanmolas (You can still fight a two-headed Gleeok in Level 6)
 // 2nd Quest - Level 8: Changes the 3 Dodongos to a Patra with Circle attack cycle
@@ -11,22 +11,29 @@
 // Dungeons 1-9 1st Quest
 bank 3;
 org $8006	// 0x0C016
-// Graphics pointer for Dungeon ?
-	dw $9A9B	// dungeon?_graphics	// $9A9B (9B 9A)
+// Graphics pointer for Dungeon 3 (1st Quest)
+	dw $9A9B	// Dungeon 3 GFX, Originally $987B (7B 98)
 org $8022	// 0x0C032
-// Graphics pointer for Dungeon ?
-	dw $A7DB	// dungeon?_graphics	// $9A9B (DB A7)
+// Graphics pointer for Dungeon 8 (2nd Quest)
+	dw $A7DB	// Dungeon 8 GFX, Originally $9FDB (DB 9F)
 
 // Tables for Dungeons 1-9 1st Quest
+// $03 = Gleeok (2 Heads)
+// $06 = Flying Gleeok Head
+// $3A = Red Landmola
+// $3C = Mandhandla
 bank 6;
 org $8810	// 0x18820
-	db $03
+// Level 4 Mini-Boss. Changed to Gleeok 2-H
+	db $03	// Originally $3C (Mandhandla)
 org $8813	// 0x18823
-	db $3A
+// Level 4 Boss. Changed to Red Landmola
+	db $3A	// Originally $03 (Gleeok 2-Headed)
 org $8821	// 0x18831
 	db $53
 org $884D	// 0x1885D
-	db $3A
+// Level 3 Boss. $3A is Red Landmolas, $3C is Manhandla
+	db $3C	// Originally $3C
 org $8859	// 0x18869
 	db $64
 org $885B	// 0x1886B
@@ -36,9 +43,11 @@ org $8869	// 0x18879
 org $8870	// 0x18880
 	db $93
 org $8890	// 0x188A0
-	db $86
+// Level 4. Add Mixed Types byte
+	db $86	// Originally $06
 org $8893	// 0x188A3
-	db $05
+// Level 4. Removed Mixed Types byte
+	db $05	// Originally $85
 org $8B0C	// 0x18B1C
 	dw $E785
 org $8B1C	// 0x18B2C
