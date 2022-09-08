@@ -128,6 +128,7 @@ If you want to apply any of the optional patches, you can use each Optional patc
 * **minucce** - For his fixes for HUD Blink on cave enter/leave, scrolling timing, Link's sprite when leaving caves, Dungeon 1 Q1 door fix, random wait times when entering caves, magic beam alignment, the Diagonal Sword Swing code and the Copy/Erase save file system
 * **kalita-kan** - For contributing with the "ZELDA name" and "Full Hearts after death" optional patches.
 * **lexluthermeister** - For his help on creating the Optional patch for the new bosses.
+* **BlazeHeatnix** - For some script revisions and suggestions.
 * All other users that gave their feedback on possible ways to improve the game over at the [RomHacking.net](https://www.romhacking.net/forum/index.php?topic=29403.0) thread, and those that gave insightful ideas and mockups!
 
 -------------------
