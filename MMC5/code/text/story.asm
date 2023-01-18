@@ -236,8 +236,9 @@ treasure_27:
 	db $08, "MAP        COMPASS",{end}
 //08 16 0A 19 24 24 24 24 24 24 24 24 0C 18 16 19 0A 1C 1C FF
 //----------------------------------------
+org $9BE0	// 0x09BF0
 treasure_28:
-	db $0C, "TRIFORCE",{end}
+	db $07, "TRIFORCE OF WISDOM",{end}
 //0C 1D 1B 12 0F 18 1B 0C 0E FF
 //----------------------------------------
 
