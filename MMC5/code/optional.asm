@@ -62,6 +62,9 @@
 // Reworked Title Screen without THE HYRULE FANTASY subtitle
 //incsrc code/optional/ReworkedTSNoSubtitle.asm
 
+// Rework the Sword Swing to be similar to that of A Link to the Past
+//incsrc code/optional/alttp_sword_draw.asm
+
 // Change the Tunics back to Rings (New Ring sprite for Redux)
 //incsrc code/optional/Tunic2Ring.asm
 
@@ -70,4 +73,5 @@
 
 // ZELDA name doesn't trigger 2nd Quest on file creation
 //incsrc code/optional/ZELDANameDoesntTrigger2ndQuest.asm
+
 

@@ -7,6 +7,8 @@
 //	Code should be used only for educational, documentation and modding purposes.
 //	Please keep derivative work open source.
 
+// Fix sword beam position inside Dungeons
+incsrc code/optional/dungeon_draw_beam.asm
 
 //
 // Draw sword or rod
@@ -37,7 +39,7 @@ sword_detect:
 	sta.b $98,x	// Object direction
 
 	jsr $7013	// Direction index
-	sty $01
+	sty.b $01
 
 	tya
 	clc
@@ -87,18 +89,24 @@ wide_sword:
 
 // ====================================================
 
-	lda.b $70	// Player Xpos
+	lda.b $70			// Player Xpos
 	clc
 	adc.w wide_sword_xpos,y
-	sta.b $70,x	// Hitbox Xpos
+	sta.b $70,x			// Hitbox Xpos
 	sta.b $00
 
-	lda.b $84	// Player Ypos
+	lda.b $84			// Player Ypos
 	clc
 	adc.w wide_sword_ypos,y
-	sta.b $84,x	// Hitbox Ypos
+	sta.b $84,x			// Hitbox Ypos
 	sta.b $01
 
+	lda.b $10			// Dungeon = -2 pixels
+	beq .load_attr
+	dec.b $01
+	dec.b $01
+
+.load_attr:
 	lda.w wide_sword_sprite,y	// Vertical (0), horizontal (1), diagonal (2)
 	sta.b $0C
 

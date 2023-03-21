@@ -7,6 +7,8 @@
 //	Code should be used only for educational, documentation and modding purposes.
 //	Please keep derivative work open source.
 
+// Fix sword beam position inside Dungeons
+incsrc code/optional/dungeon_draw_beam.asm
 
 //
 // Draw sword or rod
@@ -20,8 +22,9 @@ org $F7AB	// 0x1F7BB
 	jsr sword_detect
 
 	lda.b $84,x	// Normal swing (00)
-	bne $44		// $ , $F7FB-$F7B7
+	bne $44		// $44 , $F7FB-$F7B7
 
+//warnpc $F7B7
 
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
@@ -86,18 +89,24 @@ wide_sword:
 
 // ====================================================
 
-	lda.b $70	// Player Xpos
+	lda.b $70			// Player Xpos
 	clc
-	adc wide_sword_xpos,y
-	sta.b $70,x	// Hitbox Xpos
+	adc.w wide_sword_xpos,y
+	sta.b $70,x			// Hitbox Xpos
 	sta.b $00
 
-	lda.b $84	// Player Ypos
+	lda.b $84			// Player Ypos
 	clc
 	adc.w wide_sword_ypos,y
-	sta.b $84,x	// Hitbox Ypos
+	sta.b $84,x			// Hitbox Ypos
 	sta.b $01
 
+	lda.b $10			// Dungeon = -2 pixels
+	beq .load_attr
+	dec.b $01
+	dec.b $01
+
+.load_attr:
 	lda.w wide_sword_sprite,y	// Vertical (0), horizontal (1), diagonal (2)
 	sta.b $0C
 
@@ -174,6 +183,7 @@ wide_sword_flip_h16:
 	db $00,$00,$00,$00,$00,$01,$01,$01	// Left
 	db $00,$00,$00,$01,$01,$00,$00,$00	// Right
 
+//warnpc $BEF0	// 0x1BF00
 
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
