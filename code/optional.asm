@@ -74,4 +74,24 @@
 // ZELDA name doesn't trigger 2nd Quest on file creation
 //incsrc code/optional/ZELDANameDoesntTrigger2ndQuest.asm
 
+//------------------------------------
+//	Zelda Hack Pack patches
+//		(by gzip)
+//------------------------------------
+
+// Use the Better Font graphics
+//incsrc code/optional/zelda_hack_pack/better_font.asm
+
+// Change the Dungeon music to that of Zelda: A New Light
+//incsrc code/optional/zelda_hack_pack/dungeon_music.asm
+
+// Like Likes now consume rupees instead of the shield
+//incsrc code/optional/zelda_hack_pack/like_like_rupees.asm
+
+// Change the Low Hearts beeping sound to a heartbeat-like sound
+// NOTE: Should NOT be used with "Remove Low Health Beep"!
+//incsrc code/optional/zelda_hack_pack/low_hearts_sound.asm
+
+// Make both the Lost Woods and Lost Hills into normal screens instead of having to always walk the correct path to go through
+//incsrc code/optional/zelda_hack_pack/not_lost.asm
 

@@ -47,6 +47,7 @@ https://www.romhacking.net/forum/index.php?topic=29403.0
 * Fix Y-scroll timing glitch when changing screens
 * Fix Q1-D1 door opening on its own if you enter-leave the dungeon
 * Fix alignment of the sword beam in multiple directions
+* Fix the Y-position of both the sword and sword beam graphics inside Dungeons (they're usually 2 pixels lower than they should)
 * Increment the initial bomb max. amount to 10 instead of 8
 * Increment the bomb upgrades by 10 instead of the original 4. First upgrade should give you 20 bombs, second will be 30.
 * Faster text printing
@@ -77,17 +78,20 @@ https://www.romhacking.net/forum/index.php?topic=29403.0
 
 ## Optional patches:
 
+* **Better Font.ips**		- Use the Better Font graphics from gzip's Zelda Hack Pack (should NOT be used with "FDS Font"!)
 * **Bluer Tunic.ips**		- Blue-er Tunic based on Asaki's hack
-* **Tunic 2 Ring.ips**		- Change the Tunics back to Rings that use a new revamped sprite
-* **Tunic 2 NES Ring.ips**		- Change Tunics to the Original Ring GFX from the NES release
-* **Grey Automap.ips**		- Hide the unique Automap tiles and print out the grey tiles from the original
 * **Disable Diagonal Sword.ips**	- Disable Diagonal Sword Swing for those that want the original Zelda 1 stab instead
+* **Dungeon Music.ips**		- Change the Dungeon music to that of Zelda: A New Light (gzip's Zelda Hack Pack)
+* **FDS Font.ips**			- Famicom Disk System's version Font graphics (should NOT be used with "Better Font"!)
 * **Full Health at Start.ips**	- Fill the amount of hearts you have upon starting a save file, so you don't always start with 3 hearts only
 * **Full Health After Death.ips**	- Fill the amount of hearts you have after a death or a Game Over
-* **FDS Font.ips**			- Famicom Disk System's version Font graphics
+* **Grey Automap.ips**		- Hide the unique Automap tiles and print out the grey tiles from the original
+* **Like Like Rupees.ips**	- Like Likes now consume rupees instead of the shield (gzip's Zelda Hack Pack)
+* **Link's Awakening GFX.ips**	- Link's Awakening graphics patch
+* **Low Hearts Sound.ips**	- Change the Low Hearts beeping sound to a heartbeat-like sound (gzip's Zelda Hack Pack, should NOT be used with "Remove Low Health Beep")
+* **Not Lost.ips**		- Make both the Lost Woods and Lost Hills into normal screens instead of having to always walk the correct path to go through
 * **Original Hidden Secrets.ips**	- Hide back all the overworld and dungeon secrets
 * **Original Bomb Amounts.ips**	- Original bomb drops of 04 instead of 05 and upgrades amounts of 04 instead of 10
-* **Link's Awakening GFX.ips**	- Link's Awakening graphics patch
 * **Original HUD.ips**		- Original HUD to be the same as the original Zelda 1, with the map on the left and health on the right. If you want a Grey Automap with the Original HUD, use "Grey Automap (for Original HUD).ips"
 * **Original NES GFX.ips**		- Original NES graphics
 * **Original Overworld Columns.ips**	- Original (blocky) Overworld screen/column definitions
@@ -97,6 +101,8 @@ https://www.romhacking.net/forum/index.php?topic=29403.0
 * **Remove Reworked TS Subtitle.ips**	- Reworked Title Screen without "THE HYRULE FANTASY" subtitle
 * **Rearranged Bosses.ips**		- Unique bosses in each Dungeon/Level
 * **Recoloured Dungeons.ips**	- Make each dungeon have its own unique colour palette similar to Modern Classic Edition
+* **Tunic 2 Ring.ips**		- Change the Tunics back to Rings that use a new revamped sprite
+* **Tunic 2 NES Ring.ips**		- Change Tunics to the Original Ring GFX from the NES release
 * **ZELDANameDoesntTrigger2ndQuest.ips**	- (Quite a mouthful, huh?) As the name implies, using this patch will make it so that if you start a save file with the name "ZELDA", it should start on a 1st Quest (like a normal file) instead of starting the file at 2nd Quest automatically.
 
 
@@ -124,7 +130,7 @@ If you want to apply any of the optional patches, you can use each Optional patc
 * **DarkSamus993** - For his ASM help towards some hacks (like the Select button Item switch).
 * **Stratoform** - For his help and code towards the Pols Voice flute code, fixing both the remaining stuff from porting the PRG1 Game Over screen's flashing and the cracked overworld walls collision, the flip hearts code and the max arrow limits.
 * **snarfblam** - For the Automap hack, which was disassembled and modified to work with 1/4 hearts instead of 1/8 exclusively for this project
-* **gzip** - For his Select button fix and the title screen slow waterfall animation.
+* **gzip** - For his Select button fix and the title screen slow waterfall animation, and the optional patches from his Zelda Hack Pack
 * **minucce** - For his fixes for HUD Blink on cave enter/leave, scrolling timing, Link's sprite when leaving caves, Dungeon 1 Q1 door fix, random wait times when entering caves, magic beam alignment, the Diagonal Sword Swing code and the Copy/Erase save file system
 * **kalita-kan** - For contributing with the "ZELDA name" and "Full Hearts after death" optional patches.
 * **lexluthermeister** - For his help on creating the Optional patch for the new bosses.
