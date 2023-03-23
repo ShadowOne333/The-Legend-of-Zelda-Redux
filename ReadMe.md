@@ -78,6 +78,7 @@ https://www.romhacking.net/forum/index.php?topic=29403.0
 
 ## Optional patches:
 
+* **ALttP Sword Swing.ips**	- Makes the sword swing similar to that of ALttP, where it's a full arc instead of stopping when reaching the center like in the default sword swing.
 * **Better Font.ips**		- Use the Better Font graphics from gzip's Zelda Hack Pack (should NOT be used with "FDS Font"!)
 * **Bluer Tunic.ips**		- Blue-er Tunic based on Asaki's hack
 * **Disable Diagonal Sword.ips**	- Disable Diagonal Sword Swing for those that want the original Zelda 1 stab instead
@@ -132,6 +133,7 @@ If you want to apply any of the optional patches, you can use each Optional patc
 * **snarfblam** - For the Automap hack, which was disassembled and modified to work with 1/4 hearts instead of 1/8 exclusively for this project
 * **gzip** - For his Select button fix and the title screen slow waterfall animation, and the optional patches from his Zelda Hack Pack
 * **minucce** - For his fixes for HUD Blink on cave enter/leave, scrolling timing, Link's sprite when leaving caves, Dungeon 1 Q1 door fix, random wait times when entering caves, magic beam alignment, the Diagonal Sword Swing code and the Copy/Erase save file system
+* **tacoschip** - For the fix for the sword graphics and beam graphics inside Dungeons
 * **kalita-kan** - For contributing with the "ZELDA name" and "Full Hearts after death" optional patches.
 * **lexluthermeister** - For his help on creating the Optional patch for the new bosses.
 * **BlazeHeatnix** - For some script revisions and suggestions.
