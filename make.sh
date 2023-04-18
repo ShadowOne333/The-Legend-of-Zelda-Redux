@@ -42,6 +42,7 @@ if [ "$sha1" == "$checksum" ]; then
 
 cp "$clean_rom" "$patched_rom"
 bin/xkas -o "$patched_rom" "$asm_file"
+#bin/asar --no-title-check "$asm_file" "$patched_rom"
 bin/flips --create --ips "$clean_rom" "$patched_rom" "$patches_folder/Zelda1_Redux.ips"
 
 jumpto END

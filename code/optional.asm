@@ -1,7 +1,7 @@
-//*****************************************************************
+//**************************************************************
 // 	Optional patches
 // Uncomment the desired Optional patches
-//*****************************************************************
+//**************************************************************
 
 // Link's Awakening DX Graphics
 //incsrc code/optional/LinksAwakeningGFX.asm
@@ -35,7 +35,7 @@
 // This means no cracked walls nor discernible burnable trees
 //incsrc code/optional/OriginalHiddenSecrets.asm
 
-// Original NES HUD (Hearts on the right, map on the left)
+// Original NES HUD (Hearts on the right, map on the left
 //incsrc code/optional/OriginalHUD.asm
 
 // Original Overworld column definitions

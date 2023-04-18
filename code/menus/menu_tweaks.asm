@@ -44,7 +44,7 @@ main_menu_init_done:
 	inc.b $11
 	rts
 
-//warnpc $A589
+warnpc $A589
 
 // #########################################################
 
@@ -157,7 +157,7 @@ main_menu_exit_check:
 
 .load_game:
 
-//warnpc $A5FE
+warnpc $A6FE
 
 // /////////////////////////////////////////////////////////
 
@@ -183,7 +183,7 @@ org $9E3F	// 0x09E4F
 	jmp main_menu_mode_name
 	nop #1
 
-//warnpc $9e45
+warnpc $9E45+1
 
 // ////////////////////////////////////////////////////
 
@@ -243,7 +243,7 @@ register_mode_letter_ypos:
 	jmp $A1FA
 	nop #0
 
-//warnpc $9eeb
+warnpc $9EEB+1
 
 // ###########################################################
 
@@ -255,7 +255,7 @@ org $9E9D	// 0x09EAD
 	jmp menu_misc_draw_name_map
 	nop #0
 
-//warnpc $9EA4
+warnpc $9EA4+1
 
 // ///////////////////////////////////////////////////////////
 
@@ -264,7 +264,7 @@ org $9EB5	// 0x09EC5
 	jmp misc_menu_palette
 	nop #1
 
-//warnpc $9eb9
+warnpc $9EB9+1
 
 // ///////////////////////////////////////////////////////////
 
@@ -280,7 +280,7 @@ register_player_joypad_start:
 
 .save:
 
-//warnpc $9eff
+warnpc $9EFF+1
 
 // ///////////////////////////////////////////////////////////
 
@@ -296,7 +296,7 @@ erase_player_run:
 
 	nop #22
 
-//warnpc $9fde
+warnpc $9FDE+1
 
 // ###########################################################
 
@@ -376,7 +376,7 @@ main_menu_exit:
 
 	nop #7
 
-//warnpc $a254
+warnpc $A254+1
 
 // ###########################################################
 
@@ -1410,7 +1410,7 @@ copy_player1:
 
 	rts
 
-//warnpc $BF50
+warnpc $BF50
 
 // #########################################################
 
@@ -1469,7 +1469,7 @@ org $9D7B	// 0x09D8B
 
 	db $FF
 
-//warnpc $9daf
+warnpc $9DAF+1
 
 org $9DDF	// 0x09DEF
 	// Write name offsets
@@ -1482,7 +1482,7 @@ org $9DDF	// 0x09DEF
 
 	db $FF
 
-//warnpc $9ded
+warnpc $9DED+1
 
 // ---------------------------------------------------------
 
@@ -1504,7 +1504,7 @@ org $9EFF	// 0x09F0F
 	jsr register_menu_quit_sound
 	nop #2
 
-//warnpc $9F04
+warnpc $9F04+1
 
 org $9F6F	// 0x09F7F
 	jsr register_menu_name_done
@@ -1545,4 +1545,4 @@ game_over_menu_input:
 	and.b #($20|$04)
 	jmp $8B03
 
-//warnpc $9400, Originally warnpc $BF40
+warnpc $9400	// Originally warnpc $BF40

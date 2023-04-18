@@ -24,10 +24,10 @@ org $8022	// 0x0C032
 // $3C = Mandhandla
 bank 6;
 org $8810	// 0x18820
-// Level 4 Mini-Boss. Changed to Gleeok 2-H
-	db $03	// Originally $3C (Mandhandla)
+// Level 4 Mini-Boss Manhandla. Changed to Gleeok 2-H
+	db $03	// Originally $3C (Manhandla)
 org $8813	// 0x18823
-// Level 4 Boss. Changed to Red Landmola
+// Level 4 Boss Gleeok 2-Headed. Changed to Red Landmola
 	db $3A	// Originally $03 (Gleeok 2-Headed)
 org $8821	// 0x18831
 	db $53

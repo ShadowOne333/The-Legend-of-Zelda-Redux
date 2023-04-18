@@ -1,11 +1,11 @@
 // Move Link's weapon sprite in dungeon mode
 
-bank 7; org $f7c1
+bank 7; org $F7C1
 
 dungeon_draw_weapon:
 	lda.b $84
 	clc
-	adc.w $f759,y
+	adc.w $F759,y
 	sta.b $84,x
 	sta.b $01
 
@@ -19,4 +19,4 @@ dungeon_draw_weapon:
 	nop
 	nop
 
-//warnpc $f7d7+1
+warnpc $F7D7+1

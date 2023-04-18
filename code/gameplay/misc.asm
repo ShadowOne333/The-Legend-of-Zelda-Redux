@@ -48,7 +48,7 @@ bank 7; org $E73D	// 0x1E74D
 // Fixes the collision behind link when swinging the wand.
 bank 1;
 org $B5D4	// 0x075E4, SRAM Routine $7D5B
-	cmp.b #$32	//Fix wand windup colusion behind link when swinging the wand
+	cmp.b #$32	//Fix wand windup colusion behind Link when swinging the wand
 
 
 //***********************************************************

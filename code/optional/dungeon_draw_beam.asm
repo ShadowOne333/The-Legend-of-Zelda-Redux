@@ -11,7 +11,7 @@ dungeon_draw_beam:
 	nop
 	nop
 
-//warnpc $F3A2+1
+warnpc $F3A2+1
 
 
 bank 6; org $BE40	// Originally $BE00, moved 30 bytes lower to coexist with original Sword Draw

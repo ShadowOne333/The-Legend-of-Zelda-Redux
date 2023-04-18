@@ -29,7 +29,7 @@ wide_sword_draw:
 	lda.b $84,x		// Normal swing (00)
 	bne .resume
 
-//warnpc $F7B7+1
+warnpc $F7B7+1
 
 
 org $F7FB
@@ -171,7 +171,7 @@ bank 6; org $BD00	// 0x1BD10
 	db $84,$84,$03,$03,$03,$04,$04,$00	// Left
 	db $44,$44,$02,$02,$02,$C4,$C4,$80	// Right
 
-//warnpc $BE00+1	// 0x1BE10
+warnpc $BE00+1	// 0x1BE10
 
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 

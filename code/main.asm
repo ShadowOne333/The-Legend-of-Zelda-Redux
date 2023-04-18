@@ -76,6 +76,7 @@ incsrc code/text/text_speed.asm		// Modify text parsing speed
 //****************************************
 incsrc code/gameplay/arrows.asm		// Arrow counter code by BogaaBogaa
 incsrc code/gameplay/automap.asm	// Disassembly of the Automap Plus hack by snarfblam
+incsrc code/gameplay/dungeon_automap.asm	// Disassembly of the Dungeon Automap hack by tacoschip
 incsrc code/gameplay/item_toggle.asm	// Pressing Select toggles the selected B Button item from the inventory
 incsrc code/gameplay/manual_save.asm	// Save manually by pressing Pause and then Up+A (Button combo can be modified)
 incsrc code/gameplay/misc.asm		// Miscellaneous hacks

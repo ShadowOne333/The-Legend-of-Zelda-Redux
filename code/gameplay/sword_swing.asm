@@ -49,7 +49,7 @@ weapon_position:
 	adc.w $0084,y
 	jmp $7BE2
 
-//warnpc $7DFB-7
+warnpc $B66B-7+1	// warnpc base $7DFB-7
 
 // 7 free variables !!
 	nop
@@ -60,7 +60,7 @@ weapon_position:
 	nop
 	nop
 
-//warnpc $7DFB
+warnpc $B66B+1	// warnpc base $7DFB
 
 
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -97,5 +97,5 @@ weapon_collide_check:
 
 	jmp $7DAA	// Damage routine
 
-//warnpc $7D5F
+warnpc $B5CF+1	// warnpc $7D5F
 
