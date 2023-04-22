@@ -75,6 +75,7 @@ incsrc code/text/text_speed.asm		// Modify text parsing speed
 //	Gameplay changes
 //****************************************
 incsrc code/gameplay/arrows.asm		// Arrow counter code by BogaaBogaa
+incsrc code/gameplay/dungeon_music.asm	// Changes the dungeon music between the original theme and gzip's A New Light dungeon theme
 incsrc code/gameplay/automap.asm	// Disassembly of the Automap Plus hack by snarfblam
 incsrc code/gameplay/dungeon_automap.asm	// Disassembly of the Dungeon Automap hack by tacoschip
 incsrc code/gameplay/item_toggle.asm	// Pressing Select toggles the selected B Button item from the inventory
