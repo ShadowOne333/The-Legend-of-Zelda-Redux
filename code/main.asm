@@ -75,7 +75,6 @@ incsrc code/text/text_speed.asm		// Modify text parsing speed
 //	Gameplay changes
 //****************************************
 incsrc code/gameplay/arrows.asm		// Arrow counter code by BogaaBogaa
-incsrc code/gameplay/dungeon_music.asm	// Changes the dungeon music between the original theme and gzip's A New Light dungeon theme
 incsrc code/gameplay/automap.asm	// Disassembly of the Automap Plus hack by snarfblam
 incsrc code/gameplay/dungeon_automap.asm	// Disassembly of the Dungeon Automap hack by tacoschip
 incsrc code/gameplay/item_toggle.asm	// Pressing Select toggles the selected B Button item from the inventory
@@ -89,6 +88,13 @@ incsrc code/gameplay/sword_draw.asm	// Diagonal sword or rod draw, Comment line 
 incsrc code/gameplay/sword_swing.asm	// Diagonal sword detect hitbox orientation, Comment line if you want to apply the "Disable Diagonal Sword" optional patch
 incsrc code/gameplay/visible_secrets.asm	// Discernible secrets for bombable (cracked) walls in both Overworld and Dungeons, and burnable trees in the Overworld
 incsrc code/gameplay/move_maps.asm	// Change Hearts and Map positions in HUD (INCLUDE AFTER HUD, ARROWS, RUPEE AND AUTOMAP CODE!), Comment line if you want to apply the "Original HUD" optional patch
+
+
+//****************************************
+//	Music changes
+//****************************************
+// Changes the dungeon music between the original theme, gzip's A New Light dungeon theme, The3Dude's Perils of Darkness Dungeon theme and Matrixz's Triforce Power dungeon theme
+incsrc code/music/dungeon_music.asm
 
 
 //****************************************
