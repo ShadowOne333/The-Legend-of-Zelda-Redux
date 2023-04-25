@@ -3,14 +3,14 @@
 //	Code by tacoschip, new Dungeon theme by gzip
 //***********************************************************
 
-bank 0; org $9c97
+bank 0; org $9C97
 	jmp .start
 	nop
 
-bank 0; org $9f8f
+bank 0; org $9F8F
 	jmp .reverb_bits_square
 
-bank 0; org $9e98
+bank 0; org $9E98
 	jmp .noise_channel
 	nop
 
@@ -18,32 +18,32 @@ bank 0; org $9e98
 
 incsrc "code/music/zelda1_dungeon_theme.asm"
 
-bank 0; org $9cbc
-	lda $6c			// sequence #
+bank 0; org $9CBC
+	lda $6C			// Sequence #
 	ldy $10
 	cmp .songs_end-1,y
 	jmp .loop
 
-warnpc $9cc6+1
+warnpc $9CC6+1
 
 
 bank 0; org $8000
 .loop:
-	bne .sequence		// keep playing
+	bne .sequence		// Keep playing
 
 	lda .songs_loop-1,y
 	bcs .sequence		// cmp = sec
 
 .start:
-	ldy $10				// dungeon 1-8
+	ldy $10			// Dungeon 1-8
 	lda .songs-1,y
 
 .sequence:
-	sta $6c
+	sta $6C
 	tay
 
 	lda .notes,y
-	sta $5f4
+	sta $05F4
 
 	lda .square2_0,y
 	sta $66
@@ -51,25 +51,25 @@ bank 0; org $8000
 	sta $67
 
 	lda .triangle,y
-	sta $60c
+	sta $060C
 
 	lda .square1,y
-	sta $60b
+	sta $060B
 
-	lda .noise,y		// default disabled
-	sta $60d
-	sta $5f5
+	lda .noise,y		// Default disabled
+	sta $060D
+	sta $05F5
 
 	lda .reverb_sq,y
-	sta $619
+	sta $0619
 
 	lda .reverb_tri,y
-	sta $5f1
+	sta $05F1
 
-	jmp $9d1a
+	jmp $9D1A
 
 .reverb_bits_square:
-	ldy $609			// check dungeon song
+	ldy $0609			// check dungeon song
 	cpy #$40
 	beq .reverb_bits_square_custom
 
@@ -77,7 +77,7 @@ bank 0; org $8000
 	rts
 
 .reverb_bits_square_custom:
-	ldy $6c
+	ldy $6C
 	ora .reverb_bits_sq,y
 	rts
 
@@ -89,13 +89,13 @@ bank 0; org $8000
 	beq .noise_mute
 
 .noise_allow:
-	lda $5f5			// check valid noise start ptr
+	lda $05F5			// check valid noise start ptr
 	beq .noise_mute
 
-	jmp $9e9c
+	jmp $9E9C
 
 .noise_mute:
-	jmp $9ed3
+	jmp $9ED3
 
 .songs:
 	db .zelda_1-.header
@@ -270,8 +270,8 @@ bank 0; org $8000
 	db {perils_darkness_01_reverb_bits_sq}
 	db {perils_darkness_02_reverb_bits_sq}
 
-warnpc $8d60+1
+warnpc $8D60+1
 
-bank 0; org $a000
-warnpc $bf50+1
+bank 0; org $A000
+warnpc $BF50+1
 

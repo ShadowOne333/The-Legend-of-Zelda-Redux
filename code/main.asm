@@ -1,7 +1,7 @@
-//****************************************************************
+//**************************************************************
 //	Main assembly file for Zelda 1 Redux
 // All the assembly files get linked together and compiled here
-//****************************************************************
+//**************************************************************
 
 // !!!WARNING!!!
 // This project depends on the compilation of the files to be in the precise order they are set in this file. DO NOT modify the order in which the ASM files are, or else the game might break!

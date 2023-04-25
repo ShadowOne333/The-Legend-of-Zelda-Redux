@@ -143,15 +143,11 @@ dungeon_automap_draw_once:
 	adc.b $00
 	sta.b $00
 
-
 	lda.b $01	// Tile #
 	rts
 
 .map_mask:
 	db $C0,$30,$0C,$03
-
-.ppu_map:
-	db $72,$92,$B2,$D2
 
 // =================================
 
@@ -199,24 +195,38 @@ dungeon_automap_draw_once:
 .map_full_run:
 	ldx.b #$00	// Vram size
 
+	lda.b #$20	// Mark visited flag
+	ldy.b $EB	// Room ID
+	ora.w $06FF,y
+	sta.w $06FF,y
 
 .map_full_row:
 	lda.b $EB
-	and.b #$E8	// Reset xpos = 0/8, ypos = 6
+	and.b #$E8	// Reset X-pos = 0/8, Y-pos = 6
 	sta.b $EB
 
-	jsr .get_map_tile	// Dummy
+	lda.b #$08	// 8 map tiles
+	sta.b $EC	// Unused on dungeon entry
 
+.map_full_skip:
+	jsr .get_map_tile	// Ignore leading empty tiles
+	cmp.b #$24
+	bne .map_full_header
+
+	inc.b $EB
+	dec.b $EC
+	bne .map_full_skip
+	beq .map_full_next
+
+.map_full_header:
 	lda.b #$20	// 20xx = status bar
 	sta.w $0302,x
 
 	lda.b $00
 	sta.w $0303,x
 
-	lda.b #$08	// 8 map tiles
+	lda.b $EC
 	sta.w $0304,x
-
-	sta.b $EC	// Unused on dungeon entry
 
 .map_full_room:
 	jsr .get_map_tile
@@ -232,17 +242,18 @@ dungeon_automap_draw_once:
 	inx
 	inx
 
+.map_full_next:
 	lda.b $EB
 	sec
 	sbc.b #$20-8
 	sta.b $EB
 	bpl .map_full_row
 
-	lda.b #(3+8)*4	// Vram payload size
-	sta.w $301
+	stx.w $301	// Vram payload size
 
 	lda.b #$FF	// eof
-	sta.w $032E
+	inx
+	sta.w $301,x
 
 	lda.w $6BAD	// Reload starting room
 	sta.b $EB
