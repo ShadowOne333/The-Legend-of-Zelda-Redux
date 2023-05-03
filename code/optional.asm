@@ -16,6 +16,12 @@
 // Increase bomb upgrades from 4 to 5
 //incsrc code/optional/BombUpgrades5.asm
 
+// Only have Zelda 1 Dungeon theme for all Dungeons
+//incsrc code/optional/zelda1_theme.asm
+
+// Interchange between Zelda 1 Dungeon theme and A New Light's dungeon theme for all Dungeons
+//incsrc code/optional/zelda1_new_light_themes.asm
+
 // Replace the NES Font with the one from the FDS release
 //incsrc code/optional/FDSFont.asm
 
@@ -81,9 +87,6 @@
 
 // Use the Better Font graphics
 //incsrc code/optional/zelda_hack_pack/better_font.asm
-
-// Change the Dungeon music to that of Zelda: A New Light
-//incsrc code/optional/zelda_hack_pack/dungeon_music.asm
 
 // Like Likes now consume rupees instead of the shield
 //incsrc code/optional/zelda_hack_pack/like_like_rupees.asm

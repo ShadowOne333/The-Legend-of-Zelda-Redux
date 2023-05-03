@@ -83,7 +83,6 @@ https://www.romhacking.net/forum/index.php?topic=29403.0
 * **Better Font.ips**		- Use the Better Font graphics from gzip's Zelda Hack Pack (should NOT be used with "FDS Font"!)
 * **Bluer Tunic.ips**		- Blue-er Tunic based on Asaki's hack
 * **Disable Diagonal Sword.ips**	- Disable Diagonal Sword Swing for those that want the original Zelda 1 stab instead
-* **Dungeon Music.ips**		- Change the Dungeon music to that of Zelda: A New Light (gzip's Zelda Hack Pack)
 * **FDS Font.ips**			- Famicom Disk System's version Font graphics (should NOT be used with "Better Font"!)
 * **Full Health at Start.ips**	- Fill the amount of hearts you have upon starting a save file, so you don't always start with 3 hearts only
 * **Full Health After Death.ips**	- Fill the amount of hearts you have after a death or a Game Over
@@ -105,6 +104,8 @@ https://www.romhacking.net/forum/index.php?topic=29403.0
 * **Recoloured Dungeons.ips**	- Make each dungeon have its own unique colour palette similar to Modern Classic Edition
 * **Tunic 2 Ring.ips**		- Change the Tunics back to Rings that use a new revamped sprite
 * **Tunic 2 NES Ring.ips**		- Change Tunics to the Original Ring GFX from the NES release
+* **Zelda 1 Dungeon Theme Only.ips**	- Changes the Dungeon music to only play the original Zelda 1 Dungeon Theme (like the original Zelda 1)
+* **Zelda 1 & A New Light Dungeon Themes.ips**	- Changes the Dungeon music to interchange between the original Zelda 1 Dungeon Theme and A New Light's Dungeon Theme. (Zelda 1's plays in odd Dungeons, A New Light's on even Dungeons)
 * **ZELDANameDoesntTrigger2ndQuest.ips**	- (Quite a mouthful, huh?) As the name implies, using this patch will make it so that if you start a save file with the name "ZELDA", it should start on a 1st Quest (like a normal file) instead of starting the file at 2nd Quest automatically.
 
 
@@ -134,7 +135,7 @@ If you want to apply any of the optional patches, you can use each Optional patc
 * **snarfblam** - For the Automap hack, which was disassembled and modified to work with 1/4 hearts instead of 1/8 exclusively for this project
 * **gzip** - For his Select button fix and the title screen slow waterfall animation, and the optional patches from his Zelda Hack Pack
 * **minucce** - For his fixes for HUD Blink on cave enter/leave, scrolling timing, Link's sprite when leaving caves, Dungeon 1 Q1 door fix, random wait times when entering caves, magic beam alignment, the Diagonal Sword Swing code and the Copy/Erase save file system
-* **tacoschip** - For the fix for the sword graphics and beam graphics inside Dungeons, and the Dungeon Automap
+* **tacoschip** - For the fix for the sword graphics and beam graphics inside Dungeons, and the Dungeon Automap and Dungeon Music changes
 * **kalita-kan** - For contributing with the "ZELDA name" and "Full Hearts after death" optional patches.
 * **lexluthermeister** - For his help on creating the Optional patch for the new bosses.
 * **BlazeHeatnix** - For some script revisions and suggestions.

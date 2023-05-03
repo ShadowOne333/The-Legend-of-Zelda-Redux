@@ -1,0 +1,38 @@
+//***********************************************************
+//		Only Zelda 1 Dungeon Music
+//***********************************************************
+
+bank 0; org $8066
+.songs:
+	db .zelda_1-.header
+	db .zelda_1-.header
+	db .zelda_1-.header
+	db .zelda_1-.header
+
+	db .zelda_1-.header
+	db .zelda_1-.header
+	db .zelda_1-.header
+	db .zelda_1-.header
+
+.songs_end:
+	db .zelda_1_end-.header
+	db .zelda_1_end-.header
+	db .zelda_1_end-.header
+	db .zelda_1_end-.header
+
+	db .zelda_1_end-.header
+	db .zelda_1_end-.header
+	db .zelda_1_end-.header
+	db .zelda_1_end-.header
+
+.songs_loop:
+	db .zelda_1-.header
+	db .zelda_1-.header
+	db .zelda_1-.header
+	db .zelda_1-.header
+
+	db .zelda_1-.header
+	db .zelda_1-.header
+	db .zelda_1-.header
+	db .zelda_1-.header
+
