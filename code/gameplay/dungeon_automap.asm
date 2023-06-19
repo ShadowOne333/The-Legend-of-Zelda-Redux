@@ -31,8 +31,8 @@ dungeon_automap_draw_once:
 	lda.b $00
 	pha
 
+	jsr .get_map_room_index
 	lda.b #$20	// Mark visited flag
-	ldy.b $EB	// Room ID
 	ora.w $06FF,y
 	sta.w $06FF,y
 
@@ -85,8 +85,8 @@ dungeon_automap_draw_once:
 	sta.b $01
 	clc		// Flag = No upper room
 
-	lda.b $EB	// Top room data
-	and.b #$EF
+	jsr .get_map_room_index
+	and.b #$EF	// Top room data
 	tay
 
 	lda.w $06FF,y	// Visited flag
@@ -102,8 +102,8 @@ dungeon_automap_draw_once:
 	sec
 
 .get_map_tile_lower:
-	lda.b $EB	// Bottom room data
-	ora.b #$10
+	jsr .get_map_room_index
+	ora.b #$10	// Bottom room data
 	tay
 
 	lda.w $06FF,y	// Visited flag
@@ -195,8 +195,8 @@ dungeon_automap_draw_once:
 .map_full_run:
 	ldx.b #$00	// Vram size
 
-	lda.b #$20	// Mark visited flag
-	ldy.b $EB	// Room ID
+	jsr .get_map_room_index
+	lda.b #$20	// Mark first room visited flag
 	ora.w $06FF,y
 	sta.w $06FF,y
 
@@ -249,16 +249,33 @@ dungeon_automap_draw_once:
 	sta.b $EB
 	bpl .map_full_row
 
-	stx.w $301	// Vram payload size
+	stx.w $0301	// Vram payload size
 
 	lda.b #$FF	// eof
 	inx
-	sta.w $301,x
+	sta.w $0301,x
 
 	lda.w $6BAD	// Reload starting room
 	sta.b $EB
 
 	jmp .map_full_exit2
+
+// =================================
+
+.get_map_room_index:
+	php
+	lda.b $EB	// Room ID
+
+	ldy.b $10	// Dungeon 9
+	cpy.b #$09
+	bcc .get_map_room_index_exit
+
+	ora.b #$80	// Other map bank
+
+.get_map_room_index_exit:
+	tay
+	plp
+	rts
 
 // ##########################################
 
@@ -289,4 +306,3 @@ bank 5; org $A731
 .map_once_return:
 
 warnpc $A73E+1
-
