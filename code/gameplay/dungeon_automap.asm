@@ -266,10 +266,12 @@ dungeon_automap_draw_once:
 	php
 	lda.b $EB	// Room ID
 
-	ldy.b $10	// Dungeon 9
-	cpy.b #$09
-	bcc .get_map_room_index_exit
-
+	// Fix for automap for Dungeons 7, 8 and 9
+// Previous method filled the maps for dungeons 7-9 due to them having shared properties with dungeons 2 and 3.
+	ldy.w $6BB0	// Ptr bank $06FF, $077F
+	cpy.b #$07-1
+	beq .get_map_room_index_exit
+    
 	ora.b #$80	// Other map bank
 
 .get_map_room_index_exit:
