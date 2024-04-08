@@ -92,8 +92,9 @@ https://www.romhacking.net/forum/index.php?topic=29403.0
 * **Link's Awakening GFX.ips**	- Link's Awakening graphics patch
 * **Low Hearts Sound.ips**	- Change the Low Hearts beeping sound to a heartbeat-like sound (gzip's Zelda Hack Pack, should NOT be used with "Remove Low Health Beep")
 * **Not Lost.ips**		- Make both the Lost Woods and Lost Hills into normal screens instead of having to always walk the correct path to go through
-* **Original Hidden Secrets.ips**	- Hide back all the overworld and dungeon secrets
 * **Original Bomb Amounts.ips**	- Original bomb drops of 04 instead of 05 and upgrades amounts of 04 instead of 10
+* **Original Enemies GFX.ips**	- Restores the original enemies GFX from vanilla Zelda 1, for those that seek ONLY the original nostalgic look of the enemies, while still retaining the new HUD and overworld graphics improvements intact.
+* **Original Hidden Secrets.ips**	- Hide back all the overworld and dungeon secrets
 * **Original HUD.ips**		- Original HUD to be the same as the original Zelda 1, with the map on the left and health on the right. If you want a Grey Automap with the Original HUD, use "Grey Automap (for Original HUD).ips"
 * **Original NES GFX.ips**		- Original NES graphics
 * **Original Overworld Columns.ips**	- Original (blocky) Overworld screen/column definitions
