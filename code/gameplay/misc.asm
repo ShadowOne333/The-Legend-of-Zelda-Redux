@@ -65,5 +65,23 @@ bank 7;	org $ED18
 	sta.w $0604
 NoBeeping:
 
+//***********************************************************
+//	Fix enemy type after screen transition
+//***********************************************************
+// There are 5 screens that spawn the wrong last enemy.
+// Usually when you kill all enemies on a screen except 1, then leave the screen and come back, the strongest enemy on that screen is the one that spawns. This happens all over the overworld  map with the exception of 5 screens (Zola doesn't count on any screen). All 5 screens spawn a red Octorock instead of a blue one.
+bank 6;
+org $852D	// 0x1853D
+	db $AB	// Originally $AA
+org $853E	// 0x1854E
+	db $AB	// Originally $AA
+org $854C	// 0x1855C
+	db $AB	// Originally $AA
+org $855F	// 0x1856F
+	db $AB	// Originally $AA
+org $8564	// 0x18574
+	db $AB	// Originally $AA
+
+
 
 

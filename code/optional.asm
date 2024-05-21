@@ -41,6 +41,9 @@
 // This means no cracked walls nor discernible burnable trees
 //incsrc code/optional/OriginalHiddenSecrets.asm
 
+// All Key Items require All On-Screen Enemies to be defeated in order to appear, instead of some just laying on the ground
+//incsrc code/optional/Key_Items_depend_on_Enemies.asm
+
 // Original NES HUD (Hearts on the right, map on the left
 //incsrc code/optional/OriginalHUD.asm
 
