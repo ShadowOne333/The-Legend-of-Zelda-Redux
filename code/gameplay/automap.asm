@@ -306,7 +306,8 @@ l_AF2E:		// 0x16F3E
 // Modifications to PPU macro pointer table
 // ———————————————
 // Pointer to below attributes (new overworld attribute macro)
-bank 6; org $A00E	// 0x1A01E
+bank 6;
+org $A00E	// 0x1A01E
 // Repoint the subscreen palette mappings for the new Automap tiles
 	dw OverworldAttributeData	// New overworld map attribute macro (Pointer to $BEF0) - Originally D3 A2 (Pointer to $A2D3 or $1A2E3 in PC)
 

@@ -23,7 +23,18 @@ dungeon_automap_draw_once:
 	pha
 	lda.b #.map_once_return-1
 	pha
-	
+
+	// Dungeon 4 1st Quest and Dugneon 5 2nd Quest fix by bogaa
+	lda $12		// Only load on initial load 
+	cmp #$05
+	bcs +
+    
+	lda #$7E	// Load icons to HUD + B/A window 
+	sta $14
+	jsr $A080
+
+	+		// End of fix
+
 	lda.b #$05
 	jmp $FFAC
 
@@ -281,7 +292,8 @@ dungeon_automap_draw_once:
 
 // ##########################################
 
-bank 5; org $B01D
+bank 5;
+org $B01D	; 0x1702D
 	lda.b #.map_full>>8
 	pha
 	lda.b #.map_full-1
@@ -294,7 +306,8 @@ bank 5; org $B01D
 
 warnpc $B02A+1
 
-bank 5; org $A731
+bank 5;
+org $A731	; 0x16741
 	lda.b #.map_once>>8
 	pha
 	lda.b #.map_once-1
