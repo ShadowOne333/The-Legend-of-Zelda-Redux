@@ -293,7 +293,7 @@ dungeon_automap_draw_once:
 // ##########################################
 
 bank 5;
-org $B01D	; 0x1702D
+org $B01D	// 0x1702D
 	lda.b #.map_full>>8
 	pha
 	lda.b #.map_full-1
@@ -307,7 +307,7 @@ org $B01D	; 0x1702D
 warnpc $B02A+1
 
 bank 5;
-org $A731	; 0x16741
+org $A731	// 0x16741
 	lda.b #.map_once>>8
 	pha
 	lda.b #.map_once-1
