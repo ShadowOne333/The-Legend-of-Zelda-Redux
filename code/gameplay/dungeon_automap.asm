@@ -24,6 +24,17 @@ dungeon_automap_draw_once:
 	lda.b #.map_once_return-1
 	pha
 
+	// Dungeon 4 1st Quest and Dugneon 5 2nd Quest fix by bogaa
+	lda $12		// Only load on initial load 
+	cmp #$05
+	bcs +
+    
+	lda #$7E	// Load icons to HUD + B/A window 
+	sta $14
+	jsr $A080
+
+	+		// End of fix
+
 	lda.b #$05
 	jmp $FFAC
 
@@ -205,8 +216,7 @@ dungeon_automap_draw_once:
 	and.b #$E8	// Reset X-pos = 0/8, Y-pos = 6
 	sta.b $EB
 
-	// Original HUD fix by gzip
-	lda.b #$07	// 8 map tiles (Originally LDA #$08)
+	lda.b #$08	// 8 map tiles (gzip recommended #$07 here instead of #$08))
 	sta.b $EC	// Unused on dungeon entry
 
 .map_full_skip:
