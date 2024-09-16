@@ -104,6 +104,7 @@ https://www.romhacking.net/forum/index.php?topic=29403.0
 * **Remove Reworked TS Subtitle.ips**	- Reworked Title Screen without "THE HYRULE FANTASY" subtitle
 * **Rearranged Bosses.ips**		- Unique bosses in each Dungeon/Level
 * **Recoloured Dungeons.ips**	- Make each dungeon have its own unique colour palette similar to Modern Classic Edition
+* **Save Text.ips**	 	 - Add text for the save button combo (Up+A) and rework the selected item UI
 * **Tunic 2 Ring.ips**		- Change the Tunics back to Rings that use a new revamped sprite
 * **Tunic 2 NES Ring.ips**		- Change Tunics to the Original Ring GFX from the NES release
 * **Zelda 1 Dungeon Theme Only.ips**	- Changes the Dungeon music to only play the original Zelda 1 Dungeon Theme (like the original Zelda 1)
