@@ -101,3 +101,5 @@
 // Make both the Lost Woods and Lost Hills into normal screens instead of having to always walk the correct path to go through
 //incsrc code/optional/zelda_hack_pack/not_lost.asm
 
+// Add "Up+A To Save" text and rework the selected item UI
+//incsrc code/optional/zelda_hack_pack/save_text.asm

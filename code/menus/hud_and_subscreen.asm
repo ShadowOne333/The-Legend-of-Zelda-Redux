@@ -58,8 +58,8 @@ org $9CDF	// 0x19CEF
 
 // Subscreen - "USE B BUTTON" text for "B BUTTON" and blank-out below row
 org $A039	// 0x1A049
-	db $A3,$50	// Change pointer to upper B button text, label "b_button"
-	db $A3,$5C	// Change pointer to lower B button text, label "blank"
+	db b_button>>8,b_button	// Change pointer to upper B button text, label "b_button"
+	db blank>>8,blank	// Change pointer to lower B button text, label "blank"
 org $A350	// 0x1A360
 b_button:
 	db $2A,$45,$08
@@ -67,14 +67,13 @@ b_button:
 	db $FF
 org $A35C	// 0x1A36C
 blank:
-	db $2A,$64,$08
-	db "        "	// Originally "FOR THIS"
+	db $2A,$64,$09
+	db "SAVE:UP+A"	// Originally "FOR THIS"
 blank_rest:
 	db $2A,$6F,$01
 	db $6E		// Box bottom-left corner
 	db $2A,$70,$4B
 	db $6A,$2A,$7B,$01,$6D,$FF	// Other tiles for the box
-	fill $04,$FF
 
 
 // Change "TRIFORCE" for "TRIFORCE OF WISDOM"
