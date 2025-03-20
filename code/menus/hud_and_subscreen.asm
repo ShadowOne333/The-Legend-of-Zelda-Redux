@@ -56,8 +56,8 @@ org $9CDF	// 0x19CEF
 	db $0F,$16,$27,$30	// Originally 0F 16 27 36
 
 
-// Subscreen - "USE B BUTTON" text for "B BUTTON" and blank-out below row
-org $A03A	// 0x1A048
+// Subscreen - "USE B BUTTON" text for "ITEM: B" and "SAVE: UP+A" below
+org $A03A	// 0x1A04A
 	dw b_button	// Change pointer to upper B button text, label "b_button"
 	dw save_up_a	// Change pointer to lower B button text, label "save_up_a"
 
@@ -65,6 +65,7 @@ org $A03A	// 0x1A048
 org $A350	// 0x1A360
 	fillto $A378,$FF
 
+// Free space reused for the B Button and Save text
 org $AF40
 b_button:
 	db $2A,$44,$08
