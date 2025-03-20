@@ -57,31 +57,46 @@ org $9CDF	// 0x19CEF
 
 
 // Subscreen - "USE B BUTTON" text for "B BUTTON" and blank-out below row
-org $A039	// 0x1A049
-	db b_button>>8,b_button	// Change pointer to upper B button text, label "b_button"
-	db blank>>8,blank	// Change pointer to lower B button text, label "blank"
+org $A03A	// 0x1A048
+	dw b_button	// Change pointer to upper B button text, label "b_button"
+	dw save_up_a	// Change pointer to lower B button text, label "save_up_a"
+
+// Blank out original data for probable free space reuse later
 org $A350	// 0x1A360
+	fillto $A378,$FF
+
+org $AF40
 b_button:
-	db $2A,$45,$08
-	db "B BUTTON"	// Originally "USE B BUTTON"
+	db $2A,$44,$08
+	db "ITEM:  B"	// Originally "USE B BUTTON"
 	db $FF
-org $A35C	// 0x1A36C
-blank:
-	db $2A,$64,$09
-	db "SAVE:UP+A"	// Originally "FOR THIS"
-blank_rest:
+//org $A35C	// 0x1A36C
+save_up_a:
+	db $2A,$64,$0A
+	db "SAVE: UP+A"	// Originally "FOR THIS"
+bottom_main_box:
 	db $2A,$6F,$01
 	db $6E		// Box bottom-left corner
 	db $2A,$70,$4B
-	db $6A,$2A,$7B,$01,$6D,$FF	// Other tiles for the box
-
+	db $6A,$2A,$7B,$01,$6D
+	// Added attribute table for changing the palette of the letters for ITEM and SAVE from white to red
+	db $2B,$E0,$04
+	db $50,$50,$50,$10
+	db $FF	// Other tiles for the box
 
 // Change "TRIFORCE" for "TRIFORCE OF WISDOM"
-//org $9D5B	// 0x19D6B
-//triforce_name:
-	//db $2B,$A7,$12		// Originally 2B AC 08
-	//db "TRIFORCE OF WISDOM"	// TRIFORCE
-	//db $FF
-// Pointer to transfer Triforce name to RAM at 1A06C ($1A05C)
-//org $A05C
-	//dw triforce_name
+org $9D5B	// 0x19D6B
+triforce_name:
+	db $2B,$A7,$08		// Originally 2B AC 08
+	db "TRIFORCE"
+	db $FF
+org $ADA0	// Changed from $AD00, $20 bytes free at $ADA0
+triforce_outline:
+	db $2B,$6A,$0C
+	db $EB,$EF,$F1,$F1,$F1,$F1,$F1,$F1,$F1,$F1,$F0,$EC
+	db $2B,$B0,$09
+	db "OF WISDOM"	// TRIFORCE
+	db $FF
+// Pointer to transfer Triforce bottom outline to PPU
+org $A05A
+	dw triforce_outline
