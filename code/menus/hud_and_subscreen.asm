@@ -78,6 +78,10 @@ blank_rest:
 
 // Change "TRIFORCE" for "TRIFORCE OF WISDOM"
 //org $9D5B	// 0x19D6B
-//	db $2B,$A7,$12		// Originally 2B AC 08
-//	db "TRIFORCE OF WISDOM"	// TRIFORCE
-//	db $FF
+//triforce_name:
+	//db $2B,$A7,$12		// Originally 2B AC 08
+	//db "TRIFORCE OF WISDOM"	// TRIFORCE
+	//db $FF
+// Pointer to transfer Triforce name to RAM at 1A06C ($1A05C)
+//org $A05C
+	//dw triforce_name
