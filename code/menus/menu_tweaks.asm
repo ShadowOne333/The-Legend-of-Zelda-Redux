@@ -1529,6 +1529,9 @@ game_over_menu_input:
 	and.b #$08
 	beq .down_cursor4
 
+	lda.b #$01		// Play sound (Shield block) on Up press
+	sta.w $0604
+
 	dec.b $13		// Wrap
 	bpl .exit
 
