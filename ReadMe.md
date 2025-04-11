@@ -141,6 +141,7 @@ If you want to apply any of the optional patches, you can use each Optional patc
 * **kalita-kan** - For contributing with the "ZELDA name" and "Full Hearts after death" optional patches.
 * **lexluthermeister** - For his help on creating the Optional patch for the new bosses.
 * **BlazeHeatnix** - For some script revisions and suggestions.
+* **BleakBluets** - For the fix to make the Up button press on Game Over play the shield sound.
 * **vailkyte** - For the Dungeon Automap fix for Dungeons 7, 8 and 9.
 * All other users that gave their feedback on possible ways to improve the game over at the [RomHacking.net](https://www.romhacking.net/forum/index.php?topic=29403.0) thread, and those that gave insightful ideas and mockups!
 
