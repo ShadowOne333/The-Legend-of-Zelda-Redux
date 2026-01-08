@@ -113,6 +113,14 @@ https://www.romhacking.net/forum/index.php?topic=29403.0
 
 -------------------
 
+## Known bugs:
+
+* Checking item prices against the current held rupee amount is not working properly. Getting items like the Blue Candle, which goes for 130 or 160 rupees, can be purchased for 100. This happens with different items.
+For items prices above 100, it seems that hitting 100 rupees flat allows the player to buy them.
+For items above 200 rupees, having 190 at hand (Blue ring) allows the item to be purchased.
+
+-------------------
+
 ## Instructions
 
 To play The Legend of Zelda Redux, the following is required:
