@@ -29,7 +29,7 @@ org $AC70	// 0x16C80
 	db $20,$8C,$03	// PPU transfer to $208C
 	db {LOW_X},$00,$24,$FF
 
-org $B8A0	// CPU $B8A0, PRG $178A0, PC 0x178B0	
+org $B8A0	// CPU $B8A0, PRG $178A0, PC 0x178B0
 // Original routine to load HUD preset. You will find the preset Format further down
 UpdateRupee:
 	ldy.b #$3D	// Size of the preset is expanded to max $3D (default $2E)
@@ -41,22 +41,27 @@ PreTableUpdater:
 // Update Values
 	lda.w $067B	// Load hundredths
 	beq setX	// If $00, store $62 (small x)
-	sta.w $031B
+	sta.w $031B	// Print in place of the small X
 Load10th:
 	lda.w $067A	// Load 10th
 	lsr		// Shift bits in place
 	lsr
 	lsr
 	lsr
-	sta.w $031C
+	sta.w $031C	// Print on the first digit after the small 'x'
 Load01th:
-	lda.w $067A			
+	lda.w $067A
 	beq setBlank	// Set Blank if 00 and 00
 NotBlank:
+	cmp.b #$0A	// Check for 10 rupees
+	bcc KeepSingleDigit	// Keep a single digit if less than 10 rupees
 	and.b #$0F	// Cut lower 4bits (lower nibble)
-	sta.w $031D                
-EndPTU:
-	rts           
+	sta.w $031D	// Print on the second digit after the small 'x'
+	rts		// EndPTU
+KeepSingleDigit:
+	sta.w $031C	// Print on the first digit after the small 'x'
+	rts
+
 setX:
 	lda.b #$62
 	sta.w $031B
@@ -203,10 +208,21 @@ GenerateHexValue:	// $9397, 0x153A7
 	lda.w $067B	// 100 and add it to shifted 10 value to get table index
 	beq Check00
 back100:
-	asl
-	asl
-	asl
-	asl
+	// FIX: Multiply hundreds by 10 (not 16) to get correct TrueTableHex10 index offset.
+	// Previous code used ASL x4 which multiplied by 16, causing the wrong table entry to be selected for any value >= 100.
+	// For example, 100 rupees would produce $066D=$A0 (160) instead of $64 (100), letting you buy 160-rupee items with only 100 rupees.
+	//
+	// We could use a small HundredsTens lookup table (at $9EF6) to get hundreds*10, then add the tens digit to form the correct index into TrueTableHex10.
+	// However, since that's already in TrueTableHex10, we'll reuse that one instead
+	//
+	// Old (buggy):
+	//   asl / asl / asl / asl    ; A = hundreds * 16  <-- WRONG
+	//   clc
+	//   adc.b $01                ; A = hundreds*16 + tens
+	//
+	// New (fixed):
+	ldx.w $067B		// X = hundreds digit (0-9)
+	lda TrueTableHex10,x	// A = hundreds * 10  (index row offset), lda HundredsTens,x
 	clc
 	adc.b $01
 	sta.b $01
