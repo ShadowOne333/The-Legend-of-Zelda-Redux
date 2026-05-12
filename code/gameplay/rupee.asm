@@ -59,7 +59,12 @@ NotBlank:
 	sta.w $031D	// Print on the second digit after the small 'x'
 	rts		// EndPTU
 KeepSingleDigit:
-	sta.w $031C	// Print on the first digit after the small 'x'
+	ldx.w $067B		// Check if hundreds digit is present
+	bne SingleWithHundreds
+	sta.w $031C	// No hundreds: ones digit goes to tens position
+	rts
+SingleWithHundreds:
+	sta.w $031D	// Hundreds present: ones digit goes to ones position ($031C already holds the correct tens digit of 0)
 	rts
 
 setX:
