@@ -60,7 +60,7 @@ NotBlank:
 	rts		// EndPTU
 KeepSingleDigit:
 	jmp KSD_Helper		// Jump to helper in free space ($9F64); same 4 bytes as original sta+rts
-	rts			// Dead code - preserves original routine size so $B8F0 boundary is not crossed
+	fill 1,$EA		// nop padding - keeps $B8F0 boundary stable; $EA is safe if a stray branch lands here
 
 setX:
 	lda.b #$62
