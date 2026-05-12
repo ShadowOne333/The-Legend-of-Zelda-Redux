@@ -59,7 +59,7 @@ NotBlank:
 	sta.w $031D	// Print on the second digit after the small 'x'
 	rts		// EndPTU
 KeepSingleDigit:
-	jmp KSD_Helper		// Jump to helper in free space ($9F1B); same 4 bytes as original sta+rts
+	jmp KSD_Helper		// Jump to helper in free space ($9F64); same 4 bytes as original sta+rts
 	rts			// Dead code - preserves original routine size so $B8F0 boundary is not crossed
 
 setX:
@@ -261,7 +261,10 @@ TrueTableHex10:
 	db $A0,$AA,$B4,$BE,$C8,$D2,$DC,$E6
 	db $F0,$FA,$FF
 
-KSD_Helper:		// $9F1B - called via jmp from KeepSingleDigit in UpdateRupee
+	fillto $9F64,$FF	// Pad table to index 99 (max X = hundreds*10+tens = 9*10+9 = 99 = $9F63)
+				// so all out-of-range reads return $FF for the CheckMax clamp in GenerateHexValue
+
+KSD_Helper:		// $9F64 - called via jmp from KeepSingleDigit in UpdateRupee
 	lda.w $067B		// Check if hundreds digit is present
 	bne KSD_Hundreds
 	lda.w $067A		// No hundreds: reload ones digit
