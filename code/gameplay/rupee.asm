@@ -59,13 +59,8 @@ NotBlank:
 	sta.w $031D	// Print on the second digit after the small 'x'
 	rts		// EndPTU
 KeepSingleDigit:
-	ldx.w $067B		// Check if hundreds digit is present
-	bne SingleWithHundreds
-	sta.w $031C	// No hundreds: ones digit goes to tens position
-	rts
-SingleWithHundreds:
-	sta.w $031D	// Hundreds present: ones digit goes to ones position ($031C already holds the correct tens digit of 0)
-	rts
+	jmp KSD_Helper		// Jump to helper in free space ($9F1B); same 4 bytes as original sta+rts
+	rts			// Dead code - preserves original routine size so $B8F0 boundary is not crossed
 
 setX:
 	lda.b #$62
@@ -265,6 +260,17 @@ TrueTableHex10:
 	db $50,$5A,$64,$6E,$78,$82,$8C,$96
 	db $A0,$AA,$B4,$BE,$C8,$D2,$DC,$E6
 	db $F0,$FA,$FF
+
+KSD_Helper:		// $9F1B - called via jmp from KeepSingleDigit in UpdateRupee
+	lda.w $067B		// Check if hundreds digit is present
+	bne KSD_Hundreds
+	lda.w $067A		// No hundreds: reload ones digit
+	sta.w $031C		// Write to tens position (display as "x5" style)
+	rts
+KSD_Hundreds:
+	lda.w $067A		// Hundreds present: reload ones digit
+	sta.w $031D		// Write to ones position ($031C already holds the correct tens digit of 0)
+	rts
 
 	fillto $9F9C,$FF	// Ends at $9F9C, 0x15FAC
 
