@@ -643,7 +643,7 @@ org $9BD8	// 0x15BE8
 //------------------------------------
 
 // Repointed and expanded Column Definitions
-org $B8F0	// 0x17900 (4D0 bytes)
+org $B900	// 0x17910 (4DA bytes)
 column_definitions:	// $00-$0F, 0x15BE8
 	db $DB,$5B,$5B				// $00
 	db $DB,$5B,$1B,$0E,$1A,$5B		// $01

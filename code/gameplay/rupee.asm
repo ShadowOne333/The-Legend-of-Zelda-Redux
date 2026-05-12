@@ -58,8 +58,16 @@ NotBlank:
 	and.b #$0F	// Cut lower 4bits (lower nibble)
 	sta.w $031D	// Print on the second digit after the small 'x'
 	rts		// EndPTU
-KeepSingleDigit:
-	sta.w $031C	// Print on the first digit after the small 'x'
+
+KeepSingleDigit:	// $9F64 - called via jmp from KeepSingleDigit in UpdateRupee
+	lda.w $067B		// Check if hundreds digit is present
+	bne KeepSingleDigit_Hundreds
+	lda.w $067A		// No hundreds: reload ones digit
+	sta.w $031C		// Write to tens position (display as "x5" style)
+	rts
+KeepSingleDigit_Hundreds:
+	lda.w $067A		// Hundreds present: reload ones digit
+	sta.w $031D		// Write to ones position ($031C already holds the correct tens digit of 0)
 	rts
 
 setX:
