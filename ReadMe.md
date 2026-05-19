@@ -110,11 +110,6 @@ https://www.romhacking.net/forum/index.php?topic=29403.0
 * **Zelda 1 & A New Light Dungeon Themes.ips**	- Changes the Dungeon music to interchange between the original Zelda 1 Dungeon Theme and A New Light's Dungeon Theme. (Zelda 1's plays in odd Dungeons, A New Light's on even Dungeons)
 * **ZELDANameDoesntTrigger2ndQuest.ips**	- (Quite a mouthful, huh?) As the name implies, using this patch will make it so that if you start a save file with the name "ZELDA", it should start on a 1st Quest (like a normal file) instead of starting the file at 2nd Quest automatically.
 
-[comment]: # (Known bugs:)
-[comment]: # (* Checking item prices against the current held rupee amount is not working properly. Getting items like the Blue Candle, which goes for 130 or 160 rupees, can be purchased for 100. This happens with different items.)
-[comment]: # (For items prices above 100, it seems that hitting 100 rupees flat allows the player to buy them.)
-[comment]: # (For items above 200 rupees, having 190 at hand (Blue ring) allows the item to be purchased.)
-
 -------------------
 
 ## Instructions
