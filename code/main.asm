@@ -54,8 +54,11 @@ incsrc code/menus/save_hearts.asm	// Keep the hearts you saved with on File load
 //****************************************
 //	Bugfixes (by minucce)
 //****************************************
+incsrc code/bugfixes/bait_keep_fix.asm		// Remove the Bait the exact moment it is given out to avoid keeping it when saving with Up+A
+incsrc code/bugfixes/candle_flame_invulnerable.asm	// Makes Link invulnerable to his own candle flame to prevent damage boosting over Stepladder holes. Enemies can still be damaged by it.
 incsrc code/bugfixes/cave_room_timer.asm	// Reduces random wait times when entering caves
 incsrc code/bugfixes/dungeon_front_room.asm	// Fix Q1-D1 door opening on its own if you enter-leave the dungeon
+incsrc code/bugfixes/khananakey_fix.asm		// Fix Link being able to phase through locked keyhole doors when any door shutters are opening
 incsrc code/bugfixes/magic_beam_align.asm	// Fix alignment of the sword beam in multiple directions
 //incsrc code/bugfixes/overworld_hud_blink.asm	// Stops HUD from disappearing when entering or leaving caves during overworld map
 incsrc code/bugfixes/overworld_leave_cave.asm	// Fix wrong player sprite position when leaving overworld from caves
