@@ -69,7 +69,7 @@ bank 6; org $A388
     db $FF
 
 // add replacement buffers in free space
-bank 6; org $AF30
+bank 6; org $AF70	// Moved from $AF30
   .save_text:
     db $29, $63, $04, $1E, $19, $2B, $0A
     db $29, $83, $07, $1D, $18, $24, $1C, $0A, $1F, $0E
