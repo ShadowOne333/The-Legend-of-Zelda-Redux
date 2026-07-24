@@ -47,7 +47,7 @@ apply-patch:
 	@cp "$(CLEAN_ROM)" "$(PATCHED_ROM)"
 	@"$(XKAS)" -o "$(PATCHED_ROM)" "$(ASM_FILE)"
 #	@"$(ASAR)" --no-title-check "$(ASM_FILE)" "$(PATCHED_ROM)"
-	@"$(FLIPS)" --create --ips "$(CLEAN_ROM)" "$(PATCHED_ROM)" "$(PATCHES_FOLDER)/Zelda1_Redux.ips"
+	@"$(FLIPS)" --create --bps "$(CLEAN_ROM)" "$(PATCHED_ROM)" "$(PATCHES_FOLDER)/Zelda1_Redux.bps"
 #-------------------------------------
 clean:
 	@rm -f "$(CLEAN_ROM)" "$(PATCHED_ROM)" "$(PATCHES_FOLDER)/Zelda1_Redux.ips"
