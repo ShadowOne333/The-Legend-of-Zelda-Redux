@@ -1,20 +1,20 @@
-//***********************************************************
-//		Only Zelda 1 Dungeon Music
-//***********************************************************
+;***********************************************************
+;		Only Zelda 1 Dungeon Music
+;***********************************************************
 
-bank 0; org $8066
-.songs:
-	db .zelda_1-.header
-	db .zelda_1-.header
-	db .zelda_1-.header
-	db .zelda_1-.header
-
+%org($8066,0)		; 0x00076
+.zelda1_songs:
 	db .zelda_1-.header
 	db .zelda_1-.header
 	db .zelda_1-.header
 	db .zelda_1-.header
 
-.songs_end:
+	db .zelda_1-.header
+	db .zelda_1-.header
+	db .zelda_1-.header
+	db .zelda_1-.header
+
+.zelda1_songs_end:
 	db .zelda_1_end-.header
 	db .zelda_1_end-.header
 	db .zelda_1_end-.header
@@ -25,7 +25,7 @@ bank 0; org $8066
 	db .zelda_1_end-.header
 	db .zelda_1_end-.header
 
-.songs_loop:
+.zelda1_songs_loop:
 	db .zelda_1-.header
 	db .zelda_1-.header
 	db .zelda_1-.header

@@ -1,264 +1,260 @@
-//***********************************************************
-//	Cracked Walls & Burnable Trees Tilemaps 
-//***********************************************************
+;***********************************************************
+;	Cracked Walls & Burnable Trees Tilemaps 
+;***********************************************************
 
-define	disable_animation	$07FF
+!disable_animation	= $07FF
 
-// New tilemaps for bombable walls in Dungeons:
-bank 5;
-// Dungeon Right Walls:
-org $A012	// 0x16022
-	db $DF,$5E,$DF,$DF,$F5,$F5,$5F,$DF,$DF,$DF,$F5,$F5	// Originally DF DF DF DF F5 F5 DF DF DF DF F5 F5
-// Dungeon Left Walls:
-org $A04E	// 0x1605E
-	db $F5,$F5,$DE,$DE,$DE,$58,$F5,$F5,$DE,$DE,$59,$DE	// Originally F5 F5 DE DE DE DE F5 F5 DE DE DE DE
-// Dungeon Bottom Wall:
-org $A08A	// 0x1609A
-	db $DD,$DD,$F5,$5B,$DD,$F5,$5D,$DD,$F5,$DD,$DD,$F5	// Originally DD DD F5 DD DD F5 DD DD F5 DD DD F5
-// Dungeon Top Wall:
-org $A0C7	// 0x160D7
-	db $DC,$DC,$F5,$DC,$5A,$F5,$DC,$5C,$F5,$DC,$DC,$F5	// Originally F5 DC DC F5 DC DC F5 DC DC F5 DC DC
-
+; New tilemaps for bombable walls in Dungeons:
+; Dungeon Right Walls:
+%org($A012,5)		; 0x16022
+	db $DF,$5E,$DF,$DF,$F5,$F5,$5F,$DF,$DF,$DF,$F5,$F5	; Originally DF DF DF DF F5 F5 DF DF DF DF F5 F5
+; Dungeon Left Walls:
+%org($A04E,5)		; 0x1605E
+	db $F5,$F5,$DE,$DE,$DE,$58,$F5,$F5,$DE,$DE,$59,$DE	; Originally F5 F5 DE DE DE DE F5 F5 DE DE DE DE
+; Dungeon Bottom Wall:
+%org($A08A,5)		; 0x1609A
+	db $DD,$DD,$F5,$5B,$DD,$F5,$5D,$DD,$F5,$DD,$DD,$F5	; Originally DD DD F5 DD DD F5 DD DD F5 DD DD F5
+; Dungeon Top Wall:
+%org($A0C7,5)		; 0x160D7
+	db $DC,$DC,$F5,$DC,$5A,$F5,$DC,$5C,$F5,$DC,$DC,$F5	; Originally F5 DC DC F5 DC DC F5 DC DC F5 DC DC
 
 
-// Original Overworld Walls & Trees:
-org $A976	// 0x16987 (Table for Secret Tiles Codes (6 bytes at $16986)
-	db $C8,$D8,$C4,$BC,$C0,$C0		// Originally $D8 - Bombable Wall	(D8 D9 DA DB)
-// C8	Pushable Rock	(C8 C9 CA CB)
-// D8	Bombable Wall	(D8 D9 DA DB)
-// C4	Burnable Tree	(C4 C5 C6 C7)
-// BC	Pushable Tomb	(BC BD BE BF)
-// C0	Armos Statue	(C0 C1 C2 C3)
-// C0	Armos Statue	(C0 C1 C2 C3)
+
+; Original Overworld Walls & Trees:
+%org($A976,5)		; 0x16987 (Table for Secret Tiles Codes (6 bytes at $16986)
+	db $C8,$D8,$C4,$BC,$C0,$C0		; Originally $D8 - Bombable Wall	(D8 D9 DA DB)
+; C8	Pushable Rock	(C8 C9 CA CB)
+; D8	Bombable Wall	(D8 D9 DA DB)
+; C4	Burnable Tree	(C4 C5 C6 C7)
+; BC	Pushable Tomb	(BC BD BE BF)
+; C0	Armos Statue	(C0 C1 C2 C3)
+; C0	Armos Statue	(C0 C1 C2 C3)
 
 
-// Fix cracked tiles always appearing regardless of Quest No. (by Trax)
-org $AAD0	// 0x16AE0
-	jsr $AC40	// Originally LDA $A976,X
+; Fix cracked tiles always appearing regardless of Quest No. (by Trax)
+%org($AAD0,5)		; 0x16AE0
+	jsr $AC40	; Originally LDA $A976,X
 
 
-// New Overworld Cracked Walls and Burnable Trees, Free space
-org $AC30	// 0x16C40
-	db $C8,$58,$5C,$BC,$C0,$C0	// Alternate secret tile codes table
-// C8	Pushable Rock	(C8 C9 CA CB)
-// 54	Bombable Wall	(58 59 5A 5B)
-// C4	Burnable Tree	(5C 5D 5E 5F)
-// BC	Pushable Tomb	(BC BD BE BF)
-// C0	Armos Statue	(C0 C1 C2 C3)
-// C0	Armos Statue	(C0 C1 C2 C3)
-org $AC40	// 0x16C50 - Free space
-	ldy.b $EB	// Current Location
-	lda.w $6AFE,y	// Screen Attributes - Table 5 (VRAM)
-	bmi quest2	// Bit 7 - 2nd Quest ONLY
+; New Overworld Cracked Walls and Burnable Trees, Free space
+%org($AC30,5)		; 0x16C40
+	db $C8,$58,$5C,$BC,$C0,$C0	; Alternate secret tile codes table
+; C8	Pushable Rock	(C8 C9 CA CB)
+; 54	Bombable Wall	(58 59 5A 5B)
+; C4	Burnable Tree	(5C 5D 5E 5F)
+; BC	Pushable Tomb	(BC BD BE BF)
+; C0	Armos Statue	(C0 C1 C2 C3)
+; C0	Armos Statue	(C0 C1 C2 C3)
+%org($AC40,5)		; 0x16C50 - Free space
+	ldy $EB	; Current Location
+	lda $6AFE,y	; Screen Attributes - Table 5 (VRAM)
+	bmi quest2	; Bit 7 - 2nd Quest ONLY
 	asl
-	bmi quest1	// Bit 6 - 1st Quest ONLY
+	bmi quest1	; Bit 6 - 1st Quest ONLY
 	bpl altTile
 quest1:
-	ldy.b $16	// Selected Save Slot (0-2)
-	lda $062D,y	// 2nd Quest Flag (0 = 1st Quest, 1 = 2nd Quest)
+	ldy $16	; Selected Save Slot (0-2)
+	lda $062D,y	; 2nd Quest Flag (0 = 1st Quest, 1 = 2nd Quest)
 	beq altTile
 	bne normalTile
 quest2:
-	ldy.b $16	// Selected Save Slot (0-2)
-	lda.w $062D,y	// 2nd Quest Flag
+	ldy $16	; Selected Save Slot (0-2)
+	lda $062D,y	; 2nd Quest Flag
 	bne altTile
 normalTile:
-	lda.w $A976,x
+	lda $A976,x
 	rts
 altTile:
-	lda $AC30,x	// Alternate secret tile codes table
+	lda $AC30,x	; Alternate secret tile codes table
 	rts
 
 
-//Fix overworld cracked walls collision (by stratoform):
-bank 7;
-org $EEFD	// 0x1EF0D
-	lda.b #$04	// Change to Bank 04 (Dungeons)
+;Fix overworld cracked walls collision (by stratoform):
+%org($EEFD,7)		; 0x1EF0D
+	lda #$04	; Change to Bank 04 (Dungeons)
 	jsr $FFAC
 
 	jmp collision_hit_tiles_call
 
 
-org $F116	// 0x1F126
-	lda.b #$04	// Change to Bank 04 (Dungeons)
+%org($F116,7)		; 0x1F126
+	lda #$04	; Change to Bank 04 (Dungeons)
 	jsr $FFAC
 
 	jmp collision_tiles_call
 
 
-bank 4;
-org $BF00	// 0x13F10
+%org($BF00,4)		; 0x13F10
 collision_tiles_call:
 	jsr collision_tiles_sub
 	bcs collision_tiles_exit2
 
-	jmp $F14E	// Non-obstacle
+	jmp $F14E	; Non-obstacle
 
 collision_tiles_exit2:
-	jmp $F11E	// Obstacle
+	jmp $F11E	; Obstacle
 
 collision_hit_tiles_call:
 	jsr collision_tiles_sub
 	bcs collision_hit_tiles_exit2
 
-	jmp $EF05	// Non-obstacle
+	jmp $EF05	; Non-obstacle
 
 collision_hit_tiles_exit2:
-	jmp $EEE4	// Obstacle
+	jmp $EEE4	; Obstacle
 
 collision_tiles_sub:
-	jsr $EDFA	// Old detour (Load tile #)
+	jsr $EDFA	; Old detour (Load tile #)
 
-	cmp.b #$54	// $00-54 = Old detour code
+	cmp #$54	; $00-54 = Old detour code
 	bcc collision_tiles_normal
 
-	// cmp.b #$58 before the new burnable tree sprite.
-	// Changed to cmp.b #$60 so the dry tree sprite becomes solid.
-	cmp.b #$60	// $54-5B = Secret tiles, solid
+	; cmp #$58 before the new burnable tree sprite.
+	; Changed to cmp #$60 so the dry tree sprite becomes solid.
+	cmp #$60	; $54-5B = Secret tiles, solid
 	bcc collision_tiles_solid
 
-	// Add more secret tile checks if needed
+	; Add more secret tile checks if needed
 
 collision_tiles_normal:
-	cmp.w $034A	// Old detour (Range check)
+	cmp $034A	; Old detour (Range check)
 	rts
 
 collision_tiles_solid:
-	sec		// Solid obstacle
+	sec		; Solid obstacle
 	rts
 
 
-// Add rock arc at the top of bombable walls, so they don't look as plain black squares
-bank 4; org $8F08	// 0x10F18
-// Modification so the bombed walls use out custom arc cave tiles ($54,$55,$56,$57) instead of being all black tiles ($24)
-	lda.b #$54	// Originally LDA #$24
+; Add rock arc at the top of bombable walls, so they don't look as plain black squares
+%org($8F08,4)		; 0x10F18
+; Modification so the bombed walls use out custom arc cave tiles ($54,$55,$56,$57) instead of being all black tiles ($24)
+	lda #$54	; Originally LDA #$24
 
-// Fix recently bombed overworld wall collision and tile properties (Unsure what this does precisely)
-// (Routine for the following code begins at $ABC4 (0x16BD4)
-bank 5; org $ABED	// 0x16BFD
-	cmp.b #$57	// Originally CMP #$27
+; Fix recently bombed overworld wall collision and tile properties (Unsure what this does precisely)
+; (Routine for the following code begins at $ABC4 (0x16BD4)
+%org($ABED,5)		; 0x16BFD
+	cmp #$57	; Originally CMP #$27
 
 
 
-//***********************************************************
-//	Tile Loading
-//***********************************************************
+;***********************************************************
+;	Tile Loading
+;***********************************************************
 
-// $17930 is free space for this, up to 17C10
+; $17930 is free space for this, up to 17C10
 
-// RAM $10 detects overworld or dungeon.
-// 00 = Overworld, 01 = Dungeon
-// PPU for the specific tiles that could be repurposed for Overworld/Dungeon use depending on area
+; RAM $10 detects overworld or dungeon.
+; 00 = Overworld, 01 = Dungeon
+; PPU for the specific tiles that could be repurposed for Overworld/Dungeon use depending on area
 
-// PPU addresses correspond to the tiles we want to change: $15A0, $15B0, $15C0, $15D0 (Up/Down Dungeon cracked walls)
-// Replacing these 4 tiles depending on whether we are on Overworld or Dungeon, could help create a custom tile for the burnable trees.
+; PPU addresses correspond to the tiles we want to change: $15A0, $15B0, $15C0, $15D0 (Up/Down Dungeon cracked walls)
+; Replacing these 4 tiles depending on whether we are on Overworld or Dungeon, could help create a custom tile for the burnable trees.
 
-bank 3;
-org $8051	// 0x0C061
-	jsr TileTransfer	// Hijack, originally JSR $8091
-org $8064	// 0x0C074
-	jsr TileTransfer	// Hijack, originally JSR $8080
+%org($8051,3)		; 0x0C061
+	jsr TileTransfer	; Hijack, originally JSR $8091
+%org($8064,3)		; 0x0C074
+	jsr TileTransfer	; Hijack, originally JSR $8080
 
-//Free Space, Previously at org $ABE0	// 0x0EBF0
-org $ABE0	// 0x0EBF0
+;Free Space, Previously at org $ABE0	; 0x0EBF0
+%org($ABE0,3)		; 0x0EBF0
 TileTransfer:
-	lda.b #$04	// Keep track of banks to fill for CHR-RAM
-	ldy.w {disable_animation}
+	lda #$04	; Keep track of banks to fill for CHR-RAM
+	ldy !disable_animation
 	beq +
-	lda.b #$01
+	lda #$01
 +
 	pha
 
 GFXLoad:
-	ldy.b #$C0	// Dungeon/Overworld assets size
-	ldx.b #$00
+	ldy #$C0	; Dungeon/Overworld assets size
+	ldx #$00
 
-	lda.b #$15    // Set DestPPU $15 upper byte
-	sta.w $2006   
-	lda.b #$40	// Set DestPPU $40 lower byte base
-	sta.w $2006
+	lda #$15    ; Set DestPPU $15 upper byte
+	sta $2006   
+	lda #$40	; Set DestPPU $40 lower byte base
+	sta $2006
 
 MapCheck:
-	lda.b $10		// Check if in Overworld = 00, or Dungeon = 01
-	bne LoopDungeonGFX	// Load Dungeon Walls if in dungeon, else load dry tree
+	lda $10		; Check if in Overworld = 00, or Dungeon = 01
+	bne LoopDungeonGFX	; Load Dungeon Walls if in dungeon, else load dry tree
 
 LoopOverworldGFX:
-	lda.w OverworldAssets,x
-	sta.w $2007
+	lda OverworldAssets,x
+	sta $2007
 	inx
-	dey		// Image size to transfer
+	dey		; Image size to transfer
 	bne LoopOverworldGFX
 
-	lda.w {disable_animation}
+	lda !disable_animation
 	bne +
 
-	pla		// Change CHR bank
+	pla		; Change CHR bank
 	pha
 
-	sta.w $C000
+	sta $C000
 	lsr
-	sta.w $C000
+	sta $C000
  	lsr
-	sta.w $C000
+	sta $C000
 	lsr
-	sta.w $C000
+	sta $C000
 	lsr
-	sta.w $C000
+	sta $C000
 	
 	pla
 	sec
-	sbc.b #$01
+	sbc #$01
 	pha
-	cmp.b #$00
+	cmp #$00
 	bne GFXLoad
 +
 	pla
 
-	jsr $8091	// Fix Hijack
+	jsr $8091	; Fix Hijack
 	rts
 
 LoopDungeonGFX:	
-	lda.w DungeonAssets,x
-	sta.w $2007
-	inx		// Image offset
-	dey		// Image size to transfer
+	lda DungeonAssets,x
+	sta $2007
+	inx		; Image offset
+	dey		; Image size to transfer
 	bne LoopDungeonGFX
 
-	lda.w {disable_animation}
+	lda !disable_animation
 	bne +
 
-	pla		// Change CHR bank
+	pla		; Change CHR bank
 	pha
 	
-	sta.w $C000
+	sta $C000
 	lsr
-	sta.w $C000
+	sta $C000
  	lsr
-	sta.w $C000
+	sta $C000
 	lsr
-	sta.w $C000
+	sta $C000
 	lsr
-	sta.w $C000
+	sta $C000
 	
 	pla
 	sec
-	sbc.b #$01
+	sbc #$01
 	pha
-	cmp.b #$00
+	cmp #$00
 	bne GFXLoad
 +
 	pla
 
-	jsr $8080	// Fix Hijack
+	jsr $8080	; Fix Hijack
 	rts
 
-org $AC60	// 0x0EC70
-// Include the Burn Tree and Cracked Walls for Overworld data
+%org($AC60,3)		; 0x0EC70
+; Include the Burn Tree and Cracked Walls for Overworld data
 OverworldAssets:
-	incbin code/gfx/OverworldAssets.bin
-// Include the Cracked Up/Down Walls for Dungeons
+	incbin "code/gfx/OverworldAssets.bin"
+; Include the Cracked Up/Down Walls for Dungeons
 DungeonAssets:
-	incbin code/gfx/DungeonAssets.bin
+	incbin "code/gfx/DungeonAssets.bin"
 
 
 

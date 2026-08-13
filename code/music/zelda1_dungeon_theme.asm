@@ -1,30 +1,30 @@
-// Dungeons 1 Music Notes Data
-define zelda_01_notes $00
-define zelda_01_reverb_sq $00
-define zelda_01_reverb_tri $00
-define zelda_01_reverb_bits_sq $90
+; Dungeons 1 Music Notes Data
+!zelda_01_notes			= $00
+!zelda_01_reverb_sq		= $00
+!zelda_01_reverb_tri		= $00
+!zelda_01_reverb_bits_sq	= $90
 
-bank 0; org $90dd
+%org($90DD,0)		; 0x010ED
 .zelda_01_sq2:
 
-bank 0; org $90dd+$22
+%org($90DD+$22,0)		; 0x010ED+$22
 .zelda_01_sq1:
 
-bank 0; org $90dd+$45
+%org($90DD+$45,0)		; 0x010ED+$45
 .zelda_01_tri:
 
-// Dungeons 2 Music Notes Data
-define zelda_02_notes $00
-define zelda_02_reverb_sq $00
-define zelda_02_reverb_tri $00
-define zelda_02_reverb_bits_sq $90
+; Dungeons 2 Music Notes Data
+!zelda_02_notes			= $00
+!zelda_02_reverb_sq		= $00
+!zelda_02_reverb_tri		= $00
+!zelda_02_reverb_bits_sq	= $90
 
-bank 0; org $913a
+%org($913A,0)		; 0x0114A
 .zelda_02_sq2:
 
-bank 0; org $913a+$1c
+%org($913A+$1C,0)		; 0x0114A+$1C
 .zelda_02_sq1:
 
-bank 0; org $913a+$39
+%org($913A+$39,0)		; 0x0114A+$39
 .zelda_02_tri:
 

@@ -1,10 +1,10 @@
-//***********************************************************
-//	Blue-er Ring/Tunic (by Asaki)
-//***********************************************************
+;***********************************************************
+;	Blue-er Ring/Tunic (by Asaki)
+;***********************************************************
 
-// Make Blue tunic even more vivid 
-bank 1; org $AB95	// 0x6BA5
-	db $29,$21,$16	// Green, blue, red
+; Make Blue tunic even more vivid 
+%org($AB95,1)		; 0x06BA5
+	db $29,$21,$16	; Green, blue, red
 
-bank 2; org $A287	// 0xA297
-	db $29,$21,$16	// Green, blue, red
+%org($A287,2)		; 0x0A297
+	db $29,$21,$16	; Green, blue, red

@@ -1,22 +1,22 @@
-// Move Link's weapon sprite in dungeon mode
-
-bank 7; org $F7C1
-
+;-------------------------------------
+; Move Link's weapon sprite in dungeon mode
+;-------------------------------------
+%org($F7C1,7)		; 0x1F7D1
 dungeon_draw_weapon:
-	lda.b $84
+	lda $84
 	clc
-	adc.w $F759,y
-	sta.b $84,x
-	sta.b $01
+	adc $F759,y
+	sta $84,x
+	sta $01
 
-	lda.b $10		// dungeon = -2 pixels
+	lda $10		; Dungeon = -2 pixels
 	beq .exit
-	dec.b $01
-	dec.b $01
+	dec $01
+	dec $01
 
 .exit:
-	lda.b $98,x		// object direction
+	lda $98,x		; Object direction
 	nop
 	nop
 
-warnpc $F7D7+1
+assert pc() <= $F7D7+1	 ; 0x1F7E7

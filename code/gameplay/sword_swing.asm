@@ -1,57 +1,50 @@
-//
-// Source:
-//	minucce
-//
-//
-// License:
-//	Code should be used only for educational, documentation and modding purposes.
-//	Please keep derivative work open source.
+;
+; Source:
+;	minucce
+;
+;
+; License:
+;	Code should be used only for educational, documentation and modding purposes.
+;	Please keep derivative work open source.
+; <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+; Warning:
+; -  Requires game power off / on to load new code into sram
+; <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
+; Detect hitbox orientation
+%org($B641,1)		; 0x7651, base $7DD1
+	ldy $00	; Get weapon direction
+	lda $0098,y
 
-//
-// Warning:
-// -  Requires game power off / on to load new code into sram
-//
-
-
-
-//
-// Detect hitbox orientation
-//
-
-bank 1; org $B641	// 0x7651, base $7DD1
-	ldy.b $00	// Get weapon direction
-	lda.w $0098,y
-
-	and.b #$0C
+	and #$0C
 	beq weapon_horizontal_facing
 
 weapon_vertical_facing:
-	lda.b #$08	// Y-delta
+	lda #$08	; Y-delta
 	pha
 
-	lda.b #$06	// X-delta
+	lda #$06	; X-delta
 	bne weapon_position
 
 weapon_horizontal_facing:
-	lda.b #$09	// #$06+3, Credit: Displaced Gamers
+	lda #$09	; #$06+3, Credit: Displaced Gamers
 	pha
 
-	lda.b #$08
+	lda #$08
 
 weapon_position:
-	clc		// Weapon Xpos
-	adc.w $0070,y
-	sta.b $04
+	clc		; Weapon Xpos
+	adc $0070,y
+	sta $04
 
-	pla		// Weapon Ypos
+	pla		; Weapon Ypos
 	clc
-	adc.w $0084,y
+	adc $0084,y
 	jmp $7BE2
 
-warnpc $B66B-7+1	// warnpc base $7DFB-7
+assert pc() <= $B66B-7+1	; warnpc base $7DFB-7
 
-// 7 free variables !!
+; 7 free variables !!
 	nop
 	nop
 	nop
@@ -60,42 +53,39 @@ warnpc $B66B-7+1	// warnpc base $7DFB-7
 	nop
 	nop
 
-warnpc $B66B+1	// warnpc base $7DFB
+assert pc() <= $B66B+1	; warnpc base $7DFB
 
 
-// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+; <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
-//
-// Detect hitbox orientation
-//
+; Detect hitbox orientation
+%org($B5AC,1)		; 0x75BC, base $7D3C
+	sta $07	; Weapon damage
 
-bank 1; org $B5AC	// 0x75BC, base $7D3C
-	sta.b $07	// Weapon damage
-
-	ldy.b $00	// Get weapon orientation
-	lda.w $0098,y
-	and.b #$0C
+	ldy $00	; Get weapon orientation
+	lda $0098,y
+	and #$0C
 	beq weapon_horizontal_hitbox
 
 weapon_vertical_hitbox:
-	lda.b #$0C
-	ldy.b #$10
+	lda #$0C
+	ldy #$10
 	bne weapon_collide_check
 
 weapon_horizontal_hitbox:
-	lda.b #$10
-	ldy.b #$0C
+	lda #$10
+	ldy #$0C
 
 weapon_collide_check:
-	sta.b $0D
-	sty.b $0E
+	sta $0D
+	sty $0E
 
-	jsr $7DD1	// Collision
+	jsr $7DD1	; Collision
 
-	lda.b $06	// Fail (rts)
-	db $F0,$C9	// beq $C9 -> $7595, $7D25-($7D5F-3)
+	lda $06	; Fail (rts)
+	db $F0,$C9	; beq $C9 -> $7595, $7D25-($7D5F-3)
 
-	jmp $7DAA	// Damage routine
+	jmp $7DAA	; Damage routine
 
-warnpc $B5CF+1	// warnpc $7D5F
+assert pc() <= $B5CF+1	; warnpc $7D5F
 

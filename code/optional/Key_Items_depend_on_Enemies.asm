@@ -1,127 +1,126 @@
-// All Key Items depend on All On-Screen Enemies being defeated to appear
+; All Key Items depend on All On-Screen Enemies being defeated to appear
 
-//------------------------------------------------------------------
+;------------------------------------------------------------------
 
-// There are rooms that have an item in plain sight and the enemies in the room don't need to be defeated in order to obtain said item. Such as a map, compass, key, or bombs.
+; There are rooms that have an item in plain sight and the enemies in the room don't need to be defeated in order to obtain said item. Such as a map, compass, key, or bombs.
+; For example, in Level 3, you have one room with Zols and a key in plain sight.
+; Then in the very next room you face more Zols, but in order to get the key in that room, they must all be defeated.
+; There are rooms like that here and there, which gives the impression that the rooms with items in plain sight were not intentional (or maybe it was but it's always bugged me either way).
+; The Wallmaster is probably the only enemy type to makes sense to have the item in plain sight near a wall.
 
-// For example, in Level 3, you have one room with Zols and a key in plain sight. Then in the very next room you face more Zols, but in order to get the key in that room, they must all be defeated.
+;------------------------------------------------------------------
+; LEVEL 1 (Q1) CHANGES
 
-// There are rooms like that here and there, which gives the impression that the rooms with items in plain sight were not intentional (or maybe it was but it's always bugged me either way). The Wallmaster is probably the only enemy type to makes sense to have the item in plain sight near a wall.
-
-bank 6;
-//------------------------------------------------------------------
-// LEVEL 1 (Q1) CHANGES
-
-org $89D4	// 0x189E4
-// Defeat Keese to get the Compass 
+; Defeat Keese to get the Compass 
+%org($89D4,6)		; 0x189E4
 	db $07
-org $89C3	// 0x189D3
-// Defeat Gels to get the Map
+; Defeat Gels to get the Map
+%org($89C3,6)		; 0x189D3
 	db $07
-org $89C5	// 0x189D5
-// Defeat Wallmasters to get the Key
+; Defeat Wallmasters to get the Key
+%org($89C5,6)		; 0x189D5
 	db $17
-//------------------------------------------------------------------
-// LEVEL 2 (Q1) CHANGES
+;------------------------------------------------------------------
+; LEVEL 2 (Q1) CHANGES
 
-org $89EF	// 0x189FF
-// Defeat Gels to get the Compass
+; Defeat Gels to get the Compass
+%org($89EF,6)		; 0x189FF
 	db $17
-org $89DF	// 0x189EF
-// Defeat Gels to get the Map
+; Defeat Gels to get the Map
+%org($89DF,6)		; 0x189EF
 	db $07
-org $89BF	// 0x189CF
-// Defeat Keese to get Bombs
+; Defeat Keese to get Bombs
+%org($89BF,6)		; 0x189CF
 	db $07
-//------------------------------------------------------------------
-// LEVEL 3 (Q1) CHANGES
+;------------------------------------------------------------------
+; LEVEL 3 (Q1) CHANGES
 
-org $89FB	// 0x18A0B
-// Defeat Zols to get the Key
+; Defeat Zols to get the Key
+%org($89FB,6)		; 0x18A0B
 	db $07
-org $89CA	// 0x189DA
-// Defeat Keese to get the Compass
+; Defeat Keese to get the Compass
+%org($89CA,6)		; 0x189DA
 	db $07
-org $89C9	// 0x189D9
-// Defeat Keese & Zols to get the Key
+; Defeat Keese & Zols to get the Key
+%org($89C9,6)		; 0x189D9
 	db $07
-org $89AA	// 0x189BA
-// Defeat Keese to get the Key
+; Defeat Keese to get the Key
+%org($89AA,6)		; 0x189BA
 	db $07
-org $89CC	// 0x189DC
-// Defeat Zols to get Map
+; Defeat Zols to get Map
+%org($89CC,6)		; 0x189DC
 	db $07
-//------------------------------------------------------------------
-// LEVEL 4 (Q1) CHANGES
+;------------------------------------------------------------------
+; LEVEL 4 (Q1) CHANGES
 
-org $89E2	// 0x189F2
-// Defeat Vires to get Compass
+; Defeat Vires to get Compass
+%org($89E2,6)		; 0x189F2
 	db $27
-org $89D1	// 0x189E1
-// Defeat Keese to get Key 1 
+; Defeat Keese to get Key 1 
+%org($89D1,6)		; 0x189E1
 	db $17
-org $89C0	// 0x189D0
-// Defeat Zols to get Key
+; Defeat Zols to get Key
+%org($89C0,6)		; 0x189D0
 	db $27
-org $89A1	// 0x189B1
-// Defeat Zols to get Map
+; Defeat Zols to get Map
+%org($89A1,6)		; 0x189B1
 	db $07
-org $8981	// 0x18991
-// Defeat Keese to get Key 2
+; Defeat Keese to get Key 2
+%org($8981,6)		; 0x18991
 	db $27
-//------------------------------------------------------------------
-// LEVEL 5 (Q1) CHANGES
+;------------------------------------------------------------------
+; LEVEL 5 (Q1) CHANGES
 
-org $89AA	// 0x189BA
-// Defeat Keese to get Key
+; Defeat Keese to get Key
+%org($89AA,6)		; 0x189BA
 	db $27
-org $89A7	// 0x189B7
-// Defeat Gibdos, Pols Voice, Keese to get Key
+; Defeat Gibdos, Pols Voice, Keese to get Key
+%org($89A7,6)		; 0x189B7
 	db $27
-//------------------------------------------------------------------
-// LEVEL 6 (Q1) CHANGES
+;------------------------------------------------------------------
+; LEVEL 6 (Q1) CHANGES
 
-org $89A9	// 0x189B9
-// Defeat Wizzrobes to get Key 1
+; Defeat Wizzrobes to get Key 1
+%org($89A9,6)		; 0x189B9
 	db $07
-org $899A	// 0x189AA
-// Defeat Wizzrobes to get Key 2
+; Defeat Wizzrobes to get Key 2
+%org($899A,6)		; 0x189AA
 	db $07
-//------------------------------------------------------------------
-// LEVEL 7 (Q1) CHANGES
+;------------------------------------------------------------------
+; LEVEL 7 (Q1) CHANGES
 
-org $8CF8	// 0x18D08
-// Defeat Ropes to get Key
+; Defeat Ropes to get Key
+%org($8CF8,6)		; 0x18D08
 	db $07
-org $8CDA	// 0x18CEA
-// Defeat Stalfos to get Compass
+; Defeat Stalfos to get Compass
+%org($8CDA,6)		; 0x18CEA
 	db $07
-org $8C98	// 0x18CA8
-// Defeat All to get Map
+; Defeat All to get Map
+%org($8C98,6)		; 0x18CA8
 	db $07
-//------------------------------------------------------------------
-// LEVEL 8 (Q1) CHANGES
+;------------------------------------------------------------------
+; LEVEL 8 (Q1) CHANGES
 
-org $8CFF	// 0x18D0F
-// Defeat All to get Key
+; Defeat All to get Key
+%org($8CFF,6)		; 0x18D0F
 	db $07
-org $8CDF	// 0x18CEF
-// Defeat Pols Voice to get Compass
+; Defeat Pols Voice to get Compass
+%org($8CDF,6)		; 0x18CEF
 	db $07
-org $8CCB	// 0x18CDB
-// Defeat Darknuts to get Key
+; Defeat Darknuts to get Key
+%org($8CCB,6)		; 0x18CDB
 	db $07
-//------------------------------------------------------------------
-// LEVEL 9 (Q1) CHANGES
+;------------------------------------------------------------------
+; LEVEL 9 (Q1) CHANGES
 
-org $8CA3	// 0x18CB3
-// Defeat Gels to get Bombs
+; Defeat Gels to get Bombs
+%org($8CA3,6)		; 0x18CB3
 	db $17
-org $8CE1	// 0x18CF1
-// Defeat Patra to get Key
+; Defeat Patra to get Key
+%org($8CE1,6)		; 0x18CF1
 	db $17
-org $8CC7	// 0x18CD7
-// Defeat Wizzrobes to get Key
+; Defeat Wizzrobes to get Key
+%org($8CC7,6)		; 0x18CD7
 	db $17
-//------------------------------------------------------------------
+;------------------------------------------------------------------
 

@@ -1,392 +1,381 @@
-//***********************************************************
-//		File Select Menu Tweaks by Minucce
-//  Code should be used only for educational, documentation and modding purposes
-//***********************************************************
+;***********************************************************
+;		File Select Menu Tweaks by Minucce
+;  Code should be used only for educational, documentation and modding purposes
+;***********************************************************
 
-//***********************************************************
-//	Table file
-//***********************************************************
+;***********************************************************
+;	Table file
+;***********************************************************
 
-table code/text/text.tbl,ltr
+incsrc "code/text/text.tbl"
 
-// *********************************************************
+; *********************************************************
+;  Original code by SpiderDave
 
-//  Original code by SpiderDave
-
-bank 2;
-org $A4A6	// 0x0A4B6
+%org($A4A6,2)		; 0x0A4B6
 	jsr main_menu_palette
 	nop
 
-// ---------------------------------------------------------
+; ---------------------------------------------------------
 
-org $A573	// 0x0A583
-
+%org($A573,2)		; 0x0A583
 main_menu_init_done:
-// We will default the position to always be Slot 1 instead
-// Previously checked against RAM $54 to know slot position
-	//lda.b $54
-	//cmp.b #$03
-	//bcc .write
+; We will default the position to always be Slot 1 instead
+; Previously checked against RAM $54 to know slot position
+	;lda $54
+	;cmp #$03
+	;bcc rite
 
-	lda.b #$00	// Default save slot 0
-.write:
-	sta.b $16
+	lda #$00	; Default save slot 0
+rite:
+	sta $16
 
-// ---------------------------------------------------------
+; ---------------------------------------------------------
 
-	lda.b #$00	// Main menu - Submode 0
-	sta.b $13
+	lda #$00	; Main menu - Submode 0
+	sta $13
 
-	lda.b #$FF	// Cave ID
-	sta.w $0526
+	lda #$FF	; Cave ID
+	sta $0526
 
-	inc.b $11
+	inc $11
 	rts
 
-warnpc $A589
+assert pc() <= $A589	; 0x0A599
 
-// #########################################################
+; #########################################################
 
-org $A596	// 0x0A5A6
-
+%org($A596,2)		; 0x0A5A6
 	dw main_menu_run
 	dw main_menu_exit
 
-// ---------------------------------------------------------
+; ---------------------------------------------------------
 
 main_menu_run:
-	ldy.b $16		// Current slot
-	ldx.b $F8		// Joypad 1
+	ldy $16		; Current slot
+	ldx $F8		; Joypad 1
 
 
-// -------------------------------------------------------
+; -------------------------------------------------------
 
 .select_option:
 	txa
-	and.b #$10
+	and #$10
 	beq .cursor_up
 
-	lda.w $0633,y		// Slot enabled
+	lda $0633,y		; Slot enabled
 	bne .valid_slot
 
-	lda.b #$03		// Register mode
-	sta.b $16
+	lda #$03		; Register mode
+	sta $16
 
 .valid_slot:
-	sty.b $54		// Selected mode  (reset on game start)
+	sty $54		; Selected mode  (reset on game start)
 
-	inc.b $13		// Stop menu
+	inc $13		; Stop menu
 	rts
 
 
-// -------------------------------------------------------
+; -------------------------------------------------------
 
 .cursor_up:
 	txa
-	and.b #$08
+	and #$08
 	beq .cursor_down
 
-	dey			// Wrap index  (0-4)
+	dey			; Wrap index  (0-4)
 	bpl .move_cursor
 
 
-	ldy.b #$04
+	ldy #$04
 	bne .move_cursor
 
-// -------------------------------------------------------
+; -------------------------------------------------------
 
 .cursor_down:
 	txa
-	and.b #($04|$20)
+	and #($04|$20)
 	beq .draw_cursor
 
-	iny			// Wrap index  (0-4)
-	cpy.b #$05
+	iny			; Wrap index  (0-4)
+	cpy #$05
 	bne .move_cursor
 
-	ldy.b #$00
+	ldy #$00
 
-// -------------------------------------------------------
+; -------------------------------------------------------
 
 .move_cursor:
-	sty.b $16
+	sty $16
 
-	lda.b #$01		// Play sound
-	sta.w $0602
+	lda #$01		; Play sound
+	sta $0602
 
-// ====================================================
+; ====================================================
 
 .draw_cursor:
-	ldx.b #$02		// Copy OAM data
+	ldx #$02		; Copy OAM data
 
 
 .loop:
-	lda.w $A589,x
-	sta.w $0201,x
+	lda $A589,x
+	sta $0201,x
 	dex
 	bpl .loop
 
-	lda.w $A58C,y		// Y-pos
-	sta.w $0200
+	lda $A58C,y		; Y-pos
+	sta $0200
 
-	lda.b #$58		// Link sprites Y,X
-	sta.b $01
+	lda #$58		; Link sprites Y,X
+	sta $01
 
-	lda.b #$30
-	sta.b $00
+	lda #$30
+	sta $00
 
-	jmp $A638		// Draw
+	jmp $A638		; Draw
 
-// ####################################################
+; ####################################################
 
 main_menu_exit_check:
-	lda.b $16		// Game slot
-	cmp.b #$03
+	lda $16		; Game slot
+	cmp #$03
 	bcc .load_game
 
 
-	// sec			// Run other menu mode
-	adc.b #$0B-1
+	; sec			; Run other menu mode
+	adc #$0B-1
 	sta $12
 
 	jmp $EBA3
 	nop #5
 
-// =====================================================
+; =====================================================
 
 .load_game:
 
-warnpc $A6FE
+assert pc() <= $A6FE	; 0x0A70E
 
-// /////////////////////////////////////////////////////////
+; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;/
 
-org $A58C	// 0x0A59C
-	db $5C,$74,$8C		// Main menu - Cursor Y-pos
+%org($A58C,2)		; 0x0A59C
+	db $5C,$74,$8C		; Main menu - Cursor Y-pos
 	db $A8-1,$B8-1
 
-org $9DAF	// 0x09DBF
-	db $2F+4,$47+4,$5F+4	// Register mode - Cursor Y-pos
+%org($9DAF,2)		; 0x09DBF
+	db $2F+4,$47+4,$5F+4	; Register mode - Cursor Y-pos
 	db $77
 
-org $9DF9	// 0x09E09
-	db $43+2		// Copy, Erase - Cursor X-pos
+%org($9DF9,2)		; 0x09E09
+	db $43+2		; Copy, Erase - Cursor X-pos
 
-org $A1D1	// 0x0A1E1
+%org($A1D1,2)		; 0x0A1E1
 	jsr register_mode_letter_ypos
 
-// ###########################################################
+; ###########################################################
 
-org $9E3F	// 0x09E4F
-
-	ldy.b $54		// Game mode
+%org($9E3F,2)		; 0x09E4F
+	ldy $54		; Game mode
 	jmp main_menu_mode_name
 	nop #1
 
-warnpc $9E45+1
+assert pc() <= $9E45+1	; 0x09E55
 
-// ////////////////////////////////////////////////////
+; ;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-org $9EAA	// 0x09EBA
-	ldy.b $54		// Erase mode = Blue cursor
-	cpy.b #$04
+%org($9EAA,2)		; 0x09EBA
+	ldy $54		; Erase mode = Blue cursor
+	cpy #$04
 
-// ###########################################################
+; ###########################################################
 
-org $9EB9	// 0x09EC9
-
+%org($9EB9,2)		; 0x09EC9
 main_menu_active_player:
-	ldx.b $54		// Create mode (0-2)
-	cpx.b #$03
+	ldx $54		; Create mode (0-2)
+	cpx #$03
 	bcc .store
 
-	ldx #$FF		// Find 1st active slot
+	ldx #$FF		; Find 1st active slot
 
 .find:
 	inx
-	lda.w $0633,x
+	lda $0633,x
 	beq .find
 
 .store:
-	stx.b $16		// Save slot
+	stx $16		; Save slot
 	jsr $A18E
 
 
-	lda.b #$50		// Link Y,X position
-	sta.b $00
+	lda #$50		; Link Y,X position
+	sta $00
 
-	lda.b #$30
-	sta.b $01
+	lda #$30
+	sta $01
 
-	inc.b $11
-	jmp $A638		// Write sprites
+	inc $11
+	jmp $A638		; Write sprites
 
-// //////////////////////////////////////////////////////
+; ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 menu_misc_draw_name_map:
-	lda.b #$00
+	lda #$00
 	bcs .exit
 
-	lda.b #$16		// Draw alphabet board
+	lda #$16		; Draw alphabet board
 
 .exit:
-	sta.b $14
+	sta $14
 
-	inc.b $13		// Next submode 03
+	inc $13		; Next submode 03
 	rts
 
-// //////////////////////////////////////////////////////
+; ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 register_mode_letter_ypos:
 	sec
-	sbc.b #$08+4
+	sbc #$08+4
 	jmp $A1FA
 	nop #0
 
-warnpc $9EEB+1
+assert pc() <= $9EEB+1	; 0x09EFB
 
-// ###########################################################
+; ###########################################################
 
-org $9E9D	// 0x09EAD
-
-	lda.b $54		// Register mode only
-	cmp.b #$03
+%org($9E9D,2)		; 0x09EAD
+	lda $54		; Register mode only
+	cmp #$03
 
 	jmp menu_misc_draw_name_map
 	nop #0
 
-warnpc $9EA4+1
+assert pc() <= $9EA4+1	; 0x09EB4
 
-// ///////////////////////////////////////////////////////////
+; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;/
 
-org $9EB5	// 0x09EC5
-
+%org($9EB5,2)		; 0x09EC5
 	jmp misc_menu_palette
 	nop #1
 
-warnpc $9EB9+1
+assert pc() <= $9EB9+1	; 0x09EC9
 
-// ///////////////////////////////////////////////////////////
+; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;/
 
-org $9EF0	// 0x09FF0
-
+%org($9EF0,2)		; 0x09FF0
 register_player_joypad_start:
-	lda.b $F8		// Joypad 1
-	and.b #$10
+	lda $F8		; Joypad 1
+	and #$10
 	bne .save
 
-	jmp $9FB0		// Spin loop
+	jmp $9FB0		; Spin loop
 	nop #6
 
 .save:
 
-warnpc $9EFF+1
+assert pc() <= $9EFF+1	; 0x09F0F
 
-// ///////////////////////////////////////////////////////////
+; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;/
 
-org $9FB9	// 0x09FC9
-	nop #3			// Register mode -- Ignore select button
+%org($9FB9,2)		; 0x09FC9
+	nop #3			; Register mode -- Ignore select button
 
-// ###########################################################
+; ###########################################################
 
-org $9FC5	// 0x09FD5
-
+%org($9FC5,2)		; 0x09FD5
 erase_player_run:
 	jmp erase_player_mode
 
 	nop #22
 
-warnpc $9FDE+1
+assert pc() <= $9FDE+1	; 0x09FEE
 
-// ###########################################################
+; ###########################################################
 
-org $A204	// 0x0A214
-// Free space = Old menu input handler
+%org($A204,2)		; 0x0A214
+; Free space = Old menu input handler
 
-// ///////////////////////////////////////////////////////////
+; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;/
 
 register_menu_quit_sound:
-	lda.b $54		// Register only
-	cmp.b #$03
+	lda $54		; Register only
+	cmp #$03
 	bcs .exit1
 
-// ---------------------------------------------------------
+; ---------------------------------------------------------
 
-	ldx.b #$07		// Blank name
+	ldx #$07		; Blank name
 
 .loop1:
-	lda.w $0640,x		// All space
-	cmp.b #$24
+	lda $0640,x		; All space
+	cmp #$24
 	bne .exit1
 
 	dex
 	bpl .loop1
 
-	lda.b #$20		// All space = Quit sound
-	sta.w $0602
+	lda #$20		; All space = Quit sound
+	sta $0602
 
 
 
 .exit1:
-	lda.b #$00		// Silent
-	sta.w $0607
+	lda #$00		; Silent
+	sta $0607
 
 	rts
 
-// /////////////////////////////////////////////////////////////
+; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;/
 
 register_menu_name_done:
-	ldy.b #$00
-	lda ($CC),y		// Check quest number
+	ldy #$00
+	lda ($CC),y		; Check quest number
 	bne .zelda
 
-	lda.b #$08		// Play sound (Fairy)
-	sta.w $0602
+	lda #$08		; Play sound (Fairy)
+	sta $0602
 	bne .exit2
 
 .zelda:
-	lda.b #$0C		// Play sound (Secret)
-	sta.w $0602
+	lda #$0C		; Play sound (Secret)
+	sta $0602
 
-// ---------------------------------------------------------
+; ---------------------------------------------------------
 
 .exit2:
-	tax			// Mark save ready
-	lda.b #$01
+	tax			; Mark save ready
+	lda #$01
 
 	rts
 
-// /////////////////////////////////////////////////////////////
+; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;/
 
 main_menu_exit:
-	lda.b #$00
-	sta.w $0602		// Sound off
-	sta.w $0656		// Item index
-	sta.b $10		// Level = Overworld
+	lda #$00
+	sta $0602		; Sound off
+	sta $0656		; Item index
+	sta $10		; Level = Overworld
 
-	ldx.b $54		// Copy player
-	cpx.b #$03
+	ldx $54		; Copy player
+	cpx #$03
 	bne .exit3
 
 	inx
-	stx.b $16
+	stx $16
 
 .exit3:
 	jmp main_menu_exit_check
 
 	nop #7
 
-warnpc $A254+1
+assert pc() <= $A254+1	; 0x0A264
 
-// ###########################################################
+; ###########################################################
 
-org $BA00	// 0x0BA10
-
+%org($BA00,2)		; 0x0BA10
 main_menu_palette:
-	ldy.b #$02
+	ldy #$02
 
 .loop2:
-	lda.w $0633,y		// Non-active player
+	lda $0633,y		; Non-active player
 	bne .next
 
 	tya
@@ -394,48 +383,48 @@ main_menu_palette:
 	asl
 	tax
 
-	lda.b #$19		// Faded default palette
-	sta.w $6803+1,x
+	lda #$19		; Faded default palette
+	sta $6803+1,x
 
-	lda.b #$17
-	sta.w $6803+2,x
+	lda #$17
+	sta $6803+2,x
 
-	lda.b #$07
-	sta.w $6803+3,x
+	lda #$07
+	sta $6803+3,x
 
 .next:
 	dey
 	bpl .loop2
 
-// ---------------------------------------------------------
+; ---------------------------------------------------------
 
-	lda.b #$12		// Transfer palette at VBlank
-	sta.b $14
+	lda #$12		; Transfer palette at VBlank
+	sta $14
 
 	rts
 
-// $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+; $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 main_menu_mode_name:
-	cpy.b #$03		// Register your name
+	cpy #$03		; Register your name
 	bcs .copy_player
 
-	lda.b #$24		// Title edge spaces
-	sta.w $0308
-	sta.w $031B
+	lda #$24		; Title edge spaces
+	sta $0308
+	sta $031B
 
 	jmp $9E45
 
-// ---------------------------------------------------------
+; ---------------------------------------------------------
 
 .copy_player:
 	bne .erase_player
 
-	ldy.b #$13-1		// Copy new string
+	ldy #$13-1		; Copy new string
 
 .loop3:
 	lda .copy_save_title, y
-	sta.w $0308, y
+	sta $0308, y
 	dey
 	bpl .loop3
 
@@ -443,75 +432,75 @@ main_menu_mode_name:
 	jmp $9E52
 
 
-// ---------------------------------------------------------
+; ---------------------------------------------------------
 
 .copy_save_title:
-	// Copy Save
+	; Copy Save
 	db $6A,$6A,$6A,$6A
 	db " COPY SAVE "
 	db $6A,$6A,$6A,$6A
 
-// $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+; $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 misc_menu_palette:
-	lda.b $54		// Creation mode only
-	cmp.b #$03
+	lda $54		; Creation mode only
+	cmp #$03
 	bcs .exit4
 
 	asl
 	asl
 	tax
 
-	lda.b #$29		// Normal palette
-	sta.w $6803+1,x
+	lda #$29		; Normal palette
+	sta $6803+1,x
 
-	lda.b #$27
-	sta.w $6803+2,x
+	lda #$27
+	sta $6803+2,x
 
-	lda.b #$17
-	sta.w $6803+3,x
+	lda #$17
+	sta $6803+3,x
 
 
-// ---------------------------------------------------------
+; ---------------------------------------------------------
 
 .exit4:
-	lda.b #$12		// Transfer palette
-	sta.b $14
+	lda #$12		; Transfer palette
+	sta $14
 
-	inc.b $13		// Next submode 04
+	inc $13		; Next submode 04
 	rts
 
-// $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+; $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 erase_player_mode:
-	lda.b $13
-	cmp.b #$04
+	lda $13
+	cmp #$04
 	bne .submode_05
 
 .submode_04:
 	ldx.b #(.text_end-.text)
 
 .loop4:
-	lda.w .text,x
-	sta.w $0302,x
+	lda .text,x
+	sta $0302,x
 
 	dex
 	bpl .loop4
 
-	inc.b $13
+	inc $13
 	rts
 
-// -----------------------------------------------------------
+; -----------------------------------------------------------
 
 .text:
-	// Box - Upper
-	db $22,$46,$01,$69	// Up-Left corner
-	db $22,$47,$13|$40,$6A	// Horizontal line
-	db $22,$5A,$01,$6B	// Up-Right corner
+	; Box - Upper
+	db $22,$46,$01,$69	; Up-Left corner
+	db $22,$47,$13|$40,$6A	; Horizontal line
+	db $22,$5A,$01,$6B	; Up-Right corner
 
-	// Box - Sides
-	db $22,$66,$07|$C0,$6C	// Vertical line
-	db $22,$7A,$07|$C0,$6C	// Vertical line
+	; Box - Sides
+	db $22,$66,$07|$C0,$6C	; Vertical line
+	db $22,$7A,$07|$C0,$6C	; Vertical line
 
 	db $FF
 
@@ -519,53 +508,53 @@ erase_player_mode:
 
 
 
-// /////////////////////////////////////////////////////////
+; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;/
 
 .submode_05:
-	cmp.b #$05
+	cmp #$05
 	bne .submode_06
 
-	lda.b $54		// Copy or erase
-	cmp.b #$03
+	lda $54		; Copy or erase
+	cmp #$03
 	bne .erase_text
 
 .copy_text:
 	ldx.b #(.copy_str_end-.copy_str)
 
 .copy_loop:
-	lda.w .copy_str,x
-	sta.w $0302,x
+	lda .copy_str,x
+	sta $0302,x
 
 	dex
 	bpl .copy_loop
 
-	inc.b $13
+	inc $13
 	rts
 
-// ---------------------------------------------------------
+; ---------------------------------------------------------
 
 .erase_text:
 	ldx.b #(.erase_str_end-.erase_str)
 
 .erase_loop:
-	lda.w .erase_str,x
-	sta.w $0302,x
+	lda .erase_str,x
+	sta $0302,x
 
 	dex
 	bpl .erase_loop
 
-	inc.b $13
+	inc $13
 	rts
 
-// ---------------------------------------------------------
+; ---------------------------------------------------------
 
 .erase_str:
-	// Box - lower
+	; Box - lower
 	db $23,$46,$01,$6E
 	db $23,$47,$13|$40,$6A
 	db $23,$5A,$01,$6D
 
-	// Erase which save?
+	; Erase which save?
 	db $22,$88,$11
 	db "ERASE WHICH SAVE?"
 
@@ -576,12 +565,12 @@ erase_player_mode:
 
 
 .copy_str:
-	// Box - lower
+	; Box - lower
 	db $23, $46, $01, $6e
 	db $23, $47, $13|$40, $6a
 	db $23, $5a, $01, $6d
 
-	// Copy which save?
+	; Copy which save?
 	db $22,$88,$11
 	db "COPY WHICH SAVE? "
 
@@ -591,156 +580,156 @@ erase_player_mode:
 
 
 
-// /////////////////////////////////////////////////////////
+; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;/
 
 .submode_06:
-	cmp.b #$06
+	cmp #$06
 	bne .submode_07
 
-	ldx.b $F8		// Joypad 1
+	ldx $F8		; Joypad 1
 
-.start_button:
+.start_button_06:
 	txa
-	and.b #$10
+	and #$10
 	beq .down_cursor
 
-	lda.b $16			// Player slot only
-	cmp.b #$03
+	lda $16			; Player slot only
+	cmp #$03
 	bcs .quit
 
 .copy_slot_2:
-	lda.b $54
-	cmp.b #$03
+	lda $54
+	cmp #$03
 	bne .erase_confirm
 
-	lda.b #$10
-	sta.b $13
+	lda #$10
+	sta $13
 
 	jmp .submode_10
 
 .erase_confirm:
-	inc.b $13
+	inc $13
 
-	lda.b $13
+	lda $13
 	bne .submode_07
 
 .quit:
 	jmp .submode_quit
 
-// ---------------------------------------------------------
+; ---------------------------------------------------------
 
 .down_cursor:
-	txa			// Down + Select button
-	and.b #($20|$04)
+	txa			; Down + Select button
+	and #($20|$04)
 	beq .up_cursor
 
-	ldy.b $16		// Save slot
+	ldy $16		; Save slot
 
 .loop5:
 	iny
-	cpy.b #$04		// Past exit
+	cpy #$04		; Past exit
 	bne .check
 
-	ldy.b #$00		// Slot 1
+	ldy #$00		; Slot 1
 
 .check:
-	lda.w $0633,y		// Slot active
+	lda $0633,y		; Slot active
 	beq .loop5
 
 	bne .move_cursor1
 
-// ---------------------------------------------------------
+; ---------------------------------------------------------
 
 .up_cursor:
 	txa
-	and.b #$08
+	and #$08
 	beq .no_move
 
-	ldy.b $16		// Save slot
+	ldy $16		; Save slot
 
 .loop6:
 	dey
 	bpl .check1
 
-	ldy.b #$03		// Exit slot
+	ldy #$03		; Exit slot
 
 .check1:
-	lda.w $0633,y		// Slot active
+	lda $0633,y		; Slot active
 	beq .loop6
 
-// ---------------------------------------------------------
+; ---------------------------------------------------------
 
 .move_cursor1:
-	sty.b $16
+	sty $16
 
-	lda.w $9DAF,y		// Y-pos cursor
-	sta.w $0200
+	lda $9DAF,y		; Y-pos cursor
+	sta $0200
 
-	lda.b #$01		// Play tune
-	sta.w $0602
+	lda #$01		; Play tune
+	sta $0602
 
-// ---------------------------------------------------------
+; ---------------------------------------------------------
 
 .no_move:
 	rts
 
-// /////////////////////////////////////////////////////////
+; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;/
 
 .submode_07:
-	cmp.b #$07
+	cmp #$07
 	bne .submode_08
 
 	ldx.b #(.text1_end-.text1)
 
 .loop7:
-	lda.w .text1,x
-	sta.w $0302,x
+	lda .text1,x
+	sta $0302,x
 
 	dex
 	bpl .loop7
 
-	ldx.b $16		// Slot 1
+	ldx $16		; Slot 1
 	inx
-	stx.w $0302+$10
+	stx $0302+$10
 
-// ---------------------------------------------------------
+; ---------------------------------------------------------
 
-	lda.b #$20		// Play sound
-	sta.w $0604
+	lda #$20		; Play sound
+	sta $0604
 
-	lda.b #$00		// Cursor choice
-	sta.b $55
+	lda #$00		; Cursor choice
+	sta $55
 
-	lda.b $16		// Color 1
-	sta.w $0202
+	lda $16		; Color 1
+	sta $0202
 
-	lda.b #$AF		// Sprite cursor 2
-	sta.w $0230
+	lda #$AF		; Sprite cursor 2
+	sta $0230
 
-	lda.b #$F2+1
-	sta.w $0231
+	lda #$F2+1
+	sta $0231
 
-	lda.b #$03
-	sta.w $0232
+	lda #$03
+	sta $0232
 
-	lda.b #$4C
-	sta.w $0233
+	lda #$4C
+	sta $0233
 
-	inc.b $13
+	inc $13
 	rts
 
-// ---------------------------------------------------------
+; ---------------------------------------------------------
 
 .text1:
-	// Erase player X?
+	; Erase player X?
 	db $22,$88,$11
 	db "ERASE PLAYER 0?  "
 
-	// Okay
+	; Okay
 	db $22,$CB,$04
 	db "OKAY"
 
-	// Quit
+	; Quit
 	db $23,$0B,$04
 	db "QUIT"
 
@@ -749,84 +738,84 @@ erase_player_mode:
 .text1_end:
 
 
-// /////////////////////////////////////////////////////////
+; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;/
 
 .submode_08:
-	cmp.b #$08
+	cmp #$08
 	bne .submode_09
 
 	ldx.b #(.text2_end-.text2)
 
 .loop8:
-	lda.w .text2,x
-	sta.w $0302,x
+	lda .text2,x
+	sta $0302,x
 
 	dex
 	bpl .loop8
 
-// ---------------------------------------------------------
+; ---------------------------------------------------------
 
 .sprite1:
-	ldx.b #$00
-	cpx.b $16
+	ldx #$00
+	cpx $16
 	bne .sprite2
 
-	stx.w $0290+2		// Gray sword
+	stx $0290+2		; Gray sword
 
 .sprite2:
 	inx
-	cpx.b $16
+	cpx $16
 	bne .sprite3
 
-	lda.b #$15		// Gray sprite
-	sta.w $0302+1
+	lda #$15		; Gray sprite
+	sta $0302+1
 
-	lda.b #$D3		// Grey text
-	sta.w $0302+7
+	lda #$D3		; Grey text
+	sta $0302+7
 
-	lda.b #$0A
-	sta.w $0302+9
+	lda #$0A
+	sta $0302+9
 
-	lda.b #$01		// Gray sword
-	sta.w $0298+2
+	lda #$01		; Gray sword
+	sta $0298+2
 
 .sprite3:
 	inx
-	cpx.b $16
+	cpx $16
 	bne .exit5
 
-	lda.b #$19		// Gray sprite
-	sta.w $0302+1
+	lda #$19		; Gray sprite
+	sta $0302+1
 
-	lda.b #$DB		// Gray text
-	sta.w $0302+7
+	lda #$DB		; Gray text
+	sta $0302+7
 
-	lda.b #$0A
-	sta.w $0302+9
+	lda #$0A
+	sta $0302+9
 
-	lda.b #$02		// Gray sword
-	sta.w $02A0+2
+	lda #$02		; Gray sword
+	sta $02A0+2
 
 .exit5:
-	inc.b $13
+	inc $13
 	rts
 
-// --------------------------------------------------------
+; --------------------------------------------------------
 
 .text2:
-	// Gray sprite
+	; Gray sprite
 	db $3F,$11,$03
 	db $10,$30,$00
 
-	// Grey text
+	; Grey text
 	db $23,$CB,$03|$40
 	db $A0
 
-	// Grey color
+	; Grey color
 	db $3F,$09,$01
 	db $00
 
-	// Red text
+	; Red text
 	db $23,$EB,$03
 	db $04,$05,$01
 
@@ -835,71 +824,71 @@ erase_player_mode:
 .text2_end:
 
 
-// /////////////////////////////////////////////////////////
+; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;/
 
 .submode_09:
-	cmp.b #$09
+	cmp #$09
 	bne .submode_10
 
-	ldx.b $F8		// Joypad 1
-	ldy.b $55
+	ldx $F8		; Joypad 1
+	ldy $55
 
-.start_button:
+.start_button_09:
 	txa
-	and.b #$10
+	and #$10
 	beq .down_cursor1
-	tya			// Okay chosen (00)
+	tya			; Okay chosen (00)
 	bne .exit6
 
-	lda.b $16		// Delete player
+	lda $16		; Delete player
 	jsr $9FE8
 
 	jmp .submode_quit
 
 .exit6:
-	lda.b #$20		// Play sound (Quit)
-	sta.w $0602
+	lda #$20		; Play sound (Quit)
+	sta $0602
 
 	bne .submode_quit
 
-// ---------------------------------------------------------
+; ---------------------------------------------------------
 
 .down_cursor1:
-	txa			// Down + Select button
-	and.b #($20|$04)
+	txa			; Down + Select button
+	and #($20|$04)
 	beq .up_cursor1
 
 	dey
 	bpl .move_cursor2
 
-	ldy.b #$01
+	ldy #$01
 	bne .move_cursor2
 
-// ---------------------------------------------------------
+; ---------------------------------------------------------
 
 .up_cursor1:
 	txa
-	and.b #$08
+	and #$08
 	beq .no_move1
 
 	iny
-	cpy.b #$02
+	cpy #$02
 	bne .move_cursor2
 
-	ldy.b #$00
+	ldy #$00
 
-// ---------------------------------------------------------
+; ---------------------------------------------------------
 
 .move_cursor2:
-	sty.b $55
+	sty $55
 
-	lda.w .cursor4_ypos,y	// Y-pos cursor
-	sta.w $0230
+	lda .cursor4_ypos,y	; Y-pos cursor
+	sta $0230
 
-	lda.b #$01		// Play tune
-	sta.w $0602
+	lda #$01		; Play tune
+	sta $0602
 
-// ---------------------------------------------------------
+; ---------------------------------------------------------
 
 .no_move1:
 	rts
@@ -907,84 +896,84 @@ erase_player_mode:
 .cursor4_ypos:
 	db $AF,$BF
 
-// /////////////////////////////////////////////////////////
+; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;/
 
 .submode_quit:
-	lda.b #$15		// Red cursor
-	sta.w $6810
+	lda #$15		; Red cursor
+	sta $6810
 
-	jmp $9EFF		// Reset save integrity
+	jmp $9EFF		; Reset save integrity
 
-// /////////////////////////////////////////////////////////
+; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;/
 
 .submode_10:
-	cmp.b #$10
+	cmp #$10
 	bne .submode_11
 
 	ldx.b #(.text3_end-.text3)
 
 .loop9:
-	lda.w .text3,x
-	sta.w $0302,x
+	lda .text3,x
+	sta $0302,x
 
 	dex
 	bpl .loop9
 
-// ---------------------------------------------------------
+; ---------------------------------------------------------
 
-	ldx.b #$00		// Cursor 2 choice
-	cpx.b $16
+	ldx #$00		; Cursor 2 choice
+	cpx $16
 	bne .cursor2
 
 	inx
-	cpx.b $16
+	cpx $16
 	bne .cursor2
 
 	inx
 
 .cursor2:
-	stx.b $54
+	stx $54
 
-	lda.b $16		// Cursor 1 color
-	sta.w $0202
+	lda $16		; Cursor 1 color
+	sta $0202
 
-	lda.w .cursor2_ypos,x	// Sprite cursor 2
-	sta.w $0234
+	lda .cursor2_ypos,x	; Sprite cursor 2
+	sta $0234
 
-	lda.b #$F2+1
-	sta.w $0235
+	lda #$F2+1
+	sta $0235
 
-	lda.b #$03
-	sta.w $0236
+	lda #$03
+	sta $0236
 
-	lda.b #$45
-	sta.w $0237
+	lda #$45
+	sta $0237
 
 .slot2:
-	ldx.b $16
+	ldx $16
 	dex
 	bne .slot3
 
-	lda.b #$D3		// Red text
-	sta.w $0302+21
+	lda #$D3		; Red text
+	sta $0302+21
 
-	lda.b #$05
-	sta.w $0302+23
+	lda #$05
+	sta $0302+23
 
 .slot3:
 	dex
 	bne .exit7
 
 
-	lda.b #$DB		// Red text
-	sta.w $0302+21
+	lda #$DB		; Red text
+	sta $0302+21
 
-	lda.b #$05
-	sta.w $0302+23
+	lda #$05
+	sta $0302+23
 
 .exit7:
-	lda.b #$10		// Play sound (Heart)
-	sta.w $0604
+	lda #$10		; Play sound (Heart)
+	sta $0604
 
 	inc $13
 	rts
@@ -992,14 +981,14 @@ erase_player_mode:
 .cursor2_ypos:
 	db $33,$4B,$63
 
-// ---------------------------------------------------------
+; ---------------------------------------------------------
 
 .text3:
-	// To which slot?
+	; To which slot?
 	db $22,$88,$11
 	db "TO WHICH SLOT?   "
 
-	// Red text
+	; Red text
 	db $23,$CB,$03|$40
 	db $50
 
@@ -1008,151 +997,151 @@ erase_player_mode:
 .text3_end:
 
 
-// /////////////////////////////////////////////////////////
+; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;/
 
 .submode_11:
-	cmp.b #$11
+	cmp #$11
 	bne .submode_12
 
-	ldx.b $F8		// Joypad 1
+	ldx $F8		; Joypad 1
 
-.start_button:
+.start_button_11:
 	txa
-	and.b #$10
+	and #$10
 	beq .down_cursor2
 
-	lda.b $54		// Player slot only
-	cmp.b #$03
+	lda $54		; Player slot only
+	cmp #$03
 	bcs .quit1
 
-	inc.b $13
+	inc $13
 
-	lda.b $13
+	lda $13
 	bne .submode_12
 
 .quit1:
 	jmp .submode_quit
 
-// ---------------------------------------------------------
+; ---------------------------------------------------------
 
 .down_cursor2:
-	txa			// Down + Select button
-	and.b #($20|$04)
+	txa			; Down + Select button
+	and #($20|$04)
 	beq .up_cursor2
 
-	ldy.b $54		// Destination (dst) slot
+	ldy $54		; Destination (dst) slot
 
 .loop10:
 	iny
 
-	cpy.b #$04		// Past exit
+	cpy #$04		; Past exit
 	bne .check2
 
-	ldy.b #$00		// Slot 1
+	ldy #$00		; Slot 1
 
 .check2:
-	cpy.b $16		// Not save 1
+	cpy $16		; Not save 1
 	beq .loop10
 
 	bne .move_cursor3
 
-// ---------------------------------------------------------
+; ---------------------------------------------------------
 
 .up_cursor2:
 	txa
-	and.b #$08
+	and #$08
 	beq .no_move2
 
-	ldy.b $54		// Destination (dst) slot
+	ldy $54		; Destination (dst) slot
 
 .loop11:
 	dey
 	bpl .check3
 
-	ldy.b #$03		// Exit slot
+	ldy #$03		; Exit slot
 
 .check3:
-	cpy.b $16		// Not save 1
+	cpy $16		; Not save 1
 	beq .loop11
 
-// ---------------------------------------------------------
+; ---------------------------------------------------------
 
 
 .move_cursor3:
-	sty.b $54
+	sty $54
 
-	lda.w $9DAF,y		// Y-pos cursor 2
-	sta.w $0234
+	lda $9DAF,y		; Y-pos cursor 2
+	sta $0234
 
-	lda.b #$01		// Play tune
-	sta.w $0602
+	lda #$01		; Play tune
+	sta $0602
 
-// ---------------------------------------------------------
+; ---------------------------------------------------------
 
 .no_move2:
 	rts
 
-// /////////////////////////////////////////////////////////
+; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;/
 
 .submode_12:
-	cmp.b #$12
+	cmp #$12
 	bne .submode_13
 
 	ldx.b #(.text4_end-.text4)
 
 .loop12:
-	lda.w .text4,x
-	sta.w $0302,x
+	lda .text4,x
+	sta $0302,x
 
 	dex
 	bpl .loop12
 
-	ldx.b $16		// Save 1
+	ldx $16		; Save 1
 	inx
-	stx.w $0302+$0D
+	stx $0302+$0D
 
-	ldx.b $54		// Save 2
+	ldx $54		; Save 2
 	inx
-	stx.w $0302+$12
+	stx $0302+$12
 
-// ---------------------------------------------------------
+; ---------------------------------------------------------
 
-	lda.b #$20		// Play sound
-	sta.w $0604
+	lda #$20		; Play sound
+	sta $0604
 
-	lda.b #$00		// Cursor choice
-	sta.b $55
+	lda #$00		; Cursor choice
+	sta $55
 
-	lda.b $54		// Color 2
-	sta.w $0236
+	lda $54		; Color 2
+	sta $0236
 
-	lda.b #$AF		// Sprite cursor 3
-	sta.w $0230
+	lda #$AF		; Sprite cursor 3
+	sta $0230
 
-	lda.b #$F3
-	sta.w $0231
+	lda #$F3
+	sta $0231
 
-	lda.b #$03
-	sta.w $0232
+	lda #$03
+	sta $0232
 
-	lda.b #$4C
-	sta.w $0233
+	lda #$4C
+	sta $0233
 
-	inc.b $13
+	inc $13
 	rts
 
-// ---------------------------------------------------------
+; ---------------------------------------------------------
 
 .text4:
-	// Copy from x to y?
+	; Copy from x to y?
 	db $22,$88,$11
 	db "COPY FROM 0 TO 0?"
 
-	// Okay
+	; Okay
 	db $22,$CB,$04
 	db "OKAY"
 
-	// Quit
+	; Quit
 	db $23,$0B,$04
 	db "QUIT"
 
@@ -1161,92 +1150,92 @@ erase_player_mode:
 .text4_end:
 
 
-// /////////////////////////////////////////////////////////
+; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;/
 
 .submode_13:
-	cmp.b #$13
+	cmp #$13
 	bne .submode_14
 
 	ldx.b #(.text5_end-.text5)
 
 .loop13:
-	lda.w .text5,x		// !!
-	sta.w $0302,x
+	lda .text5,x		; !!
+	sta $0302,x
 
 	dex
 	bpl .loop13
 
-// ---------------------------------------------------------
+; ---------------------------------------------------------
 
 .sprite4:
-	ldx.b #$00
-	cpx.b $54
+	ldx #$00
+	cpx $54
 	bne .sprite5
 
-	stx.w $0290+2		// Gray sword
+	stx $0290+2		; Gray sword
 
 .sprite5:
 	inx
-	cpx.b $54
+	cpx $54
 	bne .sprite6
 
-	lda.b #$15		// Gray sprite
-	sta.w $0302+1
+	lda #$15		; Gray sprite
+	sta $0302+1
 
-	lda.b #$D3		// Gray text
-	sta.w $0302+7
+	lda #$D3		; Gray text
+	sta $0302+7
 
-	lda.b #$0A
-	sta.w $0302+9
+	lda #$0A
+	sta $0302+9
 
-	lda.b #$01		// Gray sword
-	sta.w $0298+2
+	lda #$01		; Gray sword
+	sta $0298+2
 
 .sprite6:
 	inx
-	cpx.b $54
+	cpx $54
 	bne .exit8
 
-	lda.b #$19		// Gray sprite
-	sta.w $0302+1
+	lda #$19		; Gray sprite
+	sta $0302+1
 
-	lda.b #$DB		// Gray text
-	sta.w $0302+7
+	lda #$DB		; Gray text
+	sta $0302+7
 
-	lda.b #$0A
-	sta.w $0302+9
+	lda #$0A
+	sta $0302+9
 
-	lda.b #$02		// Gray sword
-	sta.w $02A0+2
+	lda #$02		; Gray sword
+	sta $02A0+2
 
 .exit8:
-	inc.b $13
+	inc $13
 	rts
 
-// ---------------------------------------------------------
+; ---------------------------------------------------------
 
 .text5:
-	// Gray sprite
+	; Gray sprite
 	db $3F,$11,$03
 	db $10,$30,$00
 
-	// Gray text
+	; Gray text
 	db $23,$CB,$03|$40
 	db $A0
 
-	// Gray color
+	; Gray color
 	db $3F,$09,$01
 	db $00
 
-	// Red text
+	; Red text
 	db $23,$EB,$02
 	db $05,$05
 
-	// Green text
+	; Green text
 	db $23,$ED,$01
 	db $0F
 
-	// Green color
+	; Green color
 	db $3F,$0D,$01
 	db $1A
 
@@ -1255,70 +1244,70 @@ erase_player_mode:
 .text5_end:
 
 
-// /////////////////////////////////////////////////////////
+; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;/
 
 .submode_14:
-	ldx.b $F8		// Joypad 1
-	ldy.b $55
+	ldx $F8		; Joypad 1
+	ldy $55
 
-.start_button:
+.start_button_14:
 	txa
-	and.b #$10
+	and #$10
 	beq .down_cursor3
-	tya			// Okay chosen (00)
+	tya			; Okay chosen (00)
 	bne .exit9
 
 	jsr copy_player1
 
-	lda.b #$08		// Play sound (Fairy)
-	sta.w $0602
+	lda #$08		; Play sound (Fairy)
+	sta $0602
 
 	jmp .submode_quit
 
 .exit9:
-	lda.b #$20		// Play sound (Quit)
-	sta.w $0602
+	lda #$20		; Play sound (Quit)
+	sta $0602
 
 	jmp .submode_quit
 
-// ----------------------------------------------------
+; ----------------------------------------------------
 
 .down_cursor3:
-	txa			// Down + Select button
-	and.b #($20|$04)
+	txa			; Down + Select button
+	and #($20|$04)
 	beq .up_cursor3
 
 	dey
 	bpl .move_cursor4
 
-	ldy.b #$01
+	ldy #$01
 	bne .move_cursor4
 
-// ---------------------------------------------------------
+; ---------------------------------------------------------
 
 .up_cursor3:
 	txa
-	and.b #$08
+	and #$08
 	beq .no_move3
 
 	iny
-	cpy.b #$02
+	cpy #$02
 	bne .move_cursor4
 
-	ldy.b #$00
+	ldy #$00
 
-// ---------------------------------------------------------
+; ---------------------------------------------------------
 
 .move_cursor4:
-	sty.b $55
+	sty $55
 
-	lda.w .cursor3_ypos,y	// Y-pos cursor 3
-	sta.w $0230
+	lda .cursor3_ypos,y	; Y-pos cursor 3
+	sta $0230
 
-	lda.b #$01		// Play tune
-	sta.w $0602
+	lda #$01		; Play tune
+	sta $0602
 
-// ---------------------------------------------------------
+; ---------------------------------------------------------
 
 .no_move3:
 	rts
@@ -1326,138 +1315,136 @@ erase_player_mode:
 .cursor3_ypos:
 	db $AF,$BF
 
-// $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+; $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 copy_player1:
-	lda.b $16		// Source (src)
+	lda $16		; Source (src)
 	asl
 	tay
 
-	lda.b $54		// Destination (dst)
+	lda $54		; Destination (dst)
 	asl
 	tax
 
-	// Play save = Temporary in-game save data
+	; Play save = Temporary in-game save data
 
-	lda.w $6524,y		// Transfer checksum to play save
+	lda $6524,y		; Transfer checksum to play save
 	sta $6D9C,x
 
 	lda $6525,y
 	sta $6D9D,x
 
-// ---------------------------------------------------------
+; ---------------------------------------------------------
 
 .autosave:
-	lda.b $16		// Source (src)
+	lda $16		; Source (src)
 	asl
 	asl
 	asl
 	asl
 	tax
 
-	lda.b $54		// Destination (dst)
+	lda $54		; Destination (dst)
 	asl
 	asl
 	asl
 	asl
 	tay
 
-	lda.b #$10
-	sta.b $00
+	lda #$10
+	sta $00
 
 .loop14:
-	lda.w $7F60,x		// Copy automap data to temp save
-	sta.w $7F60,y
+	lda $7F60,x		; Copy automap data to temp save
+	sta $7F60,y
 
 	inx
 	iny
 
-	dec.b $00
+	dec $00
 	bne .loop14
 
-// ---------------------------------------------------------
+; ---------------------------------------------------------
 
-	jsr $6DF1		// Compute data pointers
-	ldx.b #$0E-1
+	jsr $6DF1		; Compute data pointers
+	ldx #$0E-1
 
 .loop15:
-	lda.b $00,x		// Copy to play save
+	lda $00,x		; Copy to play save
 	sta $C0,x
 
 	dex
 	bpl .loop15
 
-// ---------------------------------------------------------
+; ---------------------------------------------------------
 
-	lda.b $54		// Destination (dst) save
-	sta.b $16
+	lda $54		; Destination (dst) save
+	sta $16
 
-	jsr $6DF1		// Compute data pointers
-	jsr $A780		// Copy file data
+	jsr $6DF1		; Compute data pointers
+	jsr $A780		; Copy file data
 
-// ---------------------------------------------------------
+; ---------------------------------------------------------
 
-	lda.b $16		// Menu - Un-fade sprite palettes
+	lda $16		; Menu - Un-fade sprite palettes
 	asl
 	asl
 	tax
 
-	lda.b #$27
-	sta.w $6803+2,x
+	lda #$27
+	sta $6803+2,x
 
-	lda.b #$17
-	sta.w $6803+3,x
+	lda #$17
+	sta $6803+3,x
 
 	rts
 
-warnpc $BF50
+assert pc() <= $BF50	; 0x0BF60
 
-// #########################################################
+; #########################################################
 
-org $9D44	// 0x09D54
-	// Erase Save
+%org($9D44,2)		; 0x09D54
+	; Erase Save
 	db $6A,$6A,$6A,$6A,$6A,$6A
 	db " ERASE SAVE "
 	db $6A,$6A,$6A,$6A,$6A
 
-org $9D70	// 0x09D80
-	// Register - No exit
+%org($9D70,2)		; 0x09D80
+	; Register - No exit
 	db "        "
 
-// ---------------------------------------------------------
+; ---------------------------------------------------------
 
-bank 6;
-org $A15D	// 0x1A16D
-	// Main Menu - Copy Save
+%org($A15D,6)		; 0x1A16D
+	; Main Menu - Copy Save
 	db "COPY SAVE"
 	db "         "
 
-org $A172	// 0x1A182
-	// Main Menu - Erase Save
+%org($A172,6)		; 0x1A182
+	; Main Menu - Erase Save
 	db "ERASE SAVE"
 	db "      "
 	db $FF
 
-// ---------------------------------------------------------
+; ---------------------------------------------------------
 
-org $A183	// 0x1A193
-	// Register Your Name - Alphabet box
-	db $21,$E4,$01,$69	// Box top left corner
-	db $21,$E5,$57,$6A	// Box horizontal line
-	db $21,$FC,$01,$6B	// Box top right corner
+%org($A183,6)		; 0x1A193
+	; Register Your Name - Alphabet box
+	db $21,$E4,$01,$69	; Box top left corner
+	db $21,$E5,$57,$6A	; Box horizontal line
+	db $21,$FC,$01,$6B	; Box top right corner
 
-	db $22,$04,$C9,$6C	// Box vertical line (left)
-	db $22,$1C,$C9,$6C	// Box vertical line (right)
+	db $22,$04,$C9,$6C	; Box vertical line (left)
+	db $22,$1C,$C9,$6C	; Box vertical line (right)
 
-	db $23,$24,$01,$6E	// Box bottom left corner
-	db $23,$25,$57,$6A	// Box horizontal line
-	db $23,$3C,$01,$6D	// Box bottom right corner
+	db $23,$24,$01,$6E	; Box bottom left corner
+	db $23,$25,$57,$6A	; Box horizontal line
+	db $23,$3C,$01,$6D	; Box bottom right corner
 
-// ---------------------------------------------------------
+; ---------------------------------------------------------
 
-bank 2;
-org $9D7B	// 0x09D8B
-	// Copy, Erase name template
+%org($9D7B,2)		; 0x09D8B
+	; Copy, Erase name template
 	db $20,$CD,$08
 	db "        "
 	db $21,$2D,$08
@@ -1469,10 +1456,10 @@ org $9D7B	// 0x09D8B
 
 	db $FF
 
-warnpc $9DAF+1
+assert pc() <= $9DAF+1	; 0x09DBF
 
-org $9DDF	// 0x09DEF
-	// Write name offsets
+%org($9DDF,2)		; 0x09DEF
+	; Write name offsets
 	db $20,$CD,$01
 	db $21,$2D,$01
 	db $21,$8D,$01
@@ -1482,70 +1469,68 @@ org $9DDF	// 0x09DEF
 
 	db $FF
 
-warnpc $9DED+1
+assert pc() <= $9DED+1	; 0x09DFD
 
-// ---------------------------------------------------------
+; ---------------------------------------------------------
 
-org $A16C	// 0x0A17C
-	cmp.b #$05		// Name wrap position
+%org($A16C,2)		; 0x0A17C
+	cmp #$05		; Name wrap position
 
-org $A1B6	// 0x0A1C6
-	lda.b #$68		// Sprite start position
+%org($A1B6,2)		; 0x0A1C6
+	lda #$68		; Sprite start position
 
-org $A183	// 0x0A193
-	cmp.b #$A8		// Sprite name wrap position
+%org($A183,2)		; 0x0A193
+	cmp #$A8		; Sprite name wrap position
 
-org $A187	// 0x0A197
-	lda.b #$68		// Sprite name wrap position
+%org($A187,2)		; 0x0A197
+	lda #$68		; Sprite name wrap position
 
-// ---------------------------------------------------------
+; ---------------------------------------------------------
 
-org $9EFF	// 0x09F0F
+%org($9EFF,2)		; 0x09F0F
 	jsr register_menu_quit_sound
 	nop #2
 
-warnpc $9F04+1
+assert pc() <= $9F04+1	; 0x09F14
 
-org $9F6F	// 0x09F7F
+%org($9F6F,2)		; 0x09F7F
 	jsr register_menu_name_done
 
-// #########################################################
+; #########################################################
 
-bank 5;
-org $8AE5	// 0x14AF5
-	db $54			// Game over - Heart X-pos
+%org($8AE5,5)		; 0x14AF5
+	db $54			; Game over - Heart X-pos
 
-org $8AFF	// 0x14B0F
+%org($8AFF,5)		; 0x14B0F
 	jmp game_over_menu_input
 	nop
 
-// /////////////////////////////////////////////////////////
+; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;/
 
-org $93E0	// 0x153F0
-// Moved from $BF20 (0x17F30) for compatibility with Automap
-
+; Moved from $BF20 (0x17F30) for compatibility with Automap
+%org($93E0,5)		; 0x153F0
 game_over_menu_input:
-	lda.b $F8		// Up cursor
-	and.b #$08
+	lda $F8		; Up cursor
+	and #$08
 	beq .down_cursor4
 
-	lda.b #$01		// Play sound (Shield block) on Up press
-	sta.w $0604
+	lda #$01		; Play sound (Shield block) on Up press
+	sta $0604
 
-	dec.b $13		// Wrap
+	dec $13		; Wrap
 	bpl .exit
 
-	lda.b #$02
-	sta.b $13
+	lda #$02
+	sta $13
 
 .exit:
 	jmp $8B16
 
-// ---------------------------------------------------------
+; ---------------------------------------------------------
 
 .down_cursor4:
-	lda.b $F8		// Down cursor
-	and.b #($20|$04)
+	lda $F8		; Down cursor
+	and #($20|$04)
 	jmp $8B03
 
-warnpc $9400	// Originally warnpc $BF40
+assert pc() <= $9400	; 0x15410, Originally warnpc $BF40

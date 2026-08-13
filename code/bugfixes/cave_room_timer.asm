@@ -1,45 +1,39 @@
-//
-// Source:
-// 	minucce
-// 
-// License:
-// 	Code should be used only for educational, documentation and modding purposes.
-// 	Please keep derivative work open source.
+;
+; Source:
+; 	minucce
+; 
+; License:
+; 	Code should be used only for educational, documentation and modding purposes.
+; 	Please keep derivative work open source.
+; <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
+; Reset timer for cave start
+%org($86A3,1)		; 0x046B3
+	sta $70,x	; x,y
+	sty $84,x
 
-// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+	lda #$00	; HP
+	sta $0485,x
 
-//
-// Reset timer for cave start
-//
+	sta $29	; Cloud timer
 
-bank 1; org $86A3	// 0x46B3
+	lda #$81	; Attr
+	sta $04BF,x
 
-	sta.b $70,x	// x,y
-	sty.b $84,x
+	lda #$40	; Freeze player
+	sta $AC
 
-	lda.b #$00	// HP
-	sta.w $0485,x
+	sta $0351	; Bonfire 1,2
+	sta $0352
 
-	sta.b $29	// Cloud timer
+	lda #$48	; x1
+	sta $71,x
 
-	lda.b #$81	// Attr
-	sta.w $04BF,x
+	lda #$A8	; x2
+	sta $72,x
 
-	lda.b #$40	// Freeze player
-	sta.b $AC
-
-	sta.w $0351	// Bonfire 1,2
-	sta.w $0352
-
-	lda.b #$48	// x1
-	sta.b $71,x
-
-	lda.b #$A8	// x2
-	sta.b $72,x
-
-	sty.b $85,x	// y1, y2
-	sty.b $86,x
+	sty $85,x	; y1, y2
+	sty $86,x
 
 	rts
 
