@@ -25,16 +25,25 @@ hud_loading_blink:
 	bne .exit
 
 
-	lda $12	; Verify overworld transition
+	lda $12		; Verify overworld transition
 	cmp #$0A
 	beq +
 	cmp #$0B
 	bne .exit
 +
--	
-	lda $2002	; Wait pre-render scanline -1
-	asl
-	bmi -
+-
+	bit $2002	; Wait vblank
+	bpl -
+
+	lda #$00	; Refresh OAM
+	sta $2003
+
+	lda #$02
+	sta $4014
+
+-
+	bit $2002	; Wait pre-render
+	bvs -
 
 	lda #$1E	; Enable drawing
 	sta $2001
@@ -44,3 +53,5 @@ hud_loading_blink:
 .exit:
 	lda $06
 	rts
+
+assert pc() <= $AF80	; 0x16F90, Originally warnpc $AF80
