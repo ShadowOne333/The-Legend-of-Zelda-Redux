@@ -61,7 +61,7 @@ incsrc "code/text/text.tbl"
 
 ; Blank out original data for probable free space reuse later
 %org($A350,6)		; 0x1A360
-	%fillto($A378,6,$FF)
+	%fillto($A378,6,$FF)	; 0x1A388
 
 ; Free space reused for the B Button and Save text
 %org($AF40,6)		; 0x1AF50

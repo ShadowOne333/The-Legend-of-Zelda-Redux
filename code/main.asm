@@ -49,9 +49,10 @@ incsrc code/bugfixes/cave_room_timer.asm	; Reduces random wait times when enteri
 incsrc code/bugfixes/dungeon_front_room.asm	; Fix Q1-D1 door opening on its own if you enter-leave the dungeon
 incsrc code/bugfixes/khananakey_fix.asm		; Fix Link being able to phase through locked keyhole doors when any door shutters are opening
 incsrc code/bugfixes/magic_beam_align.asm	; Fix alignment of the sword beam in multiple directions
+incsrc code/bugfixes/optimizations.asm		; Code optimizations for the original game
 incsrc code/bugfixes/overworld_hud_blink.asm	; Stops HUD from disappearing when entering or leaving caves during overworld map
 incsrc code/bugfixes/overworld_leave_cave.asm	; Fix wrong player sprite position when leaving overworld from caves
-incsrc code/bugfixes/overworld_scroll_timing.asm	; Fix for Y-scroll timing glitch
+;incsrc code/bugfixes/overworld_scroll_timing.asm	; Fix for Y-scroll timing glitch, removed in favour of optimizations.asm
 
 ;****************************************
 ;	Text changes
@@ -91,5 +92,5 @@ incsrc code/music/dungeon_music.asm
 ;****************************************
 ; Include optional patches
 ; Uncomment desired patches inside "optional.asm" for them to compile
-incsrc code/optional.asm
+;incsrc code/optional.asm
 

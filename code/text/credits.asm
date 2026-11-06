@@ -79,7 +79,7 @@ high_bytes:
 
 %org($AC5C,2)		; 0x0AC6C
 ; Blank out all of the original Credits text previous data (for extra free space in case it`s needed). This gives 0x19E bytes of free space!
-	%fillto($ADFA,2,$FF)
+	%fillto($ADFA,2,$FF)	; 0x0AE0A
 
 ;***********************************************************
 ;   "Saving Zelda" 1st and 2nd text
@@ -105,7 +105,7 @@ end_text2:	; $A8C8 - Originally $AB07, 0x0AB17
 	db "AND THUS,"			;24 0A 17 0D 24 1C 18 28
 	db "PEACE RETURNS TO HYRULE."	;19 0E 0A 0C 0E 24 1B 0E 1D 1E 1B 17 1C 24 1D 18 24 11 22 1B 1E 15 0E 2C
 	db "THE END.",!end;24 24 24 24 FF
-	%fillto($A900,2,$FF)
+	%fillto($A900,2,$FF)	; 0x0A910
 
 ;***********************************************************
 ;  Credits Roll and Post-credits text

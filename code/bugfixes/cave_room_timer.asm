@@ -8,32 +8,13 @@
 ; <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 ; Reset timer for cave start
-%org($86A3,1)		; 0x046B3
-	sta $70,x	; x,y
-	sty $84,x
+%org($886A,5)		; 0x1487A
+	jsr $85E4	; Our custom routine at free space 0x145F4
+	nop #3
 
-	lda #$00	; HP
-	sta $0485,x
-
-	sta $29	; Cloud timer
-
-	lda #$81	; Attr
-	sta $04BF,x
-
-	lda #$40	; Freeze player
-	sta $AC
-
-	sta $0351	; Bonfire 1,2
-	sta $0352
-
-	lda #$48	; x1
-	sta $71,x
-
-	lda #$A8	; x2
-	sta $72,x
-
-	sty $85,x	; y1, y2
-	sty $86,x
-
+%org($85F0,5)		; 0x14600
+	sta $AC,x
+	sta $98,x
+	sta $3D,x
+	sta $28,x	; Added fix from the Famicom release
 	rts
-

@@ -175,7 +175,7 @@ text_32:
 	db "_WITHIN DEATH MOUNTAIN",	'.'|!end
 ;===============================================================
 ; Pad to $45A2, or 0x045B2
-	%fillto($85A2,1,$FF)
+	%fillto($85A2,1,$FF)	; 0x045B2
 
 ; Expand the text dialogue for "Choose path" screens
 %org($85A2,1)		; 0x045B2

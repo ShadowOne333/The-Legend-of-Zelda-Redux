@@ -11,10 +11,10 @@
 ;incsrc code/optional/OriginalGFX.asm
 
 ; Make the Blue Ring/Tunic even more vivid (based on Asaki's hack)
-;incsrc code/optional/BluerTunic.asm
+incsrc code/optional/BluerTunic.asm
 
 ; Increase bomb upgrades from 4 to 5
-;incsrc code/optional/BombUpgrades5.asm
+incsrc code/optional/BombUpgrades5.asm
 
 ; Only have Zelda 1 Dungeon theme for all Dungeons
 ;incsrc code/optional/zelda1_theme.asm
@@ -51,10 +51,10 @@
 ;incsrc code/optional/OriginalOWColumns.asm
 
 ; Rearranged Bosses for Both Quests
-;incsrc code/optional/RearrangedBosses.asm
+incsrc code/optional/RearrangedBosses.asm
 
 ; Recoloured Dungeons
-;incsrc code/optional/RecolouredDungeons.asm
+incsrc code/optional/RecolouredDungeons.asm
 
 ; Remove THE HYRULE FANTASY subtitle
 ;incsrc code/optional/RemoveHyruleFantasySubtitle.asm
@@ -72,7 +72,7 @@
 ;incsrc code/optional/ReworkedTSNoSubtitle.asm
 
 ; Rework the Sword Swing to be similar to that of A Link to the Past
-;incsrc code/optional/alttp_sword_draw.asm
+incsrc code/optional/alttp_sword_draw.asm
 
 ; Change the Tunics back to Rings (New Ring sprite for Redux)
 ;incsrc code/optional/Tunic2Ring.asm
